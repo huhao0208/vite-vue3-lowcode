@@ -1,7 +1,7 @@
 export const useCustomPage = defineStore('customPage', {
     // 开启数据缓存
     persist: {
-        enabled: true,
+        enabled: false,
         strategies: [
             {
                 key: 'customPage', // 自定义名称
@@ -11,10 +11,8 @@ export const useCustomPage = defineStore('customPage', {
         ],
     },
     state: () => ({
-        counter: 1,
-        list:[{
-            test:1
-        }]
+        currentUid: '',
+        list:[ ]
     }),
     getters: {
         doubleCount(state) {
@@ -23,11 +21,16 @@ export const useCustomPage = defineStore('customPage', {
     },
     actions: {
         updateList(e){
-            console.log(e,'xxxxxxxxxxxx')
-            this.list = e
+
+            this.list = e.map(item => {
+                return {
+                    ...item,
+                    uid:item.uid||Math.random().toString(36).substr(2, 9),
+                }
+            })
         },
-        increment() {
-            this.counter++
+        setCurrent(uid) {
+           this.currentUid = uid
         },
         decrement() {
             this.counter--

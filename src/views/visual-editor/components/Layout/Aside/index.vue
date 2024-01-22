@@ -1,23 +1,23 @@
 <script setup>
 
 import draggable from 'vuedraggable';
-import usePackages from './usePackages.js'
 
-const {packages} = usePackages()
-const log = function (e) {
-  console.log(e)
-}
+
+import  {getComponent} from "../../Packages/loadComponent.js";
+import useList from "./useList.js";
+const {packages} = useList();
+
 </script>
 <template>
   <el-tabs tab-position="left" class="aside_tabs">
-    <el-tab-pane v-for="tab in packages" :key="tab.id" :label="tab.label" lazy>
+    <el-tab-pane v-for="tab in packages" :key="tab.type" :label="tab.label" lazy>
       <el-scrollbar height="calc(100vh - 80px)">
-        <draggable item-key="id" :list="tab.children" :group="{ name: 'page', pull: 'clone', put: false }">
+        <draggable item-key="id" :list="tab.components" :group="{ name: 'page', pull: 'clone', put: false }">
 
           <template #item="{ element }">
             <div class="child_item">
               <div class="label">{{ element.label }}</div>
-              <component  :is="element.component" :key="`${tab.id}/${element.id}`" style="position: relative;min-width: 50%"/>
+              <component  :is="getComponent(tab.type, element.name)" :key="`${tab.type}/${element.name}`" style="position: relative;min-width: 50%"/>
             </div>
           </template>
         </draggable>

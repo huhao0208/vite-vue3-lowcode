@@ -1,44 +1,44 @@
 export default [
     {
         label: '基础组件',
-        id: 'BasePackages',
-        children: [
+        type: 'BasePackages',
+        components: [
             {
                 label: '顶部导航',
-                id: 'NavBar',
+                name: 'NavBar',
             },
             {
                 label: '图片',
-                id: 'Image',
+                name: 'Image',
             },
             {
                 label: '按钮',
-                id: 'Button',
+                name: 'Button',
             },
             {
                 label: '通知栏',
-                id: 'NoticeBar',
+                name: 'NoticeBar',
             },
             {
                 label: '底部导航',
-                id: 'TabBar',
+                name: 'TabBar',
             },
             {
                 label: '文本',
-                id: 'Text',
+                name: 'Text',
             },
             {
                 label: '轮播',
-                id: 'Swipe',
+                name: 'Swipe',
             }
         ]
     },
     {
         label: '容器组件',
-        id: 'ContainerPackages'
+        dir: 'ContainerPackages'
     },
     {
-        id: 'BusinessPackages',
+        dir: 'BusinessPackages',
         label: '业务组件'
     }
 ]

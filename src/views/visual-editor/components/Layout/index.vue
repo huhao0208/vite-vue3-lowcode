@@ -7,7 +7,6 @@ import {
   Search,
   Star,
 } from '@element-plus/icons-vue'
-
 const attrsOpen = ref(false)
 const buttonIcon = computed(() => {
   return !attrsOpen.value ? DArrowLeft : DArrowRight;
