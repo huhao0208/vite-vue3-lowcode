@@ -12,6 +12,7 @@ export const useCustomPage = defineStore('customPage', {
     },
     state: () => ({
         currentUid: '',
+        currentDetail: null,
         list:[ ]
     }),
     getters: {
@@ -30,7 +31,8 @@ export const useCustomPage = defineStore('customPage', {
             })
         },
         setCurrent(uid) {
-           this.currentUid = uid
+           this.currentUid = uid;
+           this.currentDetail = this.list.find(item => item.uid === uid)
         },
         decrement() {
             this.counter--

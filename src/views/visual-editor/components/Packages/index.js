@@ -1,44 +1,17 @@
-export default [
-    {
-        label: '基础组件',
-        type: 'BasePackages',
-        components: [
-            {
-                label: '顶部导航',
-                name: 'NavBar',
-            },
-            {
-                label: '图片',
-                name: 'Image',
-            },
-            {
-                label: '按钮',
-                name: 'Button',
-            },
-            {
-                label: '通知栏',
-                name: 'NoticeBar',
-            },
-            {
-                label: '底部导航',
-                name: 'TabBar',
-            },
-            {
-                label: '文本',
-                name: 'Text',
-            },
-            {
-                label: '轮播',
-                name: 'Swipe',
-            }
-        ]
-    },
-    {
-        label: '容器组件',
-        dir: 'ContainerPackages'
-    },
-    {
-        dir: 'BusinessPackages',
-        label: '业务组件'
-    }
-]
+
+const modulesFiles = import.meta.glob('./**/*.vue');
+
+// 将组件转换为对象形式，键为组件名（通常是路径去掉 .vue 后的名称），值为组件本身
+const components = Object.entries(modulesFiles).reduce((componentsAccumulator, [path, component]) => {
+    // 获取组件名称（通常基于文件路径） 从.vue往前取 如果是index 则再往前取
+  const componentName = path.replace(/(\/index)?\.vue$/g,'').split('/').at(-1)
+
+
+    console.log(componentName,component,'ComponentComponent')
+    // 注册到组件列表中
+    componentsAccumulator[componentName] = markRaw(defineAsyncComponent(component));
+
+    return componentsAccumulator;
+}, {});
+console.log(components,'components')
+export default components;

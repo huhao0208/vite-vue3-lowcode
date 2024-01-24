@@ -30,7 +30,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Swipe: typeof import('./views/visual-editor/components/Packages/BasePackages/Swipe.vue')['default']
     TabBar: typeof import('./views/visual-editor/components/Packages/BasePackages/TabBar.vue')['default']
-    Text: typeof import('./views/visual-editor/components/Packages/BasePackages/Text.vue')['default']
+    Text: typeof import('./views/visual-editor/components/Packages/BasePackages/Text/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanImage: typeof import('vant/es')['Image']
     VanNavBar: typeof import('vant/es')['NavBar']

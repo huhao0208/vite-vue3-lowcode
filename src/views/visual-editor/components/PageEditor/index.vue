@@ -1,18 +1,22 @@
+
 <script setup>
 import draggable from 'vuedraggable';
-import {getComponent} from '../Packages/loadComponent.js';
+import components from '@/views/visual-editor/components/Packages/index.js'
 
-const pageStore = useCustomPage();
+const pStore = useCustomPage();
 
 // 使用 computed 属性来代替手动的 list，确保在 Vuex store 中的 list 更新时也会更新
 const list = computed({
   get() {
-    return pageStore.list;
+    return pStore.list
   },
   set(newValue) {
-    pageStore.updateList(newValue)
+    pStore.updateList(newValue)
   }
 })
+
+import useCurrent from '../../useHooks/useCurrent.js';
+const {currentUid,setCurrentUid} = useCurrent()
 
 </script>
 
@@ -22,10 +26,12 @@ const list = computed({
 
     <draggable group="page" v-model="list"
                item-key="uid" style="min-height: 667px">
+
       <template #item="{ element }">
-        <div class="list_group_item" @click="element.click">
-          <!--          {{ element.label }}-->
-          <component :is="getComponent(element.type,element.name)" :key="element.uid"></component>
+        <div class="list_group_item" :class="{
+          list_group_item_current: currentUid===element.uid
+        }" @click="setCurrentUid(element.uid)">
+          <component :is="components[element.name]" :key="element.uid"></component>
         </div>
       </template>
     </draggable>
@@ -46,7 +52,22 @@ const list = computed({
   transition: all .3s;
 
   .list_group_item {
+    position: relative;
+    &.list_group_item_current{
 
+      &:after{
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 2px solid #FF0000;
+        z-index:999999999999
+
+      }
+    }
   }
 }
 </style>

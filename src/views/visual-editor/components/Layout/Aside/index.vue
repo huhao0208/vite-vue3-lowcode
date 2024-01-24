@@ -1,9 +1,7 @@
 <script setup>
 
-import draggable from 'vuedraggable';
-
-
-import  {getComponent} from "../../Packages/loadComponent.js";
+import draggable from 'vuedraggable'
+import components from '@/views/visual-editor/components/Packages/index.js'
 import useList from "./useList.js";
 const {packages} = useList();
 
@@ -17,7 +15,7 @@ const {packages} = useList();
           <template #item="{ element }">
             <div class="child_item">
               <div class="label">{{ element.label }}</div>
-              <component  :is="getComponent(tab.type, element.name)" :key="`${tab.type}/${element.name}`" style="position: relative;min-width: 50%"/>
+              <component  :is="components[element.name]" :key="`${tab.type}/${element.name}`" style="position: relative;min-width: 50%"/>
             </div>
           </template>
         </draggable>

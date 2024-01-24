@@ -11,7 +11,6 @@ const data = ref(1)
     <template v-slot:attrs>
       <AttrsEditor></AttrsEditor>
     </template>
-
   </Layout>
 </template>
 
