@@ -5,8 +5,12 @@ import router from "@/router";
 import 'normalize.css';
 import './style.css'
 import App from './App.vue'
+const app = createApp(App)
+import install from './directives/ContextMenuDirective.js';
+install(app)
 
-createApp(App)
-    .use(pinia)
+
+    app.use(pinia)
     .use(router)
+    .use(window.contextmenu)
     .mount('#app')

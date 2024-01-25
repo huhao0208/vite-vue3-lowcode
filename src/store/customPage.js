@@ -22,11 +22,23 @@ export const useCustomPage = defineStore('customPage', {
     },
     actions: {
         updateList(e){
+            // 如果有name是NavBar的 则将其放最前面
 
             this.list = e.map(item => {
                 return {
                     ...item,
+                    attrs:item.attrs||{},
+                    styles:item.styles||{},
+                    events:item.events||{},
                     uid:item.uid||Math.random().toString(36).substr(2, 9),
+                }
+            }).sort((a ,b)=> {
+                if(a.name === 'NavBar'){
+                    return -1
+                }else if(b.name === 'NavBar'){
+                    return 1
+                }else{
+                    return 0
                 }
             })
         },

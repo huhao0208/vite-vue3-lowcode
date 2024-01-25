@@ -4,7 +4,17 @@ export default function useList() {
 
     const packages = ref([])
     onMounted(()=>{
-        packages.value = packagesJson
+        packages.value = packagesJson?.map(item=>{
+            return {
+                ...item,
+                components:item.components?.map(component=>{
+                    return {
+                        ...component,
+                        type:item.type
+                    }
+                })
+            }
+        })
     })
     return {
         packages

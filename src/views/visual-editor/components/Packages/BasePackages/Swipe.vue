@@ -20,5 +20,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-
+.my-swipe{
+  width: 100%;
+}
 </style>

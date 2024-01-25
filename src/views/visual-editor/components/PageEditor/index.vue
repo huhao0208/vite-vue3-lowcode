@@ -1,4 +1,3 @@
-
 <script setup>
 import draggable from 'vuedraggable';
 import components from '@/views/visual-editor/components/Packages/index.js'
@@ -16,22 +15,45 @@ const list = computed({
 })
 
 import useCurrent from '../../useHooks/useCurrent.js';
-const {currentUid,setCurrentUid} = useCurrent()
 
+const {currentUid, setCurrentUid} = useCurrent()
+const menuItems = [
+  {label: '复制', disabled: false, type: 'copy'},
+  {label: '删除', disabled: false, type: 'delete'},
+];
+
+const cantCopyList = ['NavBar'];
+const cantDeleteList = [ ];
+
+const getMenuItems = (element) => {
+  return menuItems.map(item => {
+    return {
+      ...item,
+      disabled:cantCopyList.includes(element.name)&&item.type==='copy' || cantDeleteList.includes(element.name)&&item.type==='delete',
+      onClick: () => {
+        console.log(element, item.label,list)
+       item.type==='copy'? pStore.updateList([...list.value,{
+         ...element,
+         uid:''
+       }]) :pStore.updateList(list.value.filter(e=>e.uid!==element.uid))
+      }
+    }
+  })
+}
 </script>
 
 
 <template>
   <el-scrollbar height="667" class="phone_container">
-
     <draggable group="page" v-model="list"
                item-key="uid" style="min-height: 667px">
-
       <template #item="{ element }">
         <div class="list_group_item" :class="{
           list_group_item_current: currentUid===element.uid
-        }" @click="setCurrentUid(element.uid)">
-          <component :is="components[element.name]" :key="element.uid"></component>
+        }" @click="setCurrentUid(element.uid)" v-contextmenu="{menuItems:getMenuItems(element)}"
+          :style="element.styles"
+        >
+          <component :is="components[element.name]" :key="element.uid" v-bind="element.attrs" v-on="element.events"></component>
         </div>
       </template>
     </draggable>
@@ -53,18 +75,31 @@ const {currentUid,setCurrentUid} = useCurrent()
 
   .list_group_item {
     position: relative;
-    &.list_group_item_current{
+    &:hover{
+      &:before{
+        position: absolute;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border: 2px solid #FF0000;
+        z-index: 999999999999
+      }
+    }
+    //transform: scale(1);
+    &.list_group_item_current {
 
-      &:after{
+      &:after {
         content: '';
         position: absolute;
         box-sizing: border-box;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        bottom: 0;
+        right: 0;
         border: 2px solid #FF0000;
-        z-index:999999999999
+        z-index: 999999999999
 
       }
     }
