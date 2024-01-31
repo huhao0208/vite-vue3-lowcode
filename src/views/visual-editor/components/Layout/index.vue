@@ -48,7 +48,9 @@ const buttonIcon = computed(() => {
   height: 100vh;
   background-color: #f5f5f5;
   overflow: hidden;
-
+  .el-header{
+    height: var(--header-height);
+  }
 }
 
 .flex_row_center {
@@ -59,19 +61,23 @@ const buttonIcon = computed(() => {
   padding: 0;
   width: 100%;
   overflow: hidden;
+  height: calc(100vh - var(--header-height));
   .page_edit_con{
     flex: 1;
+    flex-shrink: 0;
     width: 100%;
+    padding-top: 0;
     padding-left: calc(50% - 487.5px);
   }
   .right_attrs {
     height: 100%;
     background-color: #fff;
     position: relative;
-    width: 0;
+    width: 600px;
     transition: all .3s;
+    transform: translateX(100%);
     &.right_attrs_open {
-      width: 600px;
+      transform: translateX(0%);
     }
 
     .open_icon {
@@ -88,4 +94,9 @@ const buttonIcon = computed(() => {
   }
 }
 
+</style>
+<style>
+.layout{
+  --header-height:60px
+}
 </style>

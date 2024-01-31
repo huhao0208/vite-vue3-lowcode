@@ -3,8 +3,9 @@
 </script>
 
 <template>
-  <van-button >按钮</van-button>
-
+<div>
+  <slot></slot>
+</div>
 </template>
 
 <style scoped lang="scss">

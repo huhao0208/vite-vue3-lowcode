@@ -1,14 +1,24 @@
 <script setup>
+import {values} from "vuedraggable/dist/vuedraggable.common.js";
 
-import useCurrent from "@/views/visual-editor/useHooks/useCurrent.js";
-import {getAttrsConfig} from "@/views/visual-editor/components/Packages/index.js";
-const {currentDetail,attrsConfig} = useCurrent()
+const pStore = useCustomPage();
+// import useCurrent from "ve/hooks/useCurrent.js";
+import {settingComponents} from 've/components/Packages'
+import useModel from "ve/hooks/useModel.js"
+
+console.log(settingComponents, 'settingComponents')
+
+const detail = useModel(() => pStore.currentDetail, values => {
+  pStore.updateCurrentDetail(val)
+})
+
+console.log(detail, 'detaildetaildetail')
 </script>
 
 <template>
-{{attrsConfig}}
- 1111
-  {{currentDetail}}
+  <!--{{detail}}-->
+  <component v-model:attrs="detail.value.attrs" v-model:styles="detail.value.styles" v-if="detail.value?.name" :is="settingComponents[detail.value.name]?.component
+"></component>
 </template>
 
 <style scoped lang="scss">

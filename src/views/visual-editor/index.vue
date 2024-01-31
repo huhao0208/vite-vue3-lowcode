@@ -1,6 +1,5 @@
 <script setup>
-const route = useRoute()
-const data = ref(1)
+
 </script>
 
 <template>

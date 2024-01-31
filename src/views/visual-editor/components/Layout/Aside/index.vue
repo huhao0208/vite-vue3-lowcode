@@ -1,21 +1,20 @@
 <script setup>
 
 import draggable from 'vuedraggable'
-import components from '@/views/visual-editor/components/Packages/index.js'
-import useList from "./useList.js";
-const {packages} = useList();
+import {packageModules} from "ve/components/Packages"
 
+console.log(packageModules)
 </script>
 <template>
   <el-tabs tab-position="left" class="aside_tabs">
-    <el-tab-pane v-for="tab in packages" :key="tab.type" :label="tab.label" lazy>
+    <el-tab-pane v-for="(tab,type) in packageModules" :key="type" :label="tab.label" lazy>
       <el-scrollbar height="calc(100vh - 80px)">
-        <draggable item-key="id" :list="tab.components" :group="{ name: 'page', pull: 'clone', put: false }">
+        <draggable item-key="id" :list="Object.values(tab.components)" :group="{ name: 'page', pull: 'clone', put: false }">
 
           <template #item="{ element }">
             <div class="child_item">
               <div class="label">{{ element.label }}</div>
-              <component  :is="components[element.name]" :key="`${tab.type}/${element.name}`" style="position: relative;min-width: 50%"/>
+              <component  :is="element.component" :key="`${type}/${element.name}`" style="position: relative;min-width: 50%"/>
             </div>
           </template>
         </draggable>

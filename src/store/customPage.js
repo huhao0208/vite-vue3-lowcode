@@ -6,19 +6,21 @@ export const useCustomPage = defineStore('customPage', {
             {
                 key: 'customPage', // 自定义名称
                 storage: localStorage, // 保存位置，默认保存在sessionStorage
-               // paths: ['bookId', 'chapterId', 'isEyePrt', 'fontSize'], // 指定要持久化的数据，默认所有 state 都会进行缓存，你可以通过 paths 指定要持久化的字段，其他的则不会进行持久化。
+                 paths: ['list'], // 指定要持久化的数据，默认所有 state 都会进行缓存，你可以通过 paths 指定要持久化的字段，其他的则不会进行持久化。
             },
         ],
     },
     state: () => ({
         currentUid: '',
-        currentDetail: null,
         list:[ ]
     }),
     getters: {
-        doubleCount(state) {
-            return this.counter * 2
+        currentIndex(state) {
+            return state.list.findIndex(item => item.uid === state.currentUid)
         },
+        currentDetail: state => {
+            return state.list[state.currentIndex]
+        }
     },
     actions: {
         updateList(e){
@@ -44,10 +46,10 @@ export const useCustomPage = defineStore('customPage', {
         },
         setCurrent(uid) {
            this.currentUid = uid;
-           this.currentDetail = this.list.find(item => item.uid === uid)
         },
-        decrement() {
-            this.counter--
-        },
+        updateCurrentDetail(detail) {
+            this.list[this.currentIndex] = detail
+        }
+
     },
 })

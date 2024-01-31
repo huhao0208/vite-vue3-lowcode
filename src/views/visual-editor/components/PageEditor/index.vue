@@ -1,6 +1,8 @@
 <script setup>
 import draggable from 'vuedraggable';
-import components from '@/views/visual-editor/components/Packages/index.js'
+import {components} from 've/components/Packages'
+
+console.log(components,'components')
 
 const pStore = useCustomPage();
 
@@ -10,11 +12,16 @@ const list = computed({
     return pStore.list
   },
   set(newValue) {
-    pStore.updateList(newValue)
+    const list = newValue.map(item => {
+    delete item.component
+      delete item.settingComponent
+      return item
+    })
+    pStore.updateList(list)
   }
 })
 
-import useCurrent from '../../useHooks/useCurrent.js';
+import useCurrent from '../../hooks/useCurrent.js';
 
 const {currentUid, setCurrentUid} = useCurrent()
 const menuItems = [
@@ -53,7 +60,10 @@ const getMenuItems = (element) => {
         }" @click="setCurrentUid(element.uid)" v-contextmenu="{menuItems:getMenuItems(element)}"
           :style="element.styles"
         >
-          <component :is="components[element.name]" :key="element.uid" v-bind="element.attrs" v-on="element.events"></component>
+          <component :is="components[element.name]?.component" :key="element.uid" v-bind="{
+            ...element.attrs,
+            style: element.styles
+          }" v-on="element.events"></component>
         </div>
       </template>
     </draggable>
