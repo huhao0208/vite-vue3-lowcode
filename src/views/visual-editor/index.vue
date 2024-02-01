@@ -5,7 +5,7 @@
 <template>
   <Layout>
     <template v-slot:main>
-      <PageEditor></PageEditor>
+      <ContentEditor></ContentEditor>
     </template>
     <template v-slot:attrs>
       <AttrsEditor></AttrsEditor>

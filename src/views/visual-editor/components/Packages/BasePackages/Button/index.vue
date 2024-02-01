@@ -9,18 +9,19 @@ const props = defineProps({
     type: Object,
     default: () => {
       return {
-        onClick: () => {
-          console.log('click')
-        }
+
       }
     }
   }
 })
-
-
+const emit = defineEmits([])
+const clickFun = (e) => {
+  //console.log(props.events.onClick,'events')
+      // eval(props.events.onClick)
+}
 </script>
 <template>
-  <van-button v-bind="props" v-on="props.events">{{ props.text }}</van-button>
+  <van-button v-bind="props" @click="clickFun">{{ props.text }}</van-button>
 </template>
 
 <style scoped lang="scss">

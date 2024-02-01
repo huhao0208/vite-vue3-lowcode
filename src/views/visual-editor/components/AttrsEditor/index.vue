@@ -6,18 +6,14 @@ const pStore = useCustomPage();
 import {settingComponents} from 've/components/Packages'
 import useModel from "ve/hooks/useModel.js"
 
-console.log(settingComponents, 'settingComponents')
+ const detail = useModel(()=>pStore.currentDetail,val=>pStore.updateCurrentDetail(val))
 
-const detail = useModel(() => pStore.currentDetail, values => {
-  pStore.updateCurrentDetail(val)
-})
 
-console.log(detail, 'detaildetaildetail')
+
 </script>
 
 <template>
-  <!--{{detail}}-->
-  <component v-model:attrs="detail.value.attrs" v-model:styles="detail.value.styles" v-if="detail.value?.name" :is="settingComponents[detail.value.name]?.component
+  <component v-model="detail"  v-if="detail?.name" :is="settingComponents[detail.name]?.component
 "></component>
 </template>
 

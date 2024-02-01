@@ -1,21 +1,16 @@
-import { computed, defineEmits } from 'vue'
-export  default function (getter,emitter){
-    const state = ref(getter())
+import {computed} from 'vue'
 
-    watch(getter, (val) => {
-        if (val!==state.value){
-            state.value = val
+export default function createComputed(getter, setter) {
+    const result = computed({
+        get() {
+            return getter()
+        },
+        set(val) {
+           nextTick(() => {
+               setter(val)
+           })
         }
     })
 
-
-    return {
-        get value(){
-            return state.value
-        },
-        set value(value){
-            state.value = value
-            emitter(value)
-        },
-    }
+    return result
 }

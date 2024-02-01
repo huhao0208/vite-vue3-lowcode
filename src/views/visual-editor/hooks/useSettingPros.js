@@ -9,24 +9,6 @@ export default function useSettingPros(){
         props.value = useAttrs();
     })
 
-    // const props = defineProps({
-    //     attrs: {
-    //         type: Object,
-    //         default: () => ({}),
-    //     },
-    //     styles: {
-    //         type: Object,
-    //         default: () => ({}),
-    //     },
-    //     events: {
-    //         type: Object,
-    //         default: () => ({}),
-    //     },
-    // });
-
-
-    console.log(props,'propspropsprops')
-
     const emit = defineEmits(['update:attrs', 'update:styles', 'update:events']);
 
     const computedAttrs = useModel(() => props.value.attrs, (val) => emit('update:attrs', val));

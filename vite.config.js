@@ -8,6 +8,8 @@ import { VantResolver } from '@vant/auto-import-resolver';
 
 
 export default defineConfig({
+
+    base:'./',
     plugins: [
         vue(),
         AutoImport({
