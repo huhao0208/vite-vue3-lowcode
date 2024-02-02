@@ -49,38 +49,64 @@ const getMenuItems = (element) => {
 }
 
 const pageStyles = toRef(pStore.pageConfig)
+import {useDraggable} from '@vueuse/core'
+// const contentEditor = ref(null)
+// const { x, y, style } = useDraggable(contentEditor, {
+//   initialValue: { x: 0, y: 0 },
+// })
 </script>
 
 
 <template>
-  <el-scrollbar height="667" class="phone_container" :style="{
+  <div class="content_editor" ref="contentEditor">
+    <el-scrollbar height="667" class="phone_container" :style="{
     ...pageStyles,
     backgroundImage:`url(${pageStyles.backgroundImage})`,
 
   }" :class="{
     'phone_container_current': currentUid
   }">
-    <draggable group="page" v-model="list"
-               item-key="uid" style="min-height: 667px">
-      <template #item="{ element }">
-        <div class="list_group_item" :class="{
+      <draggable group="page" v-model="list"
+                 item-key="uid" style="min-height: 667px">
+        <template #item="{ element }">
+          <div class="list_group_item" :class="{
           list_group_item_current: currentUid===element.uid
         }" @click="setCurrentUid(element.uid)" v-contextmenu="{menuItems:getMenuItems(element)}"
-             :style="element.outStyles"
-        >
-          <div class="list_group_item_inner">
-            <component :is="components[element.name]?.component" :key="element.uid"
+               :style="{
+                        display: element.styles.display,
+                        width: element.styles.width,
+                        height: element.styles.height,
+                        left: element.styles.left,
+                        top: element.styles.top,
+                        background: element.styles.background,
+                        border: element.styles.border,
+                        borderRadius: element.styles.borderRadius,
+                        boxShadow: element.styles.boxShadow,
+                        transform: element.styles.transform,
+                        transformOrigin: element.styles.transformOrigin,
+                        zIndex: element.styles.zIndex,
+               }"
+          >
+            <component :is="components[element.name]" :key="element.uid"
                        :events="element.events"
                        style="pointer-events: none"
-                       v-bind="{ ...element.attrs, style: element.styles }"></component>
+                       v-bind="{ ...element.attrs, style: {
+                         ...element.styles,
+                         display:'block',
+
+                       } }"></component>
           </div>
-        </div>
-      </template>
-    </draggable>
-  </el-scrollbar>
+        </template>
+      </draggable>
+    </el-scrollbar>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.content_editor {
+
+}
+
 .phone_container {
   transform: scale(1);
   width: 375px;
@@ -113,6 +139,7 @@ const pageStyles = toRef(pStore.pageConfig)
         border-image: repeating-linear-gradient(45deg, yellow 0, red 2px, green 4px) 2; /* 设置渐变图片作为边框，切片和宽度都为 10px，角度为 45 度，颜色停止点为 10px 和 20px */
       }
     }
+
     &:hover:before {
       content: '';
       position: absolute;
@@ -124,7 +151,6 @@ const pageStyles = toRef(pStore.pageConfig)
       z-index: 9999;
 
     }
-
 
 
   }

@@ -53,7 +53,7 @@ Object.entries(modulesFiles).forEach(([path, component]) => {
     if (lastName.toLowerCase() === 'index') {
         componentsObj[componentName] = {
             ...componentsObj[componentName],
-            component: componentTarget
+            ...componentTarget
         }
         const {components = {}} = packageModulesObj[packageType] || {}
         components[componentName] = {

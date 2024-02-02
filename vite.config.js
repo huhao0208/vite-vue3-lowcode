@@ -5,6 +5,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import { VantResolver } from '@vant/auto-import-resolver';
+import { resolve } from 'path'
 
 
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
     base:'./',
     plugins: [
         vue(),
+
         AutoImport({
             include: [
                 /\.[tj]sx?$/,
@@ -47,6 +49,7 @@ export default defineConfig({
         alias: {
             '@': path.resolve(__dirname, 'src'),
             '@/': path.resolve(__dirname, 'src'),
+            "@pre": path.resolve(__dirname, 'preview'),
             'assets': path.resolve(__dirname, 'src/assets'),
             'views': path.resolve(__dirname, 'src/views'),
             've': path.resolve(__dirname, 'src/views/visual-editor'),
@@ -56,5 +59,13 @@ export default defineConfig({
             'store': path.resolve(__dirname, 'src/store'),
             'router': path.resolve(__dirname, 'src/router'),
         }
-    }
+    },
+    build: {
+        rollupOptions: {
+            input: {
+                main: resolve(__dirname, 'index.html'),
+                nested: resolve(__dirname, 'preview/index.html'),
+            },
+        },
+    },
 })

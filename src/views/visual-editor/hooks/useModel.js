@@ -1,16 +1,12 @@
 import {computed} from 'vue'
 
 export default function createComputed(getter, setter) {
-    const result = computed({
+    return computed({
         get() {
             return getter()
         },
         set(val) {
-           nextTick(() => {
-               setter(val)
-           })
+            setter(val)
         }
     })
-
-    return result
 }

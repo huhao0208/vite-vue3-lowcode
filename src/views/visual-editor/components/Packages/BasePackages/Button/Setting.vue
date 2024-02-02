@@ -1,6 +1,6 @@
 <script setup>
 
-import useSettingPros from "ve/hooks/useSettingPros.js";
+ 
 import SettingLayout from "ve/components/SettingLayout.vue";
 import {defineEmits} from "vue";
 

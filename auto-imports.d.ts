@@ -42,11 +42,33 @@ declare global {
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
+  const is: typeof import('./src/utils/is.js')['is']
+  const isArray: typeof import('./src/utils/is.js')['isArray']
+  const isBoolean: typeof import('./src/utils/is.js')['isBoolean']
+  const isClient: typeof import('./src/utils/is.js')['isClient']
+  const isDate: typeof import('./src/utils/is.js')['isDate']
+  const isDef: typeof import('./src/utils/is.js')['isDef']
   const isDefined: typeof import('@vueuse/core')['isDefined']
+  const isElement: typeof import('./src/utils/is.js')['isElement']
+  const isEmpty: typeof import('./src/utils/is.js')['isEmpty']
+  const isFunction: typeof import('./src/utils/is.js')['isFunction']
+  const isMap: typeof import('./src/utils/is.js')['isMap']
+  const isNull: typeof import('./src/utils/is.js')['isNull']
+  const isNullAndUnDef: typeof import('./src/utils/is.js')['isNullAndUnDef']
+  const isNullOrUnDef: typeof import('./src/utils/is.js')['isNullOrUnDef']
+  const isNumber: typeof import('./src/utils/is.js')['isNumber']
+  const isObject: typeof import('./src/utils/is.js')['isObject']
+  const isPromise: typeof import('./src/utils/is.js')['isPromise']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isRegExp: typeof import('./src/utils/is.js')['isRegExp']
+  const isServer: typeof import('./src/utils/is.js')['isServer']
+  const isString: typeof import('./src/utils/is.js')['isString']
+  const isUnDef: typeof import('./src/utils/is.js')['isUnDef']
+  const isUrl: typeof import('./src/utils/is.js')['isUrl']
+  const isWindow: typeof import('./src/utils/is.js')['isWindow']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const mapActions: typeof import('pinia')['mapActions']
   const mapGetters: typeof import('pinia')['mapGetters']
@@ -349,11 +371,33 @@ declare module 'vue' {
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
+    readonly is: UnwrapRef<typeof import('./src/utils/is.js')['is']>
+    readonly isArray: UnwrapRef<typeof import('./src/utils/is.js')['isArray']>
+    readonly isBoolean: UnwrapRef<typeof import('./src/utils/is.js')['isBoolean']>
+    readonly isClient: UnwrapRef<typeof import('./src/utils/is.js')['isClient']>
+    readonly isDate: UnwrapRef<typeof import('./src/utils/is.js')['isDate']>
+    readonly isDef: UnwrapRef<typeof import('./src/utils/is.js')['isDef']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
+    readonly isElement: UnwrapRef<typeof import('./src/utils/is.js')['isElement']>
+    readonly isEmpty: UnwrapRef<typeof import('./src/utils/is.js')['isEmpty']>
+    readonly isFunction: UnwrapRef<typeof import('./src/utils/is.js')['isFunction']>
+    readonly isMap: UnwrapRef<typeof import('./src/utils/is.js')['isMap']>
+    readonly isNull: UnwrapRef<typeof import('./src/utils/is.js')['isNull']>
+    readonly isNullAndUnDef: UnwrapRef<typeof import('./src/utils/is.js')['isNullAndUnDef']>
+    readonly isNullOrUnDef: UnwrapRef<typeof import('./src/utils/is.js')['isNullOrUnDef']>
+    readonly isNumber: UnwrapRef<typeof import('./src/utils/is.js')['isNumber']>
+    readonly isObject: UnwrapRef<typeof import('./src/utils/is.js')['isObject']>
+    readonly isPromise: UnwrapRef<typeof import('./src/utils/is.js')['isPromise']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isRegExp: UnwrapRef<typeof import('./src/utils/is.js')['isRegExp']>
+    readonly isServer: UnwrapRef<typeof import('./src/utils/is.js')['isServer']>
+    readonly isString: UnwrapRef<typeof import('./src/utils/is.js')['isString']>
+    readonly isUnDef: UnwrapRef<typeof import('./src/utils/is.js')['isUnDef']>
+    readonly isUrl: UnwrapRef<typeof import('./src/utils/is.js')['isUrl']>
+    readonly isWindow: UnwrapRef<typeof import('./src/utils/is.js')['isWindow']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -647,11 +691,33 @@ declare module '@vue/runtime-core' {
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
+    readonly is: UnwrapRef<typeof import('./src/utils/is.js')['is']>
+    readonly isArray: UnwrapRef<typeof import('./src/utils/is.js')['isArray']>
+    readonly isBoolean: UnwrapRef<typeof import('./src/utils/is.js')['isBoolean']>
+    readonly isClient: UnwrapRef<typeof import('./src/utils/is.js')['isClient']>
+    readonly isDate: UnwrapRef<typeof import('./src/utils/is.js')['isDate']>
+    readonly isDef: UnwrapRef<typeof import('./src/utils/is.js')['isDef']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
+    readonly isElement: UnwrapRef<typeof import('./src/utils/is.js')['isElement']>
+    readonly isEmpty: UnwrapRef<typeof import('./src/utils/is.js')['isEmpty']>
+    readonly isFunction: UnwrapRef<typeof import('./src/utils/is.js')['isFunction']>
+    readonly isMap: UnwrapRef<typeof import('./src/utils/is.js')['isMap']>
+    readonly isNull: UnwrapRef<typeof import('./src/utils/is.js')['isNull']>
+    readonly isNullAndUnDef: UnwrapRef<typeof import('./src/utils/is.js')['isNullAndUnDef']>
+    readonly isNullOrUnDef: UnwrapRef<typeof import('./src/utils/is.js')['isNullOrUnDef']>
+    readonly isNumber: UnwrapRef<typeof import('./src/utils/is.js')['isNumber']>
+    readonly isObject: UnwrapRef<typeof import('./src/utils/is.js')['isObject']>
+    readonly isPromise: UnwrapRef<typeof import('./src/utils/is.js')['isPromise']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isRegExp: UnwrapRef<typeof import('./src/utils/is.js')['isRegExp']>
+    readonly isServer: UnwrapRef<typeof import('./src/utils/is.js')['isServer']>
+    readonly isString: UnwrapRef<typeof import('./src/utils/is.js')['isString']>
+    readonly isUnDef: UnwrapRef<typeof import('./src/utils/is.js')['isUnDef']>
+    readonly isUrl: UnwrapRef<typeof import('./src/utils/is.js')['isUrl']>
+    readonly isWindow: UnwrapRef<typeof import('./src/utils/is.js')['isWindow']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
