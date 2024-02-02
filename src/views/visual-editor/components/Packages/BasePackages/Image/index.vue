@@ -8,6 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
+
   <van-image
       v-bind="props"
   />

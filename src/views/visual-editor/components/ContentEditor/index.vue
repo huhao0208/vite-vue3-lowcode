@@ -86,7 +86,7 @@ const pageStyles = toRef(pStore.pageConfig)
   width: 375px;
   min-height: 667px;
   background: #fff;
-  border-radius: 10px;
+  //border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, .1);
   overflow-x: hidden;
 
@@ -98,6 +98,7 @@ const pageStyles = toRef(pStore.pageConfig)
     cursor: pointer;
 
     &.list_group_item_current {
+
       &:after {
         content: '';
         position: absolute;
@@ -107,7 +108,9 @@ const pageStyles = toRef(pStore.pageConfig)
         bottom: 0;
         right: 0;
         background: transparent;
-        border: 2px dashed #0048ff;
+        //border: 2px dashed #0048ff;
+        border: 1px solid transparent; /* 设置透明的边框 */
+        border-image: repeating-linear-gradient(45deg, yellow 0, red 2px, green 4px) 2; /* 设置渐变图片作为边框，切片和宽度都为 10px，角度为 45 度，颜色停止点为 10px 和 20px */
       }
     }
     &:hover:before {
