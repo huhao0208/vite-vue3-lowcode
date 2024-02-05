@@ -1,26 +1,11 @@
 <script setup>
 import draggable from 'vuedraggable';
 import {components} from 've/components/Packages'
+import useModel from "ve/hooks/useModel.js"
 
 console.log(components, 'components')
-
 const pStore = useCustomPage();
-
-// 使用 computed 属性来代替手动的 list，确保在 Vuex store 中的 list 更新时也会更新
-const list = computed({
-  get() {
-    return pStore.list
-  },
-  set(newValue) {
-    const list = newValue.map(item => {
-      delete item.component
-      delete item.settingComponent
-      return item
-    })
-    pStore.updateList(list)
-  }
-})
-
+const list = useModel(() => pStore.list, (newValue) => pStore.updateList(newValue))
 import useCurrent from '../../hooks/useCurrent.js';
 
 const {currentUid, setCurrentUid} = useCurrent()
@@ -28,10 +13,8 @@ const menuItems = [
   {label: '复制', disabled: false, type: 'copy'},
   {label: '删除', disabled: false, type: 'delete'},
 ];
-
 const cantCopyList = ['NavBar'];
 const cantDeleteList = [];
-
 const getMenuItems = (element) => {
   return menuItems.map(item => {
     return {
@@ -40,7 +23,7 @@ const getMenuItems = (element) => {
       onClick: () => {
         console.log(element, item.label, list)
         item.type === 'copy' ? pStore.updateList([...list.value, {
-          ...element,
+          ...JSON.parse(JSON.stringify(element)),
           uid: ''
         }]) : pStore.updateList(list.value.filter(e => e.uid !== element.uid))
       }
@@ -49,11 +32,9 @@ const getMenuItems = (element) => {
 }
 
 const pageStyles = toRef(pStore.pageConfig)
-import {useDraggable} from '@vueuse/core'
-// const contentEditor = ref(null)
-// const { x, y, style } = useDraggable(contentEditor, {
-//   initialValue: { x: 0, y: 0 },
-// })
+
+import styleFmt from "utils/styleFmt.js";
+
 </script>
 
 
@@ -72,29 +53,12 @@ import {useDraggable} from '@vueuse/core'
           <div class="list_group_item" :class="{
           list_group_item_current: currentUid===element.uid
         }" @click="setCurrentUid(element.uid)" v-contextmenu="{menuItems:getMenuItems(element)}"
-               :style="{
-                        display: element.styles.display,
-                        width: element.styles.width,
-                        height: element.styles.height,
-                        left: element.styles.left,
-                        top: element.styles.top,
-                        background: element.styles.background,
-                        border: element.styles.border,
-                        borderRadius: element.styles.borderRadius,
-                        boxShadow: element.styles.boxShadow,
-                        transform: element.styles.transform,
-                        transformOrigin: element.styles.transformOrigin,
-                        zIndex: element.styles.zIndex,
-               }"
+               :style="styleFmt( element.outStyles,{})"
           >
             <component :is="components[element.name]" :key="element.uid"
                        :events="element.events"
                        style="pointer-events: none"
-                       v-bind="{ ...element.attrs, style: {
-                         ...element.styles,
-                         display:'block',
-
-                       } }"></component>
+                       v-bind="{ ...element.attrs, style:styleFmt( element.styles,{}) }"></component>
           </div>
         </template>
       </draggable>
@@ -134,8 +98,9 @@ import {useDraggable} from '@vueuse/core'
         bottom: 0;
         right: 0;
         background: transparent;
+        z-index: 99999999999999;
         //border: 2px dashed #0048ff;
-        border: 1px solid transparent; /* 设置透明的边框 */
+        border: 2px solid transparent; /* 设置透明的边框 */
         border-image: repeating-linear-gradient(45deg, yellow 0, red 2px, green 4px) 2; /* 设置渐变图片作为边框，切片和宽度都为 10px，角度为 45 度，颜色停止点为 10px 和 20px */
       }
     }
@@ -148,7 +113,7 @@ import {useDraggable} from '@vueuse/core'
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, .1);
-      z-index: 9999;
+      z-index: 9999999999999;
 
     }
 

@@ -1,11 +1,28 @@
 <script setup>
 import {defineEmits} from "vue";
+import useModel from "ve/hooks/useModel.js";
 
 defineOptions({
   name: 'Image',
   label: '图片',
   type: 'BasePackages',
-  order: 2
+  order: 2,
+  config: { // 默认配置
+    attrs: {
+      src:'https://img01.yzcdn.cn/vant/cat.jpeg',
+      fit:'fill',
+    },
+    styles: {
+
+    },
+    outStyles: {
+      width: 375,
+      height: 200,
+    },
+    events: {
+      click: ''
+    }
+  }
 })
 const props = defineProps({
   modelValue: {
@@ -14,20 +31,8 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['update:modelValue']);
-const data = computed({
-  get() {
-    const {attrs={},events={},styles={},...arg} = props.modelValue||{}
-    return {
-      attrs,
-      events,
-      styles,
-      ...arg
-    }
-  },
-  set(value) {
-    emit('update:modeValue', value)
-  }
-})
+const data = useModel(()=>props.modelValue || {},e=>emit('update:modelValue',e))
+
 
 // contain	保持宽高缩放图片，使图片的长边能完全显示出来
 // cover	保持宽高缩放图片，使图片的短边能完全显示出来，裁剪长边
@@ -38,8 +43,7 @@ const fitObj = {
   contain: '保持宽高缩放图片，使图片的长边能完全显示出来',
   cover: '保持宽高缩放图片，使图片的短边能完全显示出来，裁剪长边',
   fill: '拉伸图片，使图片填满元素',
-  none: '保持图片原有尺寸',
-  scaleDown: '取 none 或 contain 中较小的一个'
+  none: '保持图片原有尺寸'
 }
 </script>
 

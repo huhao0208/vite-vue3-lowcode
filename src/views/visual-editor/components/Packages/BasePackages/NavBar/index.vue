@@ -1,36 +1,40 @@
 <script setup>
-defineProps({
+const props = defineProps({
   title: {
     type: String,
-    default: '标题'
+    default: ''
   },
   placeholder: {
     type: Boolean,
-    default: true
+    default: false
   },
   fixed: {
     type: Boolean,
-    default: true
+    default: false
   },
   leftText: {
     type: String,
-    default: '返回'
+    default: ''
   },
   rightText: {
     type: String,
-    default: '搜索'
+    default: ''
   },
   leftIcon: {
     type: String,
-    default: 'arrow-left'
+    default: ''
   }
 })
-
+const onClickLeft = () => {
+  console.log('返回')
+}
+const onClickRight = () => {
+  console.log('搜索')
+}
 </script>
 
 <template>
-  <div>
-    <van-nav-bar
+  <van-nav-bar
       :title="title"
       :placeholder="placeholder"
       :fixed="fixed"
@@ -39,8 +43,7 @@ defineProps({
       :left-icon="leftIcon"
       @click-left="onClickLeft"
       @click-right="onClickRight"
-    />
-  </div>
+  />
 
 </template>
 

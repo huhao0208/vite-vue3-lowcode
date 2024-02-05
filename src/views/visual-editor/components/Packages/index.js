@@ -27,12 +27,7 @@ Object.entries(modulesFiles).forEach(([path, component]) => {
             ...componentsObj[componentName],
             label, name, order
         }
-        settingComponentsObj[componentName] = {
-            label,
-            name,
-            order,
-            component: componentTarget
-        }
+        settingComponentsObj[componentName] = componentTarget
         const {components = {}} = packageModulesObj[packageType] || {}
 
         components[componentName] = {

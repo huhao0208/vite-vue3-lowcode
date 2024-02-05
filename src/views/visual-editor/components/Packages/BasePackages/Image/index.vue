@@ -2,7 +2,7 @@
 const props = defineProps({
   src: {
     type: String,
-    default: 'https://img01.yzcdn.cn/vant/cat.jpeg',
+    default: '',
   }
 })
 </script>

@@ -1,27 +1,36 @@
 <script setup>
 import {components} from 've/components/Packages'
+import styleFmt, {processValue} from "@/utils/styleFmt.js";
 
-console.log(components,'components')
+console.log(components, 'components')
 const pageJson = JSON.parse(localStorage.getItem("customPage"))
-console.log(pageJson)
-const {pageConfig,list} = pageJson
+console.log(pageJson, 'pageJson')
+const {pageConfig, list} = pageJson
 
 
 </script>
 
 <template>
-  <div :style="pageConfig" class="page_container" style="width: 375px">
-<!--    {{list}}-->
+  <div :style="pageConfig" class="page_container">
 
-    <component v-for="item in list" :key="item.uid" :is="components[item.name]" v-bind="{
+
+    <div v-for="item in list" :key="item.uid" :style="styleFmt(item.outStyles,{
+          unit:'rem',
+          baseSize:37.5
+   })">
+      <component :is="components[item.name]" v-bind="{
         ...item.attrs,
-        style:item.styles
+        style: styleFmt(item.styles,{
+          unit:'vw',
+          baseSize:37.5
+        })
       }"></component>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.page_container{
+.page_container {
   min-height: 100vh;
 }
 </style>

@@ -1,15 +1,15 @@
 <script setup>
 defineProps({
-  txt:{
-    type:String,
-    default:'文本内容'
+  txt: {
+    type: String,
+    default: ''
   }
 })
 </script>
 
 <template>
-  <div>
-    {{ txt }}
+  <div v-html="txt" >
+
   </div>
 </template>
 

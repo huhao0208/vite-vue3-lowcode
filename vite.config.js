@@ -6,14 +6,16 @@ import Components from 'unplugin-vue-components/vite'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import { VantResolver } from '@vant/auto-import-resolver';
 import { resolve } from 'path'
+import viteCompression from 'vite-plugin-compression'
 
 
 export default defineConfig({
-
     base:'./',
     plugins: [
         vue(),
-
+        viteCompression({
+            filter: /.(js|css|html|json|mjs|png|jpg|jpeg|svg)$/i  // 这些文件都要压缩
+        }),
         AutoImport({
             include: [
                 /\.[tj]sx?$/,
@@ -61,11 +63,23 @@ export default defineConfig({
         }
     },
     build: {
+        emptyOutDir: true, //清空输出目录
+        minify: 'esbuild',
+
+        reportCompressedSize:false,//启用/禁用 gzip 压缩大小报告
+        //输出路径
         rollupOptions: {
             input: {
                 main: resolve(__dirname, 'index.html'),
-                nested: resolve(__dirname, 'preview/index.html'),
+                preview: resolve(__dirname, 'preview/index.html'),
+            },
+            output: {
+                chunkFileNames: 'js/[name].[hash].js',
+                assetFileNames: 'assets/[name].[hash][extname]',
             },
         },
+    },
+    esbuild: {
+        drop: ['console', 'debugger'],
     },
 })

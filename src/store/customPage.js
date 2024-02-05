@@ -1,3 +1,5 @@
+import {v4 as uuid} from "uuid";
+import {settingComponents} from 've/components/Packages/index.js'
 export const useCustomPage = defineStore('customPage', {
     // 开启数据缓存
     persist: {
@@ -7,8 +9,8 @@ export const useCustomPage = defineStore('customPage', {
     },
     state: () => ({
         currentUid: '',
-        list:[ ],
-        pageConfig:{
+        list: [],
+        pageConfig: {
             backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
             backgroundImage: '', // 设置元素的背景图像，默认值：none。
             backgroundSize: 'auto', // 设置元素背景图像的大小，默认值：auto。
@@ -26,37 +28,57 @@ export const useCustomPage = defineStore('customPage', {
         },
         currentDetail: state => {
             return state.list[state.currentIndex]
-        }
+        },
+        pageData(state) {
+            return {
+                ...state.pageConfig,
+                list: state.list,
+            }
+        },
     },
     actions: {
-        updateList(e){
-            // 如果有name是NavBar的 则将其放最前面
+        updateList(e) {
 
-            this.list = e.map(item => {
+            this.list = e.map(item=>{
+               const {name,label,styles,outStyles,attrs,events,uid,children}=item
+              //  console.log(settingComponents[name],'settingComponents[name]')
+                const { attrs:defaultAttrs={},events:defaultEvents={},styles:defaultStyles={}, outStyles:defaultOutStyles={} } = settingComponents[name]?.config||{}
                 return {
-                    ...item,
-                    attrs:item.attrs||{},
-                    styles:item.styles||{
-                        opacity:1,
-                        // width: 'auto',
-                        // height: 'auto',
-
+                    name,label,
+                    uid: uid||uuid(),
+                    styles:styles|| {
+                        display:'block',
+                        width:'100%',
+                        height:'100%',
+                        ...defaultStyles
                     },
-                    events:item.events||{},
-                    uid:item.uid||Math.random().toString(36).substr(2, 9),
-                }
-            }).sort((a ,b)=> {
-                if(a.name === 'NavBar'){
-                    return -1
-                }else if(b.name === 'NavBar'){
-                    return 1
-                }else{
-                    return 0
+                    outStyles:outStyles|| {
+                        width:375,
+                        height: 80,
+                        overflow:'hidden',
+                        display:'block',
+                        opacity:1,
+                        boxSizing:"border-box",
+                        ...defaultOutStyles
+                    },
+                    attrs:attrs||{...defaultAttrs},
+                    events:events||{...defaultEvents},
+                    children:  children?.map(cItem=>{
+                        return {
+                            ...cItem,
+                            uid: cItem.uid|| `children_${uuid()}`,
+                            styles: cItem.styles||{...defaultStyles},
+                            outStyles: cItem.outStyles||{...defaultOutStyles},
+                            attrs: cItem.attrs||{...defaultAttrs},
+                            events: cItem.events||{...defaultEvents},
+                        }
+                    })
                 }
             })
         },
+
         setCurrent(uid) {
-           this.currentUid = uid;
+            this.currentUid = uid;
         },
         updateCurrentDetail(detail) {
             this.list[this.currentIndex] = detail

@@ -7,7 +7,8 @@ NProgress.configure({showSpinner: false}); // NProgress Configuration
 const routes = [
     {
         path: '/',
-        component: () => import('@/views/visual-editor/index.vue'),
+        redirect: '/visual-editor/route-path'
+        // component: () => import('@/views/visual-editor/index.vue'),
     },
     {
         path: '/visual-editor/:id',

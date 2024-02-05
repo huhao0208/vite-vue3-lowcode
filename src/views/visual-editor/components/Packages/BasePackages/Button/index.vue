@@ -3,7 +3,7 @@
 const props = defineProps({
   text: {
     type: String,
-    default: '按钮',
+    default: '',
   },
   events: {
     type: Object,
