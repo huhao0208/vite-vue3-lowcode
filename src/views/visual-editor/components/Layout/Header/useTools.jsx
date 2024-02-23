@@ -27,17 +27,17 @@ export const useTools = () => {
 
     return [
 
-        {
-            title: '导出JSON',
-            icon: Download,
-            onClick: () => {
-                const { copy } = useClipboard({ source: JSON.stringify(jsonData) });
-
-                copy()
-                    .then(() => ElMessage.success('复制成功'))
-                    .catch((err) => ElMessage.error(`复制失败：${err}`));
-            },
-        },
+        // {
+        //     title: '导出JSON',
+        //     icon: Download,
+        //     onClick: () => {
+        //         const { copy } = useClipboard({ source: JSON.stringify(jsonData) });
+        //
+        //         copy()
+        //             .then(() => ElMessage.success('复制成功'))
+        //             .catch((err) => ElMessage.error(`复制失败：${err}`));
+        //     },
+        // },
         {
             title: '真机预览',
             icon: Cellphone,

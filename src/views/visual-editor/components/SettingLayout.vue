@@ -6,16 +6,16 @@ export default {
 
 <template>
   <el-tabs type="border-card" class="settings">
-    <el-tab-pane label="属性设置">
+    <el-tab-pane label="属性设置" v-if="$slots.attrs">
       <slot name="attrs"></slot>
     </el-tab-pane>
-    <el-tab-pane label="样式设置">
+    <el-tab-pane label="样式设置"  v-if="$slots.styles">
 
       <!--通用样式配置-->
       <CommonStyleSetting/>
       <slot name="styles"></slot>
     </el-tab-pane>
-    <el-tab-pane label="事件配置">
+    <el-tab-pane label="事件配置" v-if="$slots.events">
       <slot name="events"></slot>
     </el-tab-pane>
     <el-tab-pane label="页面设置">

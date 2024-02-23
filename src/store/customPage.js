@@ -1,5 +1,6 @@
 import {v4 as uuid} from "uuid";
-import {settingComponents} from 've/components/Packages/index.js'
+import {components, settingComponents} from 've/components/Packages/index.js'
+
 export const useCustomPage = defineStore('customPage', {
     // 开启数据缓存
     persist: {
@@ -37,42 +38,41 @@ export const useCustomPage = defineStore('customPage', {
         },
     },
     actions: {
-        updateList(e) {
+        updateList(e=[]) {
+            console.log('%c updateList', 'color: #007acc;')
+            this.list = e.map(item => {
+                // console.log(item)
+                const {name, label, styles, outStyles, attrs, events, uid='', children = [], type} = item
 
-            this.list = e.map(item=>{
-               const {name,label,styles,outStyles,attrs,events,uid,children}=item
-              //  console.log(settingComponents[name],'settingComponents[name]')
-                const { attrs:defaultAttrs={},events:defaultEvents={},styles:defaultStyles={}, outStyles:defaultOutStyles={} } = settingComponents[name]?.config||{}
+                const {
+                    attrs: defaultAttrs = {},
+                    events: defaultEvents = {},
+                    styles: defaultStyles = {},
+                    outStyles: defaultOutStyles = {},
+                    children: defaultChildren = []
+                } = settingComponents[name]?.config || {}
+
                 return {
-                    name,label,
-                    uid: uid||uuid(),
-                    styles:styles|| {
-                        display:'block',
-                        width:'100%',
-                        height:'100%',
+                    name, label, type,
+                    uid: uid || uuid(),
+                    styles: styles || {
+                        display: 'block',
+                        width: '100%',
+                        height: '100%',
                         ...defaultStyles
                     },
-                    outStyles:outStyles|| {
-                        width:375,
+                    outStyles: outStyles || {
+                        width: 375,
                         height: 80,
-                        overflow:'hidden',
-                        display:'block',
-                        opacity:1,
-                        boxSizing:"border-box",
+                        overflow: 'hidden',
+                        display: 'block',
+                        opacity: 1,
+                        boxSizing: "border-box",
                         ...defaultOutStyles
                     },
-                    attrs:attrs||{...defaultAttrs},
-                    events:events||{...defaultEvents},
-                    children:  children?.map(cItem=>{
-                        return {
-                            ...cItem,
-                            uid: cItem.uid|| `children_${uuid()}`,
-                            styles: cItem.styles||{...defaultStyles},
-                            outStyles: cItem.outStyles||{...defaultOutStyles},
-                            attrs: cItem.attrs||{...defaultAttrs},
-                            events: cItem.events||{...defaultEvents},
-                        }
-                    })
+                    attrs: attrs || {...defaultAttrs},
+                    events: events || {...defaultEvents},
+
                 }
             })
         },

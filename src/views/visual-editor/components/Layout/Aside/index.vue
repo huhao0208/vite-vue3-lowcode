@@ -16,7 +16,7 @@ console.log(packageModules,settingComponents,'settingComponents')
               <div class="label">{{ element.label }}</div>
               <component  :is="element.component" :key="`${type}/${element.name}`"
                           v-bind="settingComponents[element.name]?.config?.attrs"
-                          style="position: relative;min-width: 50%"/>
+                          style="position: relative;min-width: 100px; min-height: 40px;max-height:80px"/>
             </div>
           </template>
         </draggable>

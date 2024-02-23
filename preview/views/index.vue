@@ -18,7 +18,17 @@ const {pageConfig, list} = pageJson
           unit:'rem',
           baseSize:37.5
    })">
-      <component :is="components[item.name]" v-bind="{
+      <div v-if="item.name==='Hotspot'" v-bind="{
+        ...item.attrs,
+        style: styleFmt(item.styles,{
+          unit:'vw',
+          baseSize:37.5
+        })
+      }">
+
+      </div>
+
+      <component v-else :is="components[item.name]" v-bind="{
         ...item.attrs,
         style: styleFmt(item.styles,{
           unit:'vw',

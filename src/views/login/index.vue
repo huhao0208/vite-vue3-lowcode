@@ -3,9 +3,7 @@
 </script>
 
 <template>
-<div>
-  <slot></slot>
-</div>
+login
 </template>
 
 <style scoped lang="scss">

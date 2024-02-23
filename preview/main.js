@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-
+import pinia from '@/store'
 import 'normalize.css';
 import App from './App.vue';
 
@@ -12,7 +12,7 @@ import 'animate.css';
 
 const app = createApp(App);
 
-
+app.use(pinia)
 //
 // app.config.globalProperties.$$refs = {};
 //

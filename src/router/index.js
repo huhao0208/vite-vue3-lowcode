@@ -2,13 +2,25 @@ import {createRouter, createWebHashHistory} from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // 进度条样式
 
+import {getOperatorAccount} from "api/index.js"
+
 NProgress.configure({showSpinner: false}); // NProgress Configuration
+
 
 const routes = [
     {
         path: '/',
-        redirect: '/visual-editor/route-path'
-        // component: () => import('@/views/visual-editor/index.vue'),
+        redirect: '/page-manager'
+
+    },
+    {
+        path: '/page-manager',
+        name: 'page-manager',
+        meta: {
+            title: '页面管理',
+        },
+        component: () => import('@/views/page-manager/index.vue'),
+
     },
     {
         path: '/visual-editor/:id',
@@ -17,7 +29,19 @@ const routes = [
     // 404
     {
         path: '/404',
+        name: '404',
+        meta: {
+            title: '404',
+        },
         component: () => import('@/views/404.vue'),
+    },
+    {
+        path:'/login',
+        component: () => import('@/views/login/index.vue'),
+        meta: {
+            title: '登录',
+            unAuth: true
+        }
     },
     {
         path: '/:pathMatch(.*)',
@@ -30,10 +54,33 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(() => {
+router.beforeEach(async (to, from) => {
     NProgress.start(); // start progress bar
+    console.log(to)
+    if ( to?.meta?.unAuth) {
+        return true;
+    }
+    // 如果有传递token 则更新token
+    const {token, name} = to.query
+    const appStore = useApp();
+    if (token) {
+        appStore.setToken(atob(token))
+        name && appStore.setUserName(name)
+    }
+    // 获取用户信息
+    if (!appStore.userInfo) {
+        try {
+            const data = await getOperatorAccount({
+                username: appStore.userName
+            })
+            appStore.setUserInfo(data)
+        } catch (e) {
+            console.log(e)
+        }
+    }
     return true;
-});
+})
+;
 
 router.afterEach(() => {
     NProgress.done(); // finish progress bar

@@ -6,8 +6,8 @@ const packageTypeObj = {
         label: '基础组件',
         order: 1
     },
-    "ContainerPackages": {
-        label: '容器组件',
+    "BusinessPackages": {
+        label: '业务组件',
         order: 2
     },
 }
@@ -20,12 +20,14 @@ const packageModulesObj = {}
 Object.entries(modulesFiles).forEach(([path, component]) => {
     const componentTarget = component?.default || component;
 
-    const [packageType, componentName = '', lastName = ''] = path.replace(/\.\/|\.vue$/g, '').split('/')
+    const [packageType, componentName = '', lastFullName = ''] = path.replace(/\.\/|\.vue$/g, '').split('/')
+    const lastName = lastFullName.replace(componentName, '')
     if (lastName.toLowerCase() === 'setting') {
-        const {label, name, order} = componentTarget;
+        const {label, name, order,type} = componentTarget;
+
         componentsObj[componentName] = {
             ...componentsObj[componentName],
-            label, name, order
+            label, name, order,type
         }
         settingComponentsObj[componentName] = componentTarget
         const {components = {}} = packageModulesObj[packageType] || {}
@@ -34,13 +36,14 @@ Object.entries(modulesFiles).forEach(([path, component]) => {
             ...components[componentName],
             label,
             name,
-            order,
+            order,type,
             settingComponent: componentTarget
         }
 
         packageModulesObj[packageType] = {
             ...packageTypeObj[packageType],
-            components
+            components,
+            type
 
         }
     }
@@ -62,7 +65,6 @@ Object.entries(modulesFiles).forEach(([path, component]) => {
     }
 
 });
-
 
 
 export const components = componentsObj

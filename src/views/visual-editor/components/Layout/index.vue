@@ -7,7 +7,9 @@ import {
   Search,
   Star,
 } from '@element-plus/icons-vue'
-const attrsOpen = ref(false)
+
+const pStore = useCustomPage();
+const attrsOpen = ref(true)
 const buttonIcon = computed(() => {
   return !attrsOpen.value ? DArrowLeft : DArrowRight;
 });
@@ -28,7 +30,7 @@ const buttonIcon = computed(() => {
         <div class="page_edit_con">
           <slot name="main"></slot>
         </div>
-        <div class="right_attrs" :class="{'right_attrs_open': attrsOpen}">
+        <div class="right_attrs" :hidden="!pStore.currentUid" :class="{'right_attrs_open': attrsOpen}">
           <el-button :icon="buttonIcon" class="open_icon" link
                      @click="attrsOpen = !attrsOpen">
 
@@ -96,7 +98,5 @@ const buttonIcon = computed(() => {
 
 </style>
 <style>
-.layout{
-  --header-height:60px
-}
+
 </style>

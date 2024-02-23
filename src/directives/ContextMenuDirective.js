@@ -7,8 +7,8 @@ import {h, render, nextTick} from 'vue';
 export default function install(app) {
     app.component('ContextMenu', ContextMenu);
     app.directive('contextmenu', {
-        beforeMount(el, binding, vnode) {
-            // console.log(el, binding, vnode,'el, binding, vnode')
+        mounted(el, binding, vnode) {
+             console.log(el, binding, vnode,'el, binding, vnode')
             let menuElement = document.querySelector('.body_context-menu')
             if (!menuElement) {
                 menuElement = document.createElement('div');

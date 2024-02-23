@@ -1,4 +1,4 @@
-import {computed} from 'vue'
+import {computed,toRaw} from 'vue'
 
 export default function createComputed(getter, setter) {
     return computed({
@@ -6,7 +6,7 @@ export default function createComputed(getter, setter) {
             return getter()
         },
         set(val) {
-            setter(val)
+            setter(toRaw(val))
         }
     })
 }
