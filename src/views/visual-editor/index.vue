@@ -1,4 +1,5 @@
 <script setup>
+const appStore = useApp()
 
 </script>
 

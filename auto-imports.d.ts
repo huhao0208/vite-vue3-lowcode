@@ -6,6 +6,9 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const ElMessage: typeof import('element-plus/es')['ElMessage']
+  const ElMessageBox: typeof import('element-plus/es')['ElMessageBox']
+  const ElType: typeof import('element-plus/es')['ElType']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
@@ -34,6 +37,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
   const deleteThemeEditorClass: typeof import('./src/api/index.js')['deleteThemeEditorClass']
+  const deleteThemeEditorDetail: typeof import('./src/api/index.js')['deleteThemeEditorDetail']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
@@ -74,6 +78,7 @@ declare global {
   const isUrl: typeof import('./src/utils/is.js')['isUrl']
   const isWindow: typeof import('./src/utils/is.js')['isWindow']
   const listThemeEditorClass: typeof import('./src/api/index.js')['listThemeEditorClass']
+  const listThemeEditorDetail: typeof import('./src/api/index.js')['listThemeEditorDetail']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const mapActions: typeof import('pinia')['mapActions']
   const mapGetters: typeof import('pinia')['mapGetters']
@@ -125,6 +130,7 @@ declare global {
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const router: typeof import('./src/router/index.js')['default']
   const saveThemeEditorClass: typeof import('./src/api/index.js')['saveThemeEditorClass']
+  const saveThemeEditorDetail: typeof import('./src/api/index.js')['saveThemeEditorDetail']
   const setActivePinia: typeof import('pinia')['setActivePinia']
   const setMapStoreSuffix: typeof import('pinia')['setMapStoreSuffix']
   const shallowReactive: typeof import('vue')['shallowReactive']
@@ -152,6 +158,9 @@ declare global {
   const unref: typeof import('vue')['unref']
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
+  const updateThemeEditorDetail: typeof import('./src/api/index.js')['updateThemeEditorDetail']
+  const updateThemeEditorDetailContent: typeof import('./src/api/index.js')['updateThemeEditorDetailContent']
+  const upload: typeof import('./src/api/index.js')['upload']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
   const useApp: typeof import('./src/store/app.js')['useApp']
@@ -318,6 +327,7 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
+  const uuid: typeof import('./src/utils/index.js')['uuid']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -347,6 +357,7 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ElMessage: UnwrapRef<typeof import('element-plus/es')['ElMessage']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -375,6 +386,7 @@ declare module 'vue' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly deleteThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['deleteThemeEditorClass']>
+    readonly deleteThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['deleteThemeEditorDetail']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
@@ -415,6 +427,7 @@ declare module 'vue' {
     readonly isUrl: UnwrapRef<typeof import('./src/utils/is.js')['isUrl']>
     readonly isWindow: UnwrapRef<typeof import('./src/utils/is.js')['isWindow']>
     readonly listThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['listThemeEditorClass']>
+    readonly listThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['listThemeEditorDetail']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -466,6 +479,7 @@ declare module 'vue' {
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly router: UnwrapRef<typeof import('./src/router/index.js')['default']>
     readonly saveThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorClass']>
+    readonly saveThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorDetail']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
@@ -493,6 +507,9 @@ declare module 'vue' {
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
+    readonly updateThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['updateThemeEditorDetail']>
+    readonly updateThemeEditorDetailContent: UnwrapRef<typeof import('./src/api/index.js')['updateThemeEditorDetailContent']>
+    readonly upload: UnwrapRef<typeof import('./src/api/index.js')['upload']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
     readonly useApp: UnwrapRef<typeof import('./src/store/app.js')['useApp']>
@@ -656,6 +673,7 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
+    readonly uuid: UnwrapRef<typeof import('./src/utils/index.js')['uuid']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>
@@ -678,6 +696,7 @@ declare module '@vue/runtime-core' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ElMessage: UnwrapRef<typeof import('element-plus/es')['ElMessage']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -706,6 +725,7 @@ declare module '@vue/runtime-core' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly deleteThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['deleteThemeEditorClass']>
+    readonly deleteThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['deleteThemeEditorDetail']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
@@ -746,6 +766,7 @@ declare module '@vue/runtime-core' {
     readonly isUrl: UnwrapRef<typeof import('./src/utils/is.js')['isUrl']>
     readonly isWindow: UnwrapRef<typeof import('./src/utils/is.js')['isWindow']>
     readonly listThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['listThemeEditorClass']>
+    readonly listThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['listThemeEditorDetail']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -797,6 +818,7 @@ declare module '@vue/runtime-core' {
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly router: UnwrapRef<typeof import('./src/router/index.js')['default']>
     readonly saveThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorClass']>
+    readonly saveThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorDetail']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
@@ -824,6 +846,9 @@ declare module '@vue/runtime-core' {
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
+    readonly updateThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['updateThemeEditorDetail']>
+    readonly updateThemeEditorDetailContent: UnwrapRef<typeof import('./src/api/index.js')['updateThemeEditorDetailContent']>
+    readonly upload: UnwrapRef<typeof import('./src/api/index.js')['upload']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
     readonly useApp: UnwrapRef<typeof import('./src/store/app.js')['useApp']>
@@ -987,6 +1012,7 @@ declare module '@vue/runtime-core' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
+    readonly uuid: UnwrapRef<typeof import('./src/utils/index.js')['uuid']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>

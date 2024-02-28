@@ -10,6 +10,10 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  isPreview: {
+    type: Boolean,
+    default: false,
+  },
 })
 const emit = defineEmits(['update:modelValue']);
 import useCurrentDetail from "ve/hooks/useCurrent.js"
@@ -23,20 +27,29 @@ import useModel from 've/hooks/useModel.js'
 const styles = useModel(()=>props.modelValue||{},e=>emit('update:modelValue',e))
 
 function print(val) {
-  console.log(val)
+  // console.log(val)
+  console.log(toRaw(styles.value))
+  // if (styles.value.top <10) styles.value.top = 0
+  // if (styles.value.left <0) styles.value.left = 0
+}
+
+const clickFun = () => {
+  if (props.isPreview) return
+  setCurrentUid(props.uid)
 }
 </script>
 
 <template>
-  <div @click="setCurrentUid(props.uid)">
+  <div @click="clickFun" :class="{disabled:isPreview}">
     <Vue3DraggableResizable
-        :initW="styles.width"
-        :initH="styles.height"
+
+        :initW="styles.width||100"
+        :initH="styles.height||50"
         v-model:x="styles.left"
         v-model:y="styles.top"
         v-model:w="styles.width"
         v-model:h="styles.height"
-        :active="currentUid===uid"
+        :active="!isPreview?currentUid===uid:false"
         :draggable="true"
         :resizable="true"
         @activated="print('activated')"
@@ -48,7 +61,7 @@ function print(val) {
         @drag-end="print('drag-end')"
         @resize-end="print('resize-end')"
     >
-      热区
+      <slot>热区</slot>
     </Vue3DraggableResizable>
   </div>
 </template>

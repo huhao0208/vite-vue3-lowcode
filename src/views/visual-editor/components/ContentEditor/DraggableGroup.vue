@@ -30,7 +30,7 @@ const getMenuItems = (element) => {
       ...item,
       disabled: cantCopyList.includes(name) && item.type === 'copy' || cantDeleteList.includes(name) && item.type === 'delete',
       onClick: () => {
-        let newList = []
+        let newList = toRaw(list.value)
         switch (item.type) {
             case 'copy':
               newList.push({
@@ -40,7 +40,7 @@ const getMenuItems = (element) => {
               })
               break;
               case 'delete':
-                newList =  toRaw(list.value).filter(e => e.uid !== uid)
+                newList =  newList.filter(e => e.uid !== uid)
                 break;
             default:
                 break;
@@ -60,7 +60,7 @@ const getMenuItems = (element) => {
     <template #item="{ element }">
 
 
-      <div   @click="setCurrentUid(element.uid)" v-contextmenu="{menuItems:getMenuItems(element)}"
+      <div   @click="setCurrentUid(element.uid)" v-contextMenu="{menuItems:getMenuItems(element)}"
            :style="styleFmt( element.outStyles,{})" :class="{
               list_group_item:true,
               [`list_group_item_${element.name}`]:true,

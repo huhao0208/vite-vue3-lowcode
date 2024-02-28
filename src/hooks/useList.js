@@ -31,10 +31,8 @@ export default function useList({
     const loadList = () => {
         // 列表加载 页码自动叠加
         !isTable && pageNum.value++
-        if (pageNum.value === 1) {
-            list.value = []
-        } else {
-            if (status.value === 'noMore') return
+        if (pageNum.value !== 1&&status.value === 'noMore') {
+            return
         }
         status.value = 'loading'
         listApi({
@@ -42,7 +40,12 @@ export default function useList({
             [pageSizeKey]: pageSize.value
         }).then(res => {
             const listData = res[listKey] || [];
-            isTable ? list.value = listData : list.value.push(...listData)
+            if (pageNum.value === 1||isTable){
+                list.value = listData
+            }else{
+                list.value?.push(...listData)
+            }
+
             pages.value = res[pagesKey]
             status.value = pageNum.value >= pages.value ? 'noMore' : 'loadMore'
             total.value = res[totalKey]
@@ -61,6 +64,7 @@ export default function useList({
      */
     const reload = () => {
         // 如果是列表加载 则重置页码
+        console.log('重新加载数据')
         if (!isTable) pageNum.value = 0
         loadList()
     }

@@ -6,7 +6,7 @@ export const useCustomPage = defineStore('customPage', {
     persist: {
         key: 'customPage', // 自定义名称
         storage: localStorage, // 保存位置，默认保存在sessionStorage
-        paths: ['list', 'pageConfig'], // 指定要持久化的数据，默认所有 state 都会进行缓存，你可以通过 paths 指定要持久化的字段，其他的则不会进行持久化。
+        paths: ['classDetail'], // 指定要持久化的数据，默认所有 state 都会进行缓存，你可以通过 paths 指定要持久化的字段，其他的则不会进行持久化。
     },
     state: () => ({
         currentUid: '',
@@ -22,8 +22,12 @@ export const useCustomPage = defineStore('customPage', {
             backgroundAttachment: '',// 设置元素的背景图像是否随页面滚动或固定，默认值：scroll。
             backgroundBlendMode: '',// 设置元素背景层的混合模式，默认值：normal。
         },
+        classDetail:{}
     }),
     getters: {
+        classId(state) {
+            return state.classDetail?.id
+        },
         currentIndex(state) {
             return state.list.findIndex(item => item.uid === state.currentUid)
         },
@@ -38,6 +42,10 @@ export const useCustomPage = defineStore('customPage', {
         },
     },
     actions: {
+        setClassDetail(e) {
+            console.log('%c setClassDetail', 'color: #007acc;')
+            this.classDetail = e
+        },
         updateList(e=[]) {
             console.log('%c updateList', 'color: #007acc;')
             this.list = e.map(item => {

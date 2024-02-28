@@ -1,4 +1,3 @@
-
 import {
     defineComponent,
     reactive,
@@ -6,8 +5,8 @@ import {
     getCurrentInstance,
     isVNode,
 } from 'vue';
-import { ElButton, ElDialog } from 'element-plus';
-import { isFunction } from "@/utils/is";
+import {ElButton, ElDialog} from 'element-plus';
+import {isFunction} from "@/utils/is";
 
 
 const Modal = defineComponent({
@@ -43,6 +42,9 @@ const Modal = defineComponent({
                 state.options.onCancel?.();
                 methods.hide();
             },
+            onClosed: () => {
+                state.options.onClosed?.();
+            }
         };
 
         Object.assign(instance.proxy, methods);
@@ -51,33 +53,36 @@ const Modal = defineComponent({
             <ElDialog
                 v-model={state.visible}
                 title={state.options.title}
-                destroyOnClose={true}
+                center
+                v-bind:destroyOnClose={true}
+                onClosed={handler.onClosed}
                 {...state.options.props}
                 onClose={handler.onCancel}
             >
                 {{
-                    default: () =>
+                    default:!state.options.content? null: () =>
                         isVNode(state.options.content) ? (
-                            <content />
+                            <content/>
                         ) : isFunction(state.options.content) ? (
                             state.options.content()
-                        ) : null,
-                    footer: () =>
-                        state.options.footer === null ? null : (
+                        ) : '提示内容',
+                    footer: state.options.footer === null ? null : () =>
+                        (
                             <div>
-                                <ElButton {...{ onClick: handler.onCancel }}>取消</ElButton>
-                                <ElButton type={'primary'} {...({ onClick: handler.onConfirm } )}>
+                                <ElButton {...{onClick: handler.onCancel}}>取消</ElButton>
+                                <ElButton type={'primary'} {...({onClick: handler.onConfirm})}>
                                     确定
                                 </ElButton>
                             </div>
                         ),
                 }}
+
             </ElDialog>
         );
     },
 });
 
-export const useModal = (() => {
+const useModal = (() => {
     let instance
     return (options) => {
         if (instance) {
@@ -85,9 +90,12 @@ export const useModal = (() => {
             return instance;
         }
         const div = document.createElement('div');
+        // 设置id
+        div.id = 'modal';
         document.body.appendChild(div);
-        const app = createApp(Modal, { options });
+        const app = createApp(Modal, {options});
         instance = app.mount(div);
         return instance;
     };
 })();
+export default useModal

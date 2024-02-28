@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div v-html="txt" >
+  <div v-text="txt" >
 
   </div>
 </template>

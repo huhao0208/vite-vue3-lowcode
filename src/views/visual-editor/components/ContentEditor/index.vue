@@ -11,8 +11,6 @@ import useCurrent from '../../hooks/useCurrent.js';
 const {currentUid, setCurrentUid} = useCurrent()
 
 
-
-
 const pageStyles = toRef(pStore.pageConfig)
 
 import styleFmt from "utils/styleFmt.js";
@@ -21,33 +19,40 @@ import styleFmt from "utils/styleFmt.js";
 
 
 <template>
-  <div class="content_editor" ref="contentEditor">
-    <el-scrollbar height="667" class="phone_container" :style="{
-    ...pageStyles,
-    backgroundImage:`url(${pageStyles.backgroundImage})`,
-
-  }">
+  <el-scrollbar class="content_editor" ref="contentEditor">
+    <el-scrollbar height="667" class="phone_container" :style="styleFmt(pageStyles,{})">
       <DraggableGroup style="min-height: 667px" v-model="list"></DraggableGroup>
     </el-scrollbar>
-  </div>
+  </el-scrollbar>
 </template>
 
 <style scoped lang="scss">
 .content_editor {
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100vw - var(--aside-width) - 600px);
+
+  //padding-right: 600px;
 
 }
 
 .phone_container {
   transform: scale(1);
   width: 375px;
-  min-height: 667px;
+  height: 667px;
   background: #fff;
   //border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  border: 2px solid rgba(87, 86, 86, 0.32);
+  box-sizing: content-box;
   overflow-x: hidden;
-
   position: relative;
   transition: all .3s;
+  margin: 20px 0;
+  border-radius: 5px;
+
 
 }
 </style>

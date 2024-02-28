@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <van-back-top immediate />
+  SearchForm
 </template>
 
 <style scoped lang="scss">

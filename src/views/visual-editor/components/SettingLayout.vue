@@ -28,6 +28,7 @@ export default {
 
 <style scoped lang="scss">
 .settings {
+  //height: 100%;
   height: calc(100vh - var(--header-height));
 
   :deep(.el-tabs__header) {

@@ -34,7 +34,7 @@ const cancel = () => {
 
 <template>
   <el-button type="primary" style="width: 70%" @click="dialogVisible=true">
-    新增分类 {{ dialogVisible }}
+    新增分类
   </el-button>
   <!--  弹窗-->
   <el-dialog title="新增分类" v-model="dialogVisible" width="500">

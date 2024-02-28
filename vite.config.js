@@ -8,6 +8,7 @@ import { VantResolver } from '@vant/auto-import-resolver';
 import { resolve } from 'path'
 import viteCompression from 'vite-plugin-compression'
 import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers'
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) =>{
@@ -16,6 +17,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) =>{
    return {
        base:'./',
        plugins: [
+           vueJsx(),
            vue(),
            viteCompression({
                filter: /.(js|css|html|json|mjs|png|jpg|jpeg|svg)$/i  // 这些文件都要压缩

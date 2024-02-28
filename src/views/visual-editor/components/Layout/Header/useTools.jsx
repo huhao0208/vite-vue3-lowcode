@@ -13,59 +13,35 @@ import {
     Download,
     Upload,
 } from '@element-plus/icons-vue';
-import { useModal } from '@/hooks/useModal.jsx';
+import useModal from '@/hooks/useModal.jsx';
 import 'element-plus/es/components/message/style/css';
+
+const cStore = useCustomPage()
 export const useTools = () => {
 
-    const state = reactive({
-        coverRadio: 'current',
-        importJsonValue: '',
-    });
-    const importJsonChange = (value) => {
-        state.importJsonValue = value;
-    };
 
     return [
 
-        // {
-        //     title: '导出JSON',
-        //     icon: Download,
-        //     onClick: () => {
-        //         const { copy } = useClipboard({ source: JSON.stringify(jsonData) });
-        //
-        //         copy()
-        //             .then(() => ElMessage.success('复制成功'))
-        //             .catch((err) => ElMessage.error(`复制失败：${err}`));
-        //     },
-        // },
         {
             title: '真机预览',
             icon: Cellphone,
             onClick: () => {
-                const qrcode = useQRCode(`${location.origin}/preview`);
+                console.log('真机预览')
+                const qrcode = useQRCode(`${location.origin}/preview`,{
+                    size: 220,
+                });
                 useModal({
-                    title: '预览二维码（暂不可用）',
+                    title: '预览二维码',
                     props: {
                         width: 300,
                     },
                     footer: null,
                     content: () => (
-                        <div class={'flex justify-center'}>
-                            <img width={220} height={220} src={qrcode.value} />
+                        <div style={'display:flex;justify-content:center;align-items:center'}>
+
+                            <img width={280} height={280} src={qrcode.value} />
                         </div>
                     ),
-                });
-            },
-        },
-        {
-            title: '复制页面',
-            icon: DocumentCopy,
-            onClick: () => {
-                ElMessage({
-                    showClose: true,
-                    type: 'info',
-                    duration: 2000,
-                    message: '敬请期待！',
                 });
             },
         },
@@ -97,18 +73,19 @@ export const useTools = () => {
             title: '清空页面',
             icon: Delete,
             onClick: () => {
-                ElMessage({
-                    showClose: true,
-                    type: 'info',
-                    duration: 2000,
-                    message: '敬请期待！',
-                });
+                cStore.updateList([])
+                cStore.updatePageConfig({})
             },
         },
         {
             title: '预览',
             icon: Position,
             onClick: () => {
+                const data = {
+                    pageConfig: cStore.pageConfig,
+                    list: cStore.list,
+                }
+                sessionStorage.setItem('pageInfo',JSON.stringify(data))
                 window.open(location.href.replace('/#/', '/preview/#/'));
             },
         },

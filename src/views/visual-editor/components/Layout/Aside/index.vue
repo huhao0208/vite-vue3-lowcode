@@ -16,6 +16,8 @@ console.log(packageModules,settingComponents,'settingComponents')
               <div class="label">{{ element.label }}</div>
               <component  :is="element.component" :key="`${type}/${element.name}`"
                           v-bind="settingComponents[element.name]?.config?.attrs"
+                          class="child_item_com"
+                          isPreview
                           style="position: relative;min-width: 100px; min-height: 40px;max-height:80px"/>
             </div>
           </template>
@@ -31,7 +33,7 @@ console.log(packageModules,settingComponents,'settingComponents')
 <style scoped lang="scss">
 .aside_tabs {
   height: 100%;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.5);
   overflow: auto;
 
   :deep(.el-tabs__nav-scroll) {
@@ -42,7 +44,7 @@ console.log(packageModules,settingComponents,'settingComponents')
         user-select: none;
 
         &.is-active {
-          background-color: #f3f5fd;
+          background-color: #ffffff;
         }
       }
     }
@@ -96,6 +98,12 @@ console.log(packageModules,settingComponents,'settingComponents')
         z-index: 100;
         padding: 4px;
         background-color: rgba(135, 206, 235, 0.55);
+      }
+      .child_item_com {
+        position: relative;
+        z-index: 100;
+        transform: scale(1);
+        pointer-events: none;
       }
     }
   }

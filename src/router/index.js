@@ -18,12 +18,14 @@ const routes = [
         name: 'page-manager',
         meta: {
             title: '页面管理',
+            keepAlive:true,
         },
         component: () => import('@/views/page-manager/index.vue'),
 
     },
     {
         path: '/visual-editor/:id',
+        name: 'visual-editor',
         component: () => import('@/views/visual-editor/index.vue'),
     },
     // 404

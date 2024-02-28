@@ -14,8 +14,12 @@ defineOptions({
     styles:{
       whiteSpace: 'pre-wrap',
       lineHeight: 1.5,
+      fontSize: 16,
+      height:''
     },
-    outStyles:{},
+    outStyles:{
+      height:''
+    },
     events:{}
   }
 })

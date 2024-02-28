@@ -16,17 +16,16 @@ const buttonIcon = computed(() => {
 </script>
 
 <template>
-
-  <el-container class="layout" >
-    <el-header style="background-color: white">
+  <LayoutCom>
+    <template #header>
       <Header></Header>
-    </el-header>
-    <el-container>
-      <el-aside>
-        <Aside></Aside>
+    </template>
+    <template #aside>
+      <Aside></Aside>
+    </template>
 
-      </el-aside>
-      <el-main style="position: relative" class="flex_row_center">
+    <template #main >
+      <div  class="flex_row_center">
         <div class="page_edit_con">
           <slot name="main"></slot>
         </div>
@@ -38,21 +37,17 @@ const buttonIcon = computed(() => {
           <!-- 右侧属性编辑-->
           <slot name="attrs"></slot>
         </div>
-      </el-main>
-    </el-container>
-  </el-container>
+      </div>
+    </template>
+
+  </LayoutCom>
+
 </template>
 
 <style scoped lang="scss">
 
-.layout {
-  width: 100vw;
-  height: 100vh;
-  background-color: #f5f5f5;
-  overflow: hidden;
-  .el-header{
-    height: var(--header-height);
-  }
+:deep(.el-main){
+  padding: 0!important;
 }
 
 .flex_row_center {
@@ -62,15 +57,20 @@ const buttonIcon = computed(() => {
   justify-content: space-between;
   padding: 0;
   width: 100%;
-  overflow: hidden;
-  height: calc(100vh - var(--header-height));
-  .page_edit_con{
-    flex: 1;
-    flex-shrink: 0;
-    width: 100%;
-    padding-top: 0;
-    padding-left: calc(50% - 487.5px);
+  //overflow: hidden;
+  //height: calc(99vh - var(--header-height));
+  height: 100%;
+  .page_edit_con {
+
+
+    //width: calc(100% - 500px);
+    //padding-top: 0;
+    //padding-left: calc(50% - 500px);
+
+    //height: calc(100vh - var(--header-height));
+
   }
+
   .right_attrs {
     height: 100%;
     background-color: #fff;
@@ -78,6 +78,7 @@ const buttonIcon = computed(() => {
     width: 600px;
     transition: all .3s;
     transform: translateX(100%);
+
     &.right_attrs_open {
       transform: translateX(0%);
     }

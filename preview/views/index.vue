@@ -3,7 +3,7 @@ import {components} from 've/components/Packages'
 import styleFmt, {processValue} from "@/utils/styleFmt.js";
 
 console.log(components, 'components')
-const pageJson = JSON.parse(localStorage.getItem("customPage"))
+const pageJson = JSON.parse(sessionStorage.getItem("pageInfo"))
 console.log(pageJson, 'pageJson')
 const {pageConfig, list} = pageJson
 
@@ -11,7 +11,7 @@ const {pageConfig, list} = pageJson
 </script>
 
 <template>
-  <div :style="pageConfig" class="page_container">
+  <div :style="styleFmt(pageConfig,{})" class="page_container">
 
 
     <div v-for="item in list" :key="item.uid" :style="styleFmt(item.outStyles,{

@@ -31,7 +31,9 @@ function handleCssData(cssData, cssAttr, camelCaseAttrs, unit, baseSize) {
             } else {
                 acc[key] = value
             }
-
+            if (key==='backgroundImage'){
+                acc[key] = /^http/.test(value) ?   `url(${value})`:value
+            }
             return acc;
         }, {});
     }
