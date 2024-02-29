@@ -18,13 +18,13 @@ const routes = [
         name: 'page-manager',
         meta: {
             title: '页面管理',
-            keepAlive:true,
+            keepAlive: true,
         },
         component: () => import('@/views/page-manager/index.vue'),
 
     },
     {
-        path: '/visual-editor/:id',
+        path: '/visual-editor/:url',
         name: 'visual-editor',
         component: () => import('@/views/visual-editor/index.vue'),
     },
@@ -38,7 +38,7 @@ const routes = [
         component: () => import('@/views/404.vue'),
     },
     {
-        path:'/login',
+        path: '/login',
         component: () => import('@/views/login/index.vue'),
         meta: {
             title: '登录',
@@ -59,16 +59,37 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
     NProgress.start(); // start progress bar
     console.log(to)
-    if ( to?.meta?.unAuth) {
+    if (to?.meta?.unAuth) {
         return true;
     }
     // 如果有传递token 则更新token
-    const {token, name} = to.query
+    let {token, name} = to.query
     const appStore = useApp();
-    if (token) {
-        appStore.setToken(atob(token))
-        name && appStore.setUserName(name)
+    if (!appStore.token) {
+
+        token = !token ? localStorage.getItem('a-token') : atob(token)
+        if (!name) name = localStorage.getItem('name')
+        debugger
+        if (token && name) {
+            appStore.setToken(token)
+            appStore.setUserName(name)
+            router.replace({
+                ...to,
+                query: {
+                    ...to.query,
+                    token: undefined,
+                    name: undefined,
+                },
+            });
+
+        } else {
+            // 直接跳转a端登录地址
+            router.replace({path: '/login'})
+            return false
+        }
+
     }
+
     // 获取用户信息
     if (!appStore.userInfo) {
         try {

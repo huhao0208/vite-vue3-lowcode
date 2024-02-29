@@ -77,3 +77,10 @@ export const deleteThemeEditorDetail = data => post('/zq-package/admin/combine/d
  * @returns {Promise<unknown>}
  */
 export const updateThemeEditorDetailContent = data => post('/zq-package/admin/combine/updateThemeEditorDetailContent', data)
+
+/**
+ * @desc 获取编辑器详情内容
+ * @param data {id,url}
+ * @returns {Promise<unknown>}
+ */
+export const getThemeEditorDetailContent = data => post('/zq-package/client/combine/getThemeEditorDetailContent', data)

@@ -9,10 +9,6 @@ const list = useModel(() => pStore.list, (newValue) => pStore.updateList(JSON.pa
 import useCurrent from '../../hooks/useCurrent.js';
 
 const {currentUid, setCurrentUid} = useCurrent()
-
-
-const pageStyles = toRef(pStore.pageConfig)
-
 import styleFmt from "utils/styleFmt.js";
 
 </script>
@@ -20,8 +16,8 @@ import styleFmt from "utils/styleFmt.js";
 
 <template>
   <el-scrollbar class="content_editor" ref="contentEditor">
-    <el-scrollbar height="667" class="phone_container" :style="styleFmt(pageStyles,{})">
-      <DraggableGroup style="min-height: 667px" v-model="list"></DraggableGroup>
+    <el-scrollbar height="667" class="phone_container" >
+      <DraggableGroup :style="styleFmt(pStore.pageConfig,{})" style="min-height: 667px" v-model="list"></DraggableGroup>
     </el-scrollbar>
   </el-scrollbar>
 </template>

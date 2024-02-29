@@ -1,7 +1,12 @@
+/**
+ * @description 自动给值加上单位 px rem vw
+ * @param rawValue
+ * @param unit 目标单位 如果不传  默认px
+ * @param baseSize 如果是rem的话需要用到 默认37.5
+ * @returns {*|string}
+ */
 export function processValue(rawValue, unit = 'px', baseSize = 37.5) {
-
-
-    if (typeof rawValue === 'number' || (typeof rawValue === 'string' && /^\d+$/.test(rawValue))) {
+    if (isNumber(rawValue) || ( isString(rawValue) && /^\d+$/.test(rawValue.trim()))) {
         switch (unit) {
             case 'px':
                 return `${rawValue}px`;
@@ -16,29 +21,31 @@ export function processValue(rawValue, unit = 'px', baseSize = 37.5) {
     return rawValue;
 }
 
+/**
+ * @desc 处理css数据
+ * @param cssData
+ * @param cssAttr
+ * @param camelCaseAttrs
+ * @param unit
+ * @param baseSize
+ * @returns {{}}
+ */
 function handleCssData(cssData, cssAttr, camelCaseAttrs, unit, baseSize) {
     const unifiedAttrsSet = new Set([...cssAttr, ...camelCaseAttrs]);
+    return Object.entries(cssData).reduce((acc, [key, value]) => {
+        if (unifiedAttrsSet.has(key)) {
+            acc[key] = Array.isArray(value) ? value.map(v => processValue(v, unit, baseSize)) : processValue(value, unit, baseSize);
+        } else {
+            acc[key] = value
+        }
+        // 如果是背景图片 值为base64数据或者链接 则拼接url
+        if (key==='backgroundImage'){
+            acc[key] = /^(http|data:image)/.test(value) ? `url(${value})`:value
+        }
+        return acc;
+    }, {});
 
-    if (typeof cssData === 'string') {
-        return cssData.split(';').map(item => {
-            const [key, value] = item.split(':');
-            return unifiedAttrsSet.has(key.trim()) ? `${key.trim()}:${processValue(value.trim(), unit, baseSize)}` : item;
-        }).join(';');
-    } else if (typeof cssData === 'object') {
-        return Object.entries(cssData).reduce((acc, [key, value]) => {
-            if (unifiedAttrsSet.has(key)) {
-                acc[key] = Array.isArray(value) ? value.map(v => processValue(v, unit, baseSize)) : processValue(value, unit, baseSize);
-            } else {
-                acc[key] = value
-            }
-            if (key==='backgroundImage'){
-                acc[key] = /^http/.test(value) ?   `url(${value})`:value
-            }
-            return acc;
-        }, {});
-    }
 
-    return cssData; // 如果是其他类型，直接返回原数据
 }
 
 /**
@@ -54,12 +61,76 @@ export default function (
     {
         unit = 'px',
         baseSize = 37.5,
-        cssAttr = ['width', 'height', 'top', 'left', 'right', 'bottom', 'margin', 'padding', 'font-size', 'border-width', 'border-radius', 'margin-top', 'margin-bottom', 'margin-left', 'margin-right', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right', 'border-top-width', 'border-bottom-width', 'border-left-width', 'border-right-width', 'border-top-left-radius', 'border-top-right-radius', 'border-bottom-left-radius', 'border-bottom-right-radius']
+        cssAttr = [
+            'width',
+            'height',
+            'top',
+            'left',
+            'right',
+            'bottom',
+            'margin',
+            'padding',
+            'font-size',
+            'border-width',
+            'border-radius',
+            'margin-top',
+            'margin-bottom',
+            'margin-left',
+            'margin-right',
+            'padding-top',
+            'padding-bottom',
+            'padding-left',
+            'padding-right',
+            'border-top-width',
+            'border-bottom-width',
+            'border-left-width',
+            'border-right-width',
+            'border-top-left-radius',
+            'border-top-right-radius',
+            'border-bottom-left-radius',
+            'border-bottom-right-radius',
+            'background-size',
+            'background-position',
+            'background-origin',
+        ]
     }
 ) {
 
     const camelCaseAttrs = cssAttr.map(attr => attr.replace(/-([a-z])/g, (_, char) => char.toUpperCase()));
 
-    return handleCssData(cssData, cssAttr, camelCaseAttrs, unit, baseSize);
+    return handleCssData(convertCssStringToObject(cssData), cssAttr, camelCaseAttrs, unit, baseSize);
 
 };
+
+/**
+ * @desc 将css字符串转换为对象
+ * @param cssString
+ * @returns {{}}
+ */
+function convertCssStringToObject(cssString) {
+     if (isObject(cssString)) return cssString;
+     if (!isString(cssString)) return {};
+    const lines = cssString.split('\n');
+    const cssObject = {};
+
+    for (let line of lines) {
+        line = line.trim();
+        if (line === '') {
+            continue;
+        }
+        if (line.startsWith('/*') && line.endsWith('*/')) {
+            continue;
+        }
+
+        const parts = line.split(':');
+        let property = parts[0].trim();
+        const value = parts[1].trim();
+
+        // 将属性名转换为驼峰命名
+        property = property.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
+
+        cssObject[property] = value;
+    }
+
+    return cssObject;
+}

@@ -11,14 +11,16 @@ const toggleDark = useToggle(isDark)
 const router = useRouter()
 const route = useRoute()
 const pStore = useCustomPage()
-const submit = () => {
-  updateThemeEditorDetailContent({
-    id:route.params.id,
+const submit =async () => {
+ await updateThemeEditorDetailContent({
+    id:route.query.id,
+    url: route.params.url,
     content:JSON.stringify({
       pageStyle: pStore.pageConfig,
       contentList: pStore.list
     })
   })
+  ElMessage.success('发布成功')
 }
 </script>
 

@@ -14,8 +14,9 @@ const columns = [
   },
   {
     prop: 'url',
+    slot: 'url',
     attrs: {
-      label: 'url',
+      label: '页面链接',
       // width: '120',
     }
   },
@@ -49,6 +50,11 @@ const updateHandler = async (item) => {
   tableReload()
 }
 
+watch(()=> pStore.classId, () => {
+  tableReload()
+}, {immediate: false})
+
+
 defineExpose({
   tableReload
 })
@@ -57,7 +63,7 @@ defineExpose({
 <template>
   <div class="detail_container">
     <ProTable
-        v-if="pStore.classId"
+
         ref="tableRef"
         :config="{
             listApi:listThemeEditorDetail,
@@ -68,7 +74,13 @@ defineExpose({
         }"
         :columns="columns"
     >
-      <template #handler="{scope}">
+      <template #url="{scope}">
+        <div>
+          https://pre-qiyue.cmread.com/client/standalone/index.html#/theme-page/{{ scope?.url }}
+          <el-button>复制</el-button>
+        </div>
+      </template>
+      <template #handler="{scope={}}">
 
         <el-button link type="primary" @click="updateHandler({
         ...scope,
@@ -78,7 +90,8 @@ defineExpose({
         </el-button>
         <el-button link type="primary">复制</el-button>
         <el-button link type="primary">查看</el-button>
-        <el-button link type="primary" @click="router.push(`/visual-editor/${scope.id}`)">编辑</el-button>
+        <el-button link type="primary" @click="router.push(`/visual-editor/${scope.url}?id=${scope.id}`)">编辑
+        </el-button>
         <el-popconfirm title="删除后无法恢复，是否删除？" confirm-button-text="是"
                        cancel-button-text="否"
                        @confirm="deleteHandler(scope.id)">

@@ -1,7 +1,6 @@
-
-import { ElMessage, ElRadio, ElRadioGroup } from 'element-plus';
-import { useQRCode } from '@vueuse/integrations/useQRCode'
-import { useClipboard } from '@vueuse/core';
+import {ElMessage, ElRadio, ElRadioGroup} from 'element-plus';
+import {useQRCode} from '@vueuse/integrations/useQRCode'
+import router from '@/router'
 import {
     DocumentCopy,
     Cellphone,
@@ -17,6 +16,24 @@ import useModal from '@/hooks/useModal.jsx';
 import 'element-plus/es/components/message/style/css';
 
 const cStore = useCustomPage()
+
+// 生成预览链接
+const createPreviewLink = () => {
+    return new Promise(async (resolve, reject) => {
+        const {
+            query: {
+                id
+            }, params: {
+                url
+            }, path
+        } = router.currentRoute.value
+
+        locationg.href.replace(/#/)
+        resolve( location.href + path)
+    })
+};
+
+
 export const useTools = () => {
 
 
@@ -25,24 +42,28 @@ export const useTools = () => {
         {
             title: '真机预览',
             icon: Cellphone,
-            onClick: () => {
+            onClick: async () => {
                 console.log('真机预览')
-                const qrcode = useQRCode(`${location.origin}/preview`,{
+                const link = await createPreviewLink()
+                const qrcode = useQRCode(link, {
                     size: 220,
                 });
                 useModal({
                     title: '预览二维码',
                     props: {
-                        width: 300,
+                        width: 500,
+                        height: 700
                     },
                     footer: null,
                     content: () => (
                         <div style={'display:flex;justify-content:center;align-items:center'}>
+                            <span>{link}</span>
+                            <img width={280} height={280} src={qrcode.value}/>
 
-                            <img width={280} height={280} src={qrcode.value} />
                         </div>
                     ),
-                });
+                })
+                ;
             },
         },
         {
@@ -85,7 +106,7 @@ export const useTools = () => {
                     pageConfig: cStore.pageConfig,
                     list: cStore.list,
                 }
-                sessionStorage.setItem('pageInfo',JSON.stringify(data))
+                sessionStorage.setItem('pageInfo', JSON.stringify(data))
                 window.open(location.href.replace('/#/', '/preview/#/'));
             },
         },

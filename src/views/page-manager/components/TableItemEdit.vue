@@ -20,10 +20,10 @@ const rules = {
     {required: true, message: '请输入名称', trigger: 'blur'},
     {min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur'}
   ],
-  url: [
-    {required: true, message: '请输入描述', trigger: 'blur'},
-    {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'},
-  ]
+  // url: [
+  //   {required: true, message: '请输入描述', trigger: 'blur'},
+  //   {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'},
+  // ]
 }
 
 const closeHandler = () => {
@@ -54,12 +54,12 @@ const submit = () => {
 <template>
   <el-dialog v-bind="$attrs">
     <el-form ref="formRef" :model="form" label-width="120px" :rules="rules">
-      <el-form-item label="名称" prop="name">
+      <el-form-item label="页面名称" prop="name">
         <el-input v-model="form.name" placeholder="请输入名称"/>
       </el-form-item>
-      <el-form-item label="路径" prop="url">
-        <el-input @input="value=> value.replace(/[^a-zA-Z-]/g, '')" v-model="form.url" placeholder="请输入路径"/>
-      </el-form-item>
+<!--      <el-form-item label="路径" prop="url">-->
+<!--        <el-input @input="value=> value.replace(/[^a-zA-Z-]/g, '')" v-model="form.url" placeholder="请输入路径"/>-->
+<!--      </el-form-item>-->
 
     </el-form>
 

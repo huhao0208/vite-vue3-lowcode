@@ -105,7 +105,7 @@ const tableUpdate = function (e) {
     <div class="catalog_btns">
       <el-dropdown size="large" trigger="click" @command="handleCommand">
 
-        <div class="el_icon" @click.stop="">
+        <div class="el_icon" @click.stop="" v-if="details.id!==0">
           <MoreFilled style="width: 1em; height: 1em;transform: rotate(90deg)"/>
         </div>
         <template #dropdown>

@@ -1,6 +1,20 @@
 <script setup>
-const appStore = useApp()
+import {getThemeEditorDetailContent} from "api";
 
+ const cStore = useCustomPage()
+const route = useRoute()
+onMounted(async () => {
+  const {query:{id},params:{url}  } = route
+ const {content} = await  getThemeEditorDetailContent({
+    url,
+    id
+  })
+
+  console.log(content,'content')
+  const {pageStyle={},contentList=[]} = content||{}
+  cStore.updatePageConfig(pageStyle)
+  cStore.updateList(contentList)
+})
 </script>
 
 <template>
