@@ -6,8 +6,17 @@
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
       :http-request="handleHttpUpload"
+      :accept="accept"
+      :style="{
+        width: `${width}px`,
+        height: `${height}px`,
+      }"
   >
-    <img v-if="modelValue" :src="modelValue" class="avatar" />
+
+    <img  :style="{
+        width: `${width}px`,
+        height: `${height}px`,
+      }" v-if="modelValue" :src="modelValue" class="avatar" />
     <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
   </el-upload>
 </template>
@@ -27,6 +36,18 @@ const props = defineProps({
   modelValue: {
     type: [String],
     default: '',
+  },
+  width: {
+    type: [Number],
+    default: 178,
+  },
+  height: {
+    type: [Number],
+    default: 178,
+  },
+  accept: {
+    type: [String],
+    default: 'image/*',
   },
 })
 
@@ -56,22 +77,12 @@ const handleHttpUpload = async (options) => {
   let formData = new FormData();
   formData.append("file", options.file);
   const api = props.api ?? upload;
-  // try {
-  //
-  //   const data  = await api(formData);
-  //   console.log(data,options,'datadatadata')
-  //   options.onSuccess(data);
-  // } catch (error) {
-  //   options.onError(error);
-  // }
   return api(formData)
 };
 </script>
 
 <style scoped>
 .avatar-uploader .avatar {
-  width: 178px;
-  height: 178px;
   display: block;
 }
 </style>
@@ -84,6 +95,8 @@ const handleHttpUpload = async (options) => {
   position: relative;
   overflow: hidden;
   transition: var(--el-transition-duration-fast);
+  width: 100%;
+  height: 100%;
 }
 
 .avatar-uploader .el-upload:hover {
@@ -93,8 +106,8 @@ const handleHttpUpload = async (options) => {
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 178px;
-  height: 178px;
+  width: 100%;
+  height: 100%;
   text-align: center;
 }
 </style>

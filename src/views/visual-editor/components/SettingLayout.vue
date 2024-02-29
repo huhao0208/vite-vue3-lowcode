@@ -11,8 +11,8 @@ export default {
     </el-tab-pane>
     <el-tab-pane label="样式设置"  v-if="$slots.styles">
 
-      <!--通用样式配置-->
-      <CommonStyleSetting/>
+<!--      &lt;!&ndash;通用样式配置&ndash;&gt;-->
+<!--      <CommonStyleSetting/>-->
       <slot name="styles"></slot>
     </el-tab-pane>
     <el-tab-pane label="事件配置" v-if="$slots.events">
@@ -39,7 +39,10 @@ export default {
     height: calc(100% - 40px);
     overflow-y: auto;
     box-sizing: border-box;
-    padding: 20px 30px 20px 20px;
+    padding: 20px 10px 20px 20px;
+  }
+  :deep(.el-form-item__label){
+    text-align: center;
   }
 }
 </style>

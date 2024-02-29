@@ -41,7 +41,6 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     response => {
-        console.log(response, 'response')
         if (response?.status === 200 && response?.data?.code===200) {
 
             return Promise.resolve(response.data)

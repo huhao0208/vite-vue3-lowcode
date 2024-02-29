@@ -6,7 +6,7 @@ console.log(components, 'components')
 const pageJson = JSON.parse(sessionStorage.getItem("pageInfo"))
 console.log(pageJson, 'pageJson')
 const {pageConfig, list} = pageJson
-
+console.log(styleFmt(pageConfig,{}),'styleFmt(pageConfig,{})')
 
 </script>
 

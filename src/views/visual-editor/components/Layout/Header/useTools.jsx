@@ -14,8 +14,10 @@ import {
 } from '@element-plus/icons-vue';
 import useModal from '@/hooks/useModal.jsx';
 import 'element-plus/es/components/message/style/css';
+import {useUndoRedoStore} from "store/useUndoRedoStore.js";
 
 const cStore = useCustomPage()
+const undoRedoStore = useUndoRedoStore()
 
 // 生成预览链接
 const createPreviewLink = () => {
@@ -69,25 +71,42 @@ export const useTools = () => {
         {
             title: '撤销',
             icon: RefreshLeft,
+            disabled: !undoRedoStore.canUndo,
             onClick: () => {
-                ElMessage({
-                    showClose: true,
-                    type: 'info',
-                    duration: 2000,
-                    message: '敬请期待！',
-                });
+                // ElMessage({
+                //     showClose: true,
+                //     type: 'info',
+                //     duration: 2000,
+                //     message: '敬请期待！',
+                // });
+               const {list,pageConfig} =  undoRedoStore.undo()
+                undoRedoStore.updateIsRecord(false)
+                cStore.updateList(list)
+                cStore.updatePageConfig(pageConfig)
+
+                nextTick(() => {
+                    undoRedoStore.updateIsRecord(true)
+                })
             },
         },
         {
             title: '重做',
             icon: RefreshRight,
+            disabled: !undoRedoStore.canRedo,
             onClick: () => {
-                ElMessage({
-                    showClose: true,
-                    type: 'info',
-                    duration: 2000,
-                    message: '敬请期待！',
-                });
+                // ElMessage({
+                //     showClose: true,
+                //     type: 'info',
+                //     duration: 2000,
+                //     message: '敬请期待！',
+                // });
+                const {list,pageConfig} =  undoRedoStore.redo()
+                undoRedoStore.updateIsRecord(false)
+                cStore.updateList(list)
+                cStore.updatePageConfig(pageConfig)
+                nextTick(() => {
+                    undoRedoStore.updateIsRecord(true)
+                })
             },
         },
         {

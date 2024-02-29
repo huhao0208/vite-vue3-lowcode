@@ -50,9 +50,9 @@ const updateHandler = async (item) => {
   tableReload()
 }
 
-watch(()=> pStore.classId, () => {
-  tableReload()
-}, {immediate: false})
+const clientPageLink = (row) => {
+  return `https://pre-qiyue.cmread.com/client/standalone/index.html#/theme-page/${row.url}`
+}
 
 
 defineExpose({
@@ -63,7 +63,7 @@ defineExpose({
 <template>
   <div class="detail_container">
     <ProTable
-
+        v-if="!!pStore.classId ||pStore.classId === 0"
         ref="tableRef"
         :config="{
             listApi:listThemeEditorDetail,
@@ -76,8 +76,8 @@ defineExpose({
     >
       <template #url="{scope}">
         <div>
-          https://pre-qiyue.cmread.com/client/standalone/index.html#/theme-page/{{ scope?.url }}
-          <el-button>复制</el-button>
+          {{clientPageLink(scope)}}
+          <el-button v-copy="clientPageLink(scope)">复制</el-button>
         </div>
       </template>
       <template #handler="{scope={}}">

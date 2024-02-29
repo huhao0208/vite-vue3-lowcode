@@ -48,6 +48,7 @@ const buttonIcon = computed(() => {
 
 :deep(.el-main){
   padding: 0!important;
+  user-select: none;
 }
 
 .flex_row_center {

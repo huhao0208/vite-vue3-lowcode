@@ -13,7 +13,7 @@ const props = defineProps({
   },
 
 })
-
+const emit = defineEmits()
 const tableConfig = computed(()=>{
   return {
 
@@ -67,12 +67,9 @@ const getList = async () => {
 
 
 const handleCurrentChange = (val) => {
-  console.log(val, 'handleCurrentChange')
+  emit('current-change', val)
 }
-// 分页数据改变
-const paginationChange = (val) => {
-  console.log(val, 'paginationChange')
-}
+
 
 const pagination = reactive({
   pageSize: 10,
@@ -138,7 +135,6 @@ defineExpose({
         v-model:page-size="pagination.pageSize"
         :page-sizes="tableConfig.pageSizes"
         :background="true"
-
         :layout="tableConfig.layout"
         :total="tableData.total"
         @size-change="getList"

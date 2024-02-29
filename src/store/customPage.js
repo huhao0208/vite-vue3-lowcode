@@ -14,13 +14,9 @@ export const useCustomPage = defineStore('customPage', {
         pageConfig: {
             backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
             backgroundImage: '', // 设置元素的背景图像，默认值：none。
-            backgroundSize: 'auto', // 设置元素背景图像的大小，默认值：auto。
+            backgroundSize: 'cover', // 设置元素背景图像的大小，默认值：auto。
             backgroundPosition: '', // 设置元素背景图像的位置，默认值：0% 0%。
-            backgroundRepeat: '', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
-            backgroundClip: '', // 设置元素背景的渲染区域，默认值：border-box。
-            backgroundOrigin: '',// 设置元素背景的定位区域（背景区），默认值：border-box。
-            backgroundAttachment: '',// 设置元素的背景图像是否随页面滚动或固定，默认值：scroll。
-            backgroundBlendMode: '',// 设置元素背景层的混合模式，默认值：normal。
+            backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
         },
         classDetail:{}
     }),

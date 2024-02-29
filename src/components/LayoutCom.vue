@@ -1,6 +1,6 @@
 <script setup>
 const aStore = useApp()
-console.log(aStore,'aStore')
+ 
 
 </script>
 

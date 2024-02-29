@@ -69,6 +69,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) =>{
            }
        },
        build: {
+           outDir: 'lowcode',
            emptyOutDir: true, //清空输出目录
            minify: 'esbuild',
 

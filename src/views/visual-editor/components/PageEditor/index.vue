@@ -17,11 +17,10 @@ const page = useModel(() => pStore.pageConfig, val => pStore.updatePageConfig(va
       </div>
     </el-form-item>
     <el-form-item label="背景图片">
-      <el-input v-model="page.backgroundImage"></el-input>
+<!--      <el-input  style="width: 300px;display:block" v-model="page.backgroundImage"></el-input>-->
+      <UploadImg  style="display:block" v-model="page.backgroundImage"></UploadImg>
     </el-form-item>
-    <el-form-item>
-      <UploadImg v-model="page.backgroundImage"></UploadImg>
-    </el-form-item>
+
   </el-form>
 </template>
 

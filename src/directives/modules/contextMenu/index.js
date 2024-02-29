@@ -1,7 +1,14 @@
 /**
- * v-contextMenu
- * 右键菜单
- * 接收参数：
+ * @description:右键菜单
+ * v-contextMenu={
+ *     menuItems:[
+ *          {label: '复制', disabled: false, type: 'copy'，onClick: () => {}},
+ *          {label: '删除', disabled: false, type: 'delete'，onClick: () => {}},
+ *     ]
+ *  }
+ * 接收参数：menuItems 菜单对象数组
+ * 菜单对象属性：label disabled type onClick
+ *
  */
 import {h, nextTick, render} from "vue";
 import ContextMenu from "./ContextMenu.vue";
@@ -9,7 +16,7 @@ import ContextMenu from "./ContextMenu.vue";
 
 const contextMenu = {
     mounted(el, binding, vnode) {
-        console.log(el, binding, vnode,'el, binding, vnode')
+        // console.log(el, binding, vnode,'el, binding, vnode')
         let menuElement = document.querySelector('.body_context-menu')
         if (!menuElement) {
             menuElement = document.createElement('div');
@@ -62,10 +69,6 @@ const contextMenu = {
         document.addEventListener('click', hideContextMenu);
         el._showContextMenu = showContextMenu
         el._hideContextMenu = hideContextMenu
-        // onBeforeUnmount(() => {
-        //     el.removeEventListener('contextmenu', showContextMenu);
-        //     document.removeEventListener('click', hideContextMenu);
-        // });
     },
 
     unmounted(el) {

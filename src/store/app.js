@@ -14,7 +14,6 @@ export const useApp = defineStore('app', {
     getters: {},
     actions: {
         updateBreadcrumb(breadcrumb) {
-            console.log(breadcrumb,'breadcrumb')
             this.breadcrumb = breadcrumb
         },
 

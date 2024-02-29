@@ -22,6 +22,26 @@ const submit =async () => {
   })
   ElMessage.success('发布成功')
 }
+
+import  equal  from 'fast-deep-equal';
+import {useUndoRedoStore} from "store/useUndoRedoStore.js";
+const undoRedoStore = useUndoRedoStore()
+watch(
+    () => {
+      return {
+        pageConfig: pStore.pageConfig,
+        list: pStore.list
+      }
+    },
+    (newValue, oldValue) => {
+      const isEqual = equal( toRaw(newValue.value), toRaw(oldValue))
+       console.log(isEqual,'equal(newValue, oldValue)')
+      if (!isEqual) {
+        undoRedoStore.snapshot(newValue);
+      }
+    },
+    { deep: true }
+);
 </script>
 
 <template>
@@ -33,11 +53,13 @@ const submit =async () => {
 <!--    </el-button>-->
 <!--  </div>-->
     <div class="tools">
-      <div v-for="tool in tools" :key="tool.title" class="tool" @click="tool.onClick">
+      <div v-for="tool in tools" :key="tool.title" class="tool" @click="tool.onClick" :class="{
+        disabled: tool.disabled
+      }" >
       <el-icon>
         <component :is="tool.icon" />
       </el-icon>
-        <span>{{tool.title}}</span>
+        <span>{{tool.title}} {{tool.disabled}} </span>
       </div>
     </div>
     <div class="right">
@@ -55,6 +77,7 @@ const submit =async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
   .right{
     position: absolute;
     right: 0;
@@ -78,6 +101,11 @@ const submit =async () => {
       align-items: center;
       justify-content: space-around;
       flex-direction: column;
+      &.disabled{
+        cursor: not-allowed!important;
+        opacity: 0.5;
+        pointer-events: none;
+      }
       span{
         margin-top: 8px;
         font-size: 12px;

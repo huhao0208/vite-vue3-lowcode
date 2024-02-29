@@ -34,7 +34,7 @@ watch(() => route.path, () => {
         }
       ]
   }
-  console.log(router,'routerrouterrouter')
+
   aStore.updateBreadcrumb(list.filter(item => item.path))
 }, {
   immediate: true

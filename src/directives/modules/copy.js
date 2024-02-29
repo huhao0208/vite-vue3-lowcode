@@ -19,16 +19,18 @@ const copy = {
   }
 };
 
-async function handleClick(that =this) {
+async function handleClick() {
   try {
+    const that = this;
     await navigator.clipboard.writeText(that.copyData);
+    ElMessage({
+      type: "success",
+      message: "复制成功"
+    });
   } catch (err) {
     console.error("复制操作不被支持或失败: ", err);
   }
-  ElMessage({
-    type: "success",
-    message: "复制成功"
-  });
+
 }
 
 export default copy;
