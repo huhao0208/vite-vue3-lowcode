@@ -6,12 +6,8 @@ const props = defineProps({
     default: '',
   },
   events: {
-    type: Object,
-    default: () => {
-      return {
-
-      }
-    }
+    type: Array,
+    default: () => []
   }
 })
 const emit = defineEmits([])

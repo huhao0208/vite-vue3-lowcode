@@ -65,29 +65,19 @@ router.beforeEach(async (to, from) => {
     // 如果有传递token 则更新token
     let {token, name} = to.query
     const appStore = useApp();
-    if (!appStore.token) {
 
-        token = !token ? localStorage.getItem('a-token') : atob(token)
-        if (!name) name = localStorage.getItem('name')
-        debugger
-        if (token && name) {
-            appStore.setToken(token)
-            appStore.setUserName(name)
-            router.replace({
-                ...to,
-                query: {
-                    ...to.query,
-                    token: undefined,
-                    name: undefined,
-                },
-            });
 
-        } else {
-            // 直接跳转a端登录地址
-            router.replace({path: '/login'})
-            return false
-        }
-
+    if (!appStore.token && token && name) {
+        appStore.setToken( atob(token))
+        appStore.setUserName(name)
+        await router.replace({
+            ...to,
+            query: {
+                ...to.query,
+                token: undefined,
+                name: undefined,
+            },
+        });
     }
 
     // 获取用户信息

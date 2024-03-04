@@ -11,6 +11,7 @@ const toggleDark = useToggle(isDark)
 const router = useRouter()
 const route = useRoute()
 const pStore = useCustomPage()
+const undoRedoStore = useUndoRedoStore()
 const submit =async () => {
  await updateThemeEditorDetailContent({
     id:route.query.id,
@@ -21,11 +22,13 @@ const submit =async () => {
     })
   })
   ElMessage.success('发布成功')
+  undoRedoStore.reset()
 }
 
 import  equal  from 'fast-deep-equal';
 import {useUndoRedoStore} from "store/useUndoRedoStore.js";
-const undoRedoStore = useUndoRedoStore()
+import {debounce} from "utils";
+
 watch(
     () => {
       return {
@@ -33,13 +36,15 @@ watch(
         list: pStore.list
       }
     },
-    (newValue, oldValue) => {
+    debounce( (newValue, oldValue) => {
       const isEqual = equal( toRaw(newValue.value), toRaw(oldValue))
        console.log(isEqual,'equal(newValue, oldValue)')
       if (!isEqual) {
         undoRedoStore.snapshot(newValue);
+
+        undoRedoStore.updateIsRecord(true)
       }
-    },
+    },300),
     { deep: true }
 );
 </script>
@@ -63,7 +68,7 @@ watch(
       </div>
     </div>
     <div class="right">
-      <el-button @click="submit">
+      <el-button @click="submit" type="primary">
         发布
       </el-button>
     </div>

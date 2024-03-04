@@ -20,7 +20,7 @@ defineOptions({
     outStyles:{
       height:40
     },
-    events:{}
+    events:[]
   }
 })
 const props = defineProps({

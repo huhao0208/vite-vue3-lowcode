@@ -50,7 +50,7 @@ export const useCustomPage = defineStore('customPage', {
 
                 const {
                     attrs: defaultAttrs = {},
-                    events: defaultEvents = {},
+                    events: defaultEvents = [],
                     styles: defaultStyles = {},
                     outStyles: defaultOutStyles = {},
                     children: defaultChildren = []
@@ -75,7 +75,7 @@ export const useCustomPage = defineStore('customPage', {
                         ...defaultOutStyles
                     },
                     attrs: attrs || {...defaultAttrs},
-                    events: events || {...defaultEvents},
+                    events: events ||defaultEvents,
 
                 }
             })

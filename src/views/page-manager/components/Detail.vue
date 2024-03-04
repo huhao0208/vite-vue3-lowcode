@@ -1,6 +1,7 @@
 <script setup>
 
 import {deleteThemeEditorDetail, updateThemeEditorDetail} from "api";
+import {CopyDocument} from "@element-plus/icons-vue";
 
 const pStore = useCustomPage()
 // 表格配置
@@ -77,7 +78,7 @@ defineExpose({
       <template #url="{scope}">
         <div>
           {{clientPageLink(scope)}}
-          <el-button v-copy="clientPageLink(scope)">复制</el-button>
+          <el-button  v-copy="clientPageLink(scope)" :icon="CopyDocument"></el-button>
         </div>
       </template>
       <template #handler="{scope={}}">

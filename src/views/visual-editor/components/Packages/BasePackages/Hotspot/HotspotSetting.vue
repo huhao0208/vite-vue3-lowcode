@@ -18,7 +18,7 @@ defineOptions({
       zIndex:999999,
       position: 'absolute',
       top: 0,
-      left: 37.5,
+      left: 0,
       width: 300,
       height: 200,
 
@@ -32,9 +32,7 @@ defineOptions({
       overflow:'visible',
       zIndex:999999,
     },
-    events: {
-      click: ''
-    }
+    events: []
   }
 })
 
@@ -54,10 +52,23 @@ const data = useModel(()=>props.modelValue || {},e=>emit('update:modelValue',e))
 
 
 const clickTypeObj = {
-  request: '发送请求',
-  alert: '弹窗',
-  router: '路由',
-  link: '跳转',
+  request: {
+    title:'发送请求',
+    disabled: true
+  },
+
+  alert:  {
+    "title": "弹窗",
+    "disabled": false
+  },
+  router:  {
+    "title": "路由",
+    "disabled": false
+  },
+  link: {
+    "title": "跳转",
+    "disabled": false
+  }
 }
 
 </script>

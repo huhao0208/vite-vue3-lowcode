@@ -29,6 +29,10 @@ async function handleClick() {
     });
   } catch (err) {
     console.error("复制操作不被支持或失败: ", err);
+    ElMessage({
+      type: "fail",
+      message: "复制操作不被支持或失败: ", err
+    });
   }
 
 }

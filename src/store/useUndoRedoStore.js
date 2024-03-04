@@ -19,20 +19,21 @@ export const useUndoRedoStore = defineStore('undoRedo', {
     actions: {
         // 添加一个新的状态快照到历史记录
         snapshot(state) {
+            // 如果当前状态不可记录(撤销、重做操作时)，则直接返回
             if (!this.isRecord) {
                 return;
             }
             if (this.currentIndex < this.history.length - 1) {
                 this.history.splice(this.currentIndex + 1);
             }
-
             // 深拷贝当前状态以生成新的快照
             const currentState = JSON.parse(JSON.stringify(state));
-            if (this.history.length >= this.maxSteps) {
+            this.history.push(currentState);
+            if (this.history.length > this.maxSteps) {
                 this.history.shift(); // 如果超出最大步数，则移除最早的一个状态
             }
-            this.history.push(currentState);
-            this.currentIndex++;
+            this.currentIndex = this.history.length -1
+
         },
 
         // 撤销上一步操作
@@ -52,7 +53,13 @@ export const useUndoRedoStore = defineStore('undoRedo', {
             }
             return null; // 当无法重做时返回空
         },
-        // 更新是否可记录状态快照
+        // 将当前状态重置为初始状态
+        reset() {
+            const current = this.history?.[this.currentIndex]
+            this.history = current?[current]:[]
+            this.currentIndex = 0;
+        },
+        // 更新是否可记录状态快照 用于在撤销、重做时禁止添加snapshot记录
         updateIsRecord(val){
             this.isRecord = val
         }

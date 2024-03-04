@@ -1,4 +1,6 @@
 <script setup>
+import {Connection} from "@element-plus/icons-vue";
+
 const aStore = useApp()
 const router = useRouter();
 const route = useRoute();
@@ -39,6 +41,16 @@ watch(() => route.path, () => {
 }, {
   immediate: true
 })
+const iframeLink = ref('')
+onMounted(() => {
+  if(window.self!=window.top){
+      // alert('iframe中打开')
+    console.log(window.top,'window.top')
+    console.log(window.self,'window.self')
+    // console.log(window.top.location.href,'window.self.location.href')
+    iframeLink.value = location.href
+  }
+})
 </script>
 
 <template>
@@ -49,9 +61,21 @@ watch(() => route.path, () => {
     <component v-if="!route.meta.keepAlive" :is="Component" :key="route.path"/>
   </router-view>
 
-
+  <a class="iframe_link" v-if="iframeLink||true" :href="iframeLink" target="_blank">
+    <Connection class="icon"></Connection>
+  </a>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+.iframe_link{
+  position: fixed;
+  right: 0;
+  bottom: 40%;
+  cursor: pointer;
+  padding: 10px;
+  .icon{
+    width: 30px;
+    height: 30px;
+  }
+}
 </style>

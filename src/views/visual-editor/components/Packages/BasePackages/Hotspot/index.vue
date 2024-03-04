@@ -40,30 +40,28 @@ const clickFun = () => {
 </script>
 
 <template>
-  <div @click="clickFun" :class="{disabled:isPreview}">
-    <Vue3DraggableResizable
+  <Vue3DraggableResizable
+      :initW="styles.width||100"
+      :initH="styles.height||0"
+      v-model:x="styles.left"
+      v-model:y="styles.top"
+      v-model:w="styles.width"
+      v-model:h="styles.height"
+      :active="!isPreview?currentUid===uid:false"
+      :draggable="true"
+      :resizable="true"
+      @activated="print('activated')"
+      @deactivated="print('deactivated')"
+      @drag-start="print('drag-start')"
+      @resize-start="print('resize-start')"
+      @dragging="print('dragging')"
+      @resizing="print('resizing')"
+      @drag-end="print('drag-end')"
+      @resize-end="print('resize-end')"
+  >
+    <slot></slot>
+  </Vue3DraggableResizable>
 
-        :initW="styles.width||100"
-        :initH="styles.height||50"
-        v-model:x="styles.left"
-        v-model:y="styles.top"
-        v-model:w="styles.width"
-        v-model:h="styles.height"
-        :active="!isPreview?currentUid===uid:false"
-        :draggable="true"
-        :resizable="true"
-        @activated="print('activated')"
-        @deactivated="print('deactivated')"
-        @drag-start="print('drag-start')"
-        @resize-start="print('resize-start')"
-        @dragging="print('dragging')"
-        @resizing="print('resizing')"
-        @drag-end="print('drag-end')"
-        @resize-end="print('resize-end')"
-    >
-      <slot>热区</slot>
-    </Vue3DraggableResizable>
-  </div>
 </template>
 
 <style scoped lang="scss">

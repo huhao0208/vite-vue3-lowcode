@@ -13,15 +13,13 @@ defineOptions({
       fit:'fill',
     },
     styles: {
-
+      height: 'auto',
     },
     outStyles: {
       width: 375,
-      height: 200,
+        height: '',
     },
-    events: {
-      click: ''
-    }
+    events: [ ]
   }
 })
 const props = defineProps({
@@ -54,23 +52,24 @@ const fitObj = {
     <el-form label-width="100px">
       <el-form-item label="图片地址">
         <el-input v-model="data.attrs.src" placeholder="请输入图片地址" />
+        <UploadImg :width="200"  :height="200" style="display:block" v-model="data.attrs.src"></UploadImg>
       </el-form-item>
 
-     <el-form-item label="缩放模式">
-       <el-select v-model="data.attrs.fit" placeholder="请选择缩放模式">
-         <el-option v-for="(value, key) in fitObj" :key="key" :label="value" :value="key" />
-       </el-select>
+<!--     <el-form-item label="缩放模式">-->
+<!--       <el-select v-model="data.attrs.fit" placeholder="请选择缩放模式">-->
+<!--         <el-option v-for="(value, key) in fitObj" :key="key" :label="value" :value="key" />-->
+<!--       </el-select>-->
 
-     </el-form-item>
+<!--     </el-form-item>-->
     </el-form>
   </template>
-  <template #events>
-    <el-form label-width="100px">
-      <el-form-item label="点击事件">
-        <el-input v-model="data.events.click" placeholder="请输入点击事件" />
-      </el-form-item>
-    </el-form>
-  </template>
+<!--  <template #events>-->
+<!--    <el-form label-width="100px">-->
+<!--      <el-form-item label="点击事件">-->
+<!--        <el-input v-model="data.events.click" placeholder="请输入点击事件" />-->
+<!--      </el-form-item>-->
+<!--    </el-form>-->
+<!--  </template>-->
 </SettingLayout>
 </template>
 

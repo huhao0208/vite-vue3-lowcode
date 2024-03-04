@@ -33,7 +33,7 @@ defineOptions({
       zIndex:99999999,
       background:'#fff'
     },
-    events: {}
+    events: []
   }
 })
 const props = defineProps({

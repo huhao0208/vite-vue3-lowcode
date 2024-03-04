@@ -16,8 +16,6 @@ import useModal from '@/hooks/useModal.jsx';
 import 'element-plus/es/components/message/style/css';
 import {useUndoRedoStore} from "store/useUndoRedoStore.js";
 
-const cStore = useCustomPage()
-const undoRedoStore = useUndoRedoStore()
 
 // 生成预览链接
 const createPreviewLink = () => {
@@ -30,7 +28,7 @@ const createPreviewLink = () => {
             }, path
         } = router.currentRoute.value
 
-        locationg.href.replace(/#/)
+        location.href.replace(/#/)
         resolve( location.href + path)
     })
 };
@@ -38,9 +36,9 @@ const createPreviewLink = () => {
 
 export const useTools = () => {
 
-
-    return [
-
+    const cStore = useCustomPage()
+    const undoRedoStore = useUndoRedoStore()
+    const tools = ref([
         {
             title: '真机预览',
             icon: Cellphone,
@@ -53,14 +51,27 @@ export const useTools = () => {
                 useModal({
                     title: '预览二维码',
                     props: {
-                        width: 500,
+                        width: 400,
                         height: 700
                     },
                     footer: null,
                     content: () => (
-                        <div style={'display:flex;justify-content:center;align-items:center'}>
-                            <span>{link}</span>
+                        <div style={
+                            {
+
+                                display:'flex',
+                                flexDirection: 'column',
+                                justifyContent:'center',
+                                alignItems: 'center',
+                            }
+                        }>
+                            <div style={{
+                                width:'300px'
+                            }}>{link}</div>
                             <img width={280} height={280} src={qrcode.value}/>
+                            <div>
+                                xxx分后过期
+                            </div>
 
                         </div>
                     ),
@@ -73,20 +84,13 @@ export const useTools = () => {
             icon: RefreshLeft,
             disabled: !undoRedoStore.canUndo,
             onClick: () => {
-                // ElMessage({
-                //     showClose: true,
-                //     type: 'info',
-                //     duration: 2000,
-                //     message: '敬请期待！',
-                // });
-               const {list,pageConfig} =  undoRedoStore.undo()
+                const {list=[],pageConfig={}} =  undoRedoStore.undo()
                 undoRedoStore.updateIsRecord(false)
                 cStore.updateList(list)
                 cStore.updatePageConfig(pageConfig)
-
-                nextTick(() => {
-                    undoRedoStore.updateIsRecord(true)
-                })
+                // nextTick(() => {
+                //     undoRedoStore.updateIsRecord(true)
+                // })
             },
         },
         {
@@ -94,19 +98,13 @@ export const useTools = () => {
             icon: RefreshRight,
             disabled: !undoRedoStore.canRedo,
             onClick: () => {
-                // ElMessage({
-                //     showClose: true,
-                //     type: 'info',
-                //     duration: 2000,
-                //     message: '敬请期待！',
-                // });
-                const {list,pageConfig} =  undoRedoStore.redo()
+                const {list=[],pageConfig={}} =  undoRedoStore.redo()
                 undoRedoStore.updateIsRecord(false)
                 cStore.updateList(list)
                 cStore.updatePageConfig(pageConfig)
-                nextTick(() => {
-                    undoRedoStore.updateIsRecord(true)
-                })
+                // nextTick(() => {
+                //     undoRedoStore.updateIsRecord(true)
+                // })
             },
         },
         {
@@ -130,5 +128,26 @@ export const useTools = () => {
             },
         },
 
-    ];
+    ])
+    // 监听 store 的 canUndo 和 canRedo 变化
+    const subscription = watch(
+        () => [undoRedoStore.canUndo, undoRedoStore.canRedo],
+        ([newCanUndo, newCanRedo]) => {
+            tools.value.forEach((tool) => {
+                if (tool.title === '撤销') {
+                    tool.disabled = !newCanUndo;
+                }
+                if (tool.title === '重做') {
+                    tool.disabled = !newCanRedo;
+                }
+            });
+        },
+        { deep: false }
+    );
+
+    // 在组件卸载时记得取消订阅
+    onUnmounted(() => {
+        subscription();
+    });
+    return tools;
 };

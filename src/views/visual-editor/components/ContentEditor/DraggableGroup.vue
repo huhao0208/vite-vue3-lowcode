@@ -10,6 +10,10 @@ const props = defineProps({
   modelValue: {
     type: Array,
     default: () => []
+  },
+  scrollTop: {
+    type: Number,
+    default: 0
   }
 })
 const emit = defineEmits(['update:modelValue'])
@@ -24,7 +28,7 @@ const menuItems = [
 const cantCopyList = ['NavBar'];
 const cantDeleteList = [];
 const getMenuItems = (element) => {
-  const { name, uid,...args } = element
+  const {name, uid, ...args} = element
   return menuItems.map(item => {
     return {
       ...item,
@@ -32,18 +36,18 @@ const getMenuItems = (element) => {
       onClick: () => {
         let newList = toRaw(list.value)
         switch (item.type) {
-            case 'copy':
-              newList.push({
-                name,
-                ...args,
-                uid:''
-              })
-              break;
-              case 'delete':
-                newList =  newList.filter(e => e.uid !== uid)
-                break;
-            default:
-                break;
+          case 'copy':
+            newList.push({
+              name,
+              ...args,
+              uid: ''
+            })
+            break;
+          case 'delete':
+            newList = newList.filter(e => e.uid !== uid)
+            break;
+          default:
+            break;
         }
         emit('update:modelValue', newList)
         // console.log(item.type, uid,newList,'list')
@@ -53,29 +57,104 @@ const getMenuItems = (element) => {
   })
 }
 
+
+const onDragStart = (e) => {
+  console.log(e, 'onDragStart b')
+}
+
+const move = reactive({
+  x: 0,
+  y: 0
+})
+const onDragging = (e) => {
+  const {layerX, layerY, pageX, pageY, x, y, screenX, screenY} = e
+  move.x = screenX
+  move.y = screenY
+
+  console.log('layerY', screenX, screenY)
+}
+const onDragEnd = (e) => {
+  console.log(e, 'onDragEnd b')
+}
+const changeFun = e => {
+  const {added} = e
+  const {newIndex, element} = added || {}
+  // 计算位置信息
+  if (element.name === 'Hotspot') {
+    nextTick(() => {
+      const current = list.value[newIndex]
+      console.log(current, 'CCCCCCCCCCCCCCCC')
+      const {height, width} = current.styles
+      let left = move.x + 1200
+      let top = move.y - 487 + props.scrollTop
+
+
+      if (left > 375) {
+        left = 365
+      }
+      if (height + top <= 20) {
+        top = 20 - height
+      }
+
+      console.log({
+        height,
+        width,
+        left,
+        top
+
+      }, 'llllllllllllllll')
+      list.value[newIndex] = {
+        ...current,
+        styles: {
+          ...current.styles,
+          left: left,
+          top: top
+        }
+      }
+    })
+  }
+
+}
 </script>
 
 <template>
-  <draggable :group="{ name: 'page',  pull: false,put:true }" v-model="list" class="group_list" item-key="uid">
+  <draggable :group="{ name: 'page',  pull: false,put:true }" v-model="list" class="group_list"
+             @drag="onDragging"
+             @change="changeFun"
+             item-key="uid">
     <template #item="{ element }">
+      <component v-if="element.name === 'Hotspot'" :is="components[element.name]" :key="element.uid"
+                 :uid="element.uid"
+                 :events="element.events"
+                 v-model="element.styles"
+                 :class="`${element.name}`"
+                 style="z-index:999"
+                 v-bind="{ ...element.attrs }">
+        <div :style="{
+         height:'100%',
+         width:'100%',
+         backgroundColor: 'rgba(255, 0, 0, .2)',
+       }"
 
+             @click="setCurrentUid(element.uid)" v-contextMenu="{menuItems:getMenuItems(element)}"
+             class="Hotspot-container"
+        >
+          热区：{{ element.uid }}
+        </div>
+      </component>
 
-      <div   @click="setCurrentUid(element.uid)" v-contextMenu="{menuItems:getMenuItems(element)}"
+      <div v-else
            :style="styleFmt( element.outStyles,{})" :class="{
               list_group_item:true,
               [`list_group_item_${element.name}`]:true,
               list_group_item_current: currentUid === element.uid
             }">
 
-        <component v-if="element.name === 'Hotspot'" :is="components[element.name]" :key="element.uid"
-                   :uid="element.uid"
-                   :events="element.events"
-                   v-model="element.styles"
-                   v-bind="{ ...element.attrs }"></component>
 
-        <component v-else :is="components[element.name]" :key="element.uid"
+        <component  :is="components[element.name]" :key="element.uid"
                    :uid="element.uid"
                    :events="element.events"
+                   :class="element.name"
                    style="pointer-events: none"
                    v-bind="{ ...element.attrs, style:styleFmt( element.styles,{}) }"></component>
 
@@ -86,12 +165,26 @@ const getMenuItems = (element) => {
 </template>
 
 <style scoped lang="scss">
-.group_list{
+.group_list {
   position: relative;
+
+  &.ghost-class {
+    background: red;
+  }
+
+  &.drag-class {
+    background: yellow;
+  }
 }
+
 .list_group_item {
   position: relative;
   cursor: pointer;
+
+  .label {
+    display: none !important;
+  }
+
 
   &.list_group_item_current {
 
@@ -125,11 +218,12 @@ const getMenuItems = (element) => {
 
   }
 
-  &.list_group_item_Hotspot{
-   :deep(.vdr-container) {
+  &.list_group_item_Hotspot {
+    :deep(.vdr-container) {
       background-color: rgba(255, 0, 0, .2);
     }
   }
+
 
 }
 
@@ -150,4 +244,27 @@ const getMenuItems = (element) => {
   }
 
 }
+
+
+</style>
+
+<style lang="scss">
+.group_list {
+  .child_item {
+    .label {
+      display: none !important;
+    }
+  }
+
+  .Hotspot {
+    text-align: center;
+    color: rgb(255, 109, 3);
+    height: 0;
+
+    .Hotspot-container {
+      background-color: rgba(255, 0, 0, .2);
+    }
+  }
+}
+
 </style>

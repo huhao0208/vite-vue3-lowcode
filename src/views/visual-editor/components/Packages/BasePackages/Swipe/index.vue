@@ -16,6 +16,10 @@ const props = defineProps({
     type: String,
     default: 'white'
   },
+  showIndicators: {
+    type: Boolean,
+    default: false
+  },
   list: {
     type: Array,
     default: () => []
@@ -25,9 +29,7 @@ const props = defineProps({
 
 <template>
   <van-swipe class="my-swipe"  v-bind="props">
-    <van-swipe-item v-for="item in list" :key="item.id">
-      <van-image :src="item.src" :lazy-load="item.lazyLoad" :fit="item.fit"></van-image>
-    </van-swipe-item>
+    <van-swipe-item  :style="`background:url(${item.src}) center center/100% 100% no-repeat;`"  v-for="item in list" :key="item.id"> </van-swipe-item>
 
 
   </van-swipe>

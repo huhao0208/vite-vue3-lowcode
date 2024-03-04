@@ -22,9 +22,7 @@ defineOptions({
       width: 375,
       height: 40,
     },
-    events: {
-      click: ''
-    }
+    events:  []
   }
 })
 

@@ -1,5 +1,6 @@
 <template>
   <el-upload
+      ref="uploadRef"
       class="avatar-uploader"
       action=""
       :show-file-list="false"
@@ -13,24 +14,48 @@
       }"
   >
 
-    <img  :style="{
+
+    <div :style="{
         width: `${width}px`,
         height: `${height}px`,
-      }" v-if="modelValue" :src="modelValue" class="avatar" />
-    <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+      }" v-if="modelValue" class="avatar">
+      <el-image
+          ref="imgRef"
+          :style="{
+        width: `${width}px`,
+        height: `${height}px`,
+        display:'block'
+      }" :src="modelValue" alt=""/>
+      <div class="el-upload-avatar-actions" @click.stop="">
+        <!--          <span @click="previewHandler">-->
+        <!--            <el-icon><zoom-in/></el-icon>-->
+        <!--          </span>-->
+        <span @click.stop="imgRef?.$el?.click?.()">
+           <Upload  />
+          </span>
+        <span @click.stop=" emit('update:modelValue', '')">
+            <Delete />
+          </span>
+      </div>
+    </div>
+    <el-icon v-else class="avatar-uploader-icon">
+      <Plus/>
+    </el-icon>
+
   </el-upload>
 </template>
 
 <script lang="ts" setup>
-import { ElMessage } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
+import {ElMessage} from 'element-plus'
+import {Delete, Download, Plus, Position, Upload, ZoomIn} from '@element-plus/icons-vue'
+
 const emit: SetupContext['emit'] = defineEmits()
-import type { UploadProps } from 'element-plus'
+import type {UploadProps} from 'element-plus'
 import {SetupContext} from "vue";
 
 const props = defineProps({
   api: {
-    type: [Function,null],
+    type: [Function, null],
     default: null,
   },
   modelValue: {
@@ -49,20 +74,25 @@ const props = defineProps({
     type: [String],
     default: 'image/*',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-
+const imgRef = ref()
+const uploadRef = ref()
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
     response,
     uploadFile
 ) => {
   ElMessage.success('上传成功')
-  console.log(response,'response')
+  console.log(response, 'response')
   emit('update:modelValue', response.data)
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
- if (rawFile.size / 1024 / 1024 > 2) {
+  if (rawFile.size / 1024 / 1024 > 2) {
     ElMessage.error('Avatar picture size can not exceed 2MB!')
     return false
   }
@@ -79,11 +109,42 @@ const handleHttpUpload = async (options) => {
   const api = props.api ?? upload;
   return api(formData)
 };
+
+const previewHandler = (options) => {
+  console.log(imgRef.value.$el)
+}
 </script>
 
 <style scoped>
 .avatar-uploader .avatar {
-  display: block;
+  position: relative;
+
+  .el-upload-avatar-actions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+   justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fffbe8;
+    padding: 0 15%;
+    & > span {
+      padding: min(calc(16% - 3.4px), 20px);
+
+      svg{
+        min-width: 20px;
+        min-height: 20px;
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 </style>
 
@@ -110,4 +171,6 @@ const handleHttpUpload = async (options) => {
   height: 100%;
   text-align: center;
 }
+
+
 </style>
