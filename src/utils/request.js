@@ -47,6 +47,7 @@ axiosInstance.interceptors.response.use(
         } else {
             if (response?.data?.code === 290888){
                 router.push('/login');
+                return
             }
 
             ElMessage({

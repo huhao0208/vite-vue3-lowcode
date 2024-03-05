@@ -84,3 +84,10 @@ export const updateThemeEditorDetailContent = data => post('/zq-package/admin/co
  * @returns {Promise<unknown>}
  */
 export const getThemeEditorDetailContent = data => post('/zq-package/client/combine/getThemeEditorDetailContent', data)
+
+/**
+ * @desc 保存编辑器详情预览内容
+ * @param data
+ * @returns {Promise | Promise<unknown>}
+ */
+export const saveThemeEditorPreviewContent = data => post('/zq-package/admin/combine/saveThemeEditorPreviewContent', data)

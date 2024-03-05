@@ -133,6 +133,7 @@ declare global {
   const router: typeof import('./src/router/index.js')['default']
   const saveThemeEditorClass: typeof import('./src/api/index.js')['saveThemeEditorClass']
   const saveThemeEditorDetail: typeof import('./src/api/index.js')['saveThemeEditorDetail']
+  const saveThemeEditorPreviewContent: typeof import('./src/api/index.js')['saveThemeEditorPreviewContent']
   const setActivePinia: typeof import('pinia')['setActivePinia']
   const setMapStoreSuffix: typeof import('pinia')['setMapStoreSuffix']
   const shallowReactive: typeof import('vue')['shallowReactive']
@@ -486,6 +487,7 @@ declare module 'vue' {
     readonly router: UnwrapRef<typeof import('./src/router/index.js')['default']>
     readonly saveThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorClass']>
     readonly saveThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorDetail']>
+    readonly saveThemeEditorPreviewContent: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorPreviewContent']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
@@ -829,6 +831,7 @@ declare module '@vue/runtime-core' {
     readonly router: UnwrapRef<typeof import('./src/router/index.js')['default']>
     readonly saveThemeEditorClass: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorClass']>
     readonly saveThemeEditorDetail: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorDetail']>
+    readonly saveThemeEditorPreviewContent: UnwrapRef<typeof import('./src/api/index.js')['saveThemeEditorPreviewContent']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>

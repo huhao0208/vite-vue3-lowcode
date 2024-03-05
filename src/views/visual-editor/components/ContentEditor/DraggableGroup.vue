@@ -66,12 +66,15 @@ const move = reactive({
   x: 0,
   y: 0
 })
+
+
 const onDragging = (e) => {
   const {layerX, layerY, pageX, pageY, x, y, screenX, screenY} = e
-  move.x = screenX
-  move.y = screenY
+  move.x = x
+  move.y = y
 
-  console.log('layerY', screenX, screenY)
+  console.log('layerY', screenX, screenY,e)
+  console.log('x,y',x,y)
 }
 const onDragEnd = (e) => {
   console.log(e, 'onDragEnd b')
@@ -83,10 +86,10 @@ const changeFun = e => {
   if (element.name === 'Hotspot') {
     nextTick(() => {
       const current = list.value[newIndex]
-      console.log(current, 'CCCCCCCCCCCCCCCC')
+      console.log(window, 'CCCCCCCCCCCCCCCC')
       const {height, width} = current.styles
-      let left = move.x + 1200
-      let top = move.y - 487 + props.scrollTop
+      let left = move.x - 720
+      let top = move.y - 130 + props.scrollTop
 
 
       if (left > 375) {
@@ -144,6 +147,7 @@ const changeFun = e => {
       </component>
 
       <div v-else
+           @click="setCurrentUid(element.uid)" v-contextMenu="{menuItems:getMenuItems(element)}"
            :style="styleFmt( element.outStyles,{})" :class="{
               list_group_item:true,
               [`list_group_item_${element.name}`]:true,

@@ -10,7 +10,7 @@ const columns = [
     prop: 'name',
     attrs: {
       label: '页面名称',
-      // width: '120',
+      width: '300',
     }
   },
   {
@@ -26,7 +26,7 @@ const columns = [
     slot: 'handler',
     attrs: {
       label: '操作',
-      // width: '120',
+      width: '250',
     }
   }
 ]
@@ -52,7 +52,7 @@ const updateHandler = async (item) => {
 }
 
 const clientPageLink = (row) => {
-  return `https://pre-qiyue.cmread.com/client/standalone/index.html#/theme-page/${row.url}`
+  return `${import.meta.env.VITE_CLIENT_STANDALONE}custom/${row.url}`
 }
 
 
@@ -76,7 +76,7 @@ defineExpose({
         :columns="columns"
     >
       <template #url="{scope}">
-        <div>
+        <div class="url_container">
           {{clientPageLink(scope)}}
           <el-button  v-copy="clientPageLink(scope)" :icon="CopyDocument"></el-button>
         </div>
@@ -109,7 +109,12 @@ defineExpose({
 
 <style scoped lang="scss">
 .detail_container {
-
   padding: 10px;
+  .url_container{
+    /* 允许在单词内部换行 */
+    word-break: break-all;
+    /* 或者允许在不能以正常规则换行的地方进行换行（比如连字符、破折号等之后） */
+    overflow-wrap: break-word;
+  }
 }
 </style>

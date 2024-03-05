@@ -12,11 +12,11 @@ export const useCustomPage = defineStore('customPage', {
         currentUid: '',
         list: [],
         pageConfig: {
-            backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
-            backgroundImage: '', // 设置元素的背景图像，默认值：none。
-            backgroundSize: 'cover', // 设置元素背景图像的大小，默认值：auto。
-            backgroundPosition: '', // 设置元素背景图像的位置，默认值：0% 0%。
-            backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
+            styles:{
+
+            },
+            attrs:{}
+
         },
         classDetail:{}
     }),
@@ -88,7 +88,18 @@ export const useCustomPage = defineStore('customPage', {
             this.list[this.currentIndex] = detail
         },
         updatePageConfig(config) {
-            this.pageConfig = config
+            const {styles={}} = config
+            this.pageConfig = {
+                styles:{
+                    backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
+                    backgroundImage: '', // 设置元素的背景图像，默认值：none。
+                    backgroundSize: '375px auto', // 设置元素背景图像的大小，默认值：auto。
+                    backgroundPosition: '', // 设置元素背景图像的位置，默认值：0% 0%。
+                    backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
+                    ...styles,
+                },
+                attrs:{}
+            }
         },
 
     },

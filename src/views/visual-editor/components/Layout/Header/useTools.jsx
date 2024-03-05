@@ -15,7 +15,9 @@ import {
 import useModal from '@/hooks/useModal.jsx';
 import 'element-plus/es/components/message/style/css';
 import {useUndoRedoStore} from "store/useUndoRedoStore.js";
+import {saveThemeEditorPreviewContent} from "api";
 
+const standaloneBaseUrl = import.meta.env.VITE_CLIENT_STANDALONE
 
 // 生成预览链接
 const createPreviewLink = () => {
@@ -27,9 +29,16 @@ const createPreviewLink = () => {
                 url
             }, path
         } = router.currentRoute.value
+        const pStore = useCustomPage()
+        await  saveThemeEditorPreviewContent({
+            id,
+            content:JSON.stringify({
+                pageStyle:pStore.pageConfig,
+                contentList: pStore.list
+            })
+        })
 
-        location.href.replace(/#/)
-        resolve( location.href + path)
+        resolve( `${standaloneBaseUrl}custom/${url}?id=${id}&isPreview=1`)
     })
 };
 
@@ -65,13 +74,13 @@ export const useTools = () => {
                                 alignItems: 'center',
                             }
                         }>
-                            <div style={{
-                                width:'300px'
-                            }}>{link}</div>
+                            {/*<div style={{*/}
+                            {/*    width:'300px'*/}
+                            {/*}}>{link}</div>*/}
                             <img width={280} height={280} src={qrcode.value}/>
-                            <div>
-                                xxx分后过期
-                            </div>
+                            {/*<div>*/}
+                            {/*    xxx分后过期*/}
+                            {/*</div>*/}
 
                         </div>
                     ),
@@ -118,13 +127,9 @@ export const useTools = () => {
         {
             title: '预览',
             icon: Position,
-            onClick: () => {
-                const data = {
-                    pageConfig: cStore.pageConfig,
-                    list: cStore.list,
-                }
-                sessionStorage.setItem('pageInfo', JSON.stringify(data))
-                window.open(location.href.replace('/#/', '/preview/#/'));
+            onClick: async () => {
+                const link = await createPreviewLink()
+                window.open(link, '_blank')
             },
         },
 

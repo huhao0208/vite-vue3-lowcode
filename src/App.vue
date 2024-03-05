@@ -45,10 +45,9 @@ const iframeLink = ref('')
 onMounted(() => {
   if(window.self!=window.top){
       // alert('iframe中打开')
-    console.log(window.top,'window.top')
-    console.log(window.self,'window.self')
-    // console.log(window.top.location.href,'window.self.location.href')
+    // 在当前链接后拼接token以及name参数
     iframeLink.value = location.href
+
   }
 })
 </script>
@@ -61,7 +60,7 @@ onMounted(() => {
     <component v-if="!route.meta.keepAlive" :is="Component" :key="route.path"/>
   </router-view>
 
-  <a class="iframe_link" v-if="iframeLink||true" :href="iframeLink" target="_blank">
+  <a class="iframe_link" v-if="iframeLink" :href="iframeLink" target="_blank">
     <Connection class="icon"></Connection>
   </a>
 </template>

@@ -16,13 +16,15 @@ const scrollFun = e=>{
   console.log(e, 'scrollFun')
   scrollTop.value = e.scrollTop
 }
+
+
 </script>
 
 
 <template>
   <el-scrollbar class="content_editor"  ref="contentEditor">
     <el-scrollbar height="667" class="phone_container"  @scroll="scrollFun">
-      <DraggableGroup :scrollTop="scrollTop" :style="styleFmt(pStore.pageConfig,{})" style="min-height: 667px" v-model="list"></DraggableGroup>
+      <DraggableGroup   :scrollTop="scrollTop" :style="styleFmt(pStore.pageConfig?.styles,{})" style="min-height: 667px" v-model="list"></DraggableGroup>
     </el-scrollbar>
   </el-scrollbar>
 </template>

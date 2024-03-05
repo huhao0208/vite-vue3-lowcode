@@ -64,7 +64,7 @@ watch(
       <el-icon>
         <component :is="tool.icon" />
       </el-icon>
-        <span>{{tool.title}} {{tool.disabled}} </span>
+        <span>{{tool.title}} </span>
       </div>
     </div>
     <div class="right">

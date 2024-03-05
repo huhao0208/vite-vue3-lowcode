@@ -2,8 +2,9 @@
 
 
 import SettingLayout from "ve/components/SettingLayout.vue";
-import {defineEmits } from "vue";
+import {defineEmits} from "vue";
 import useModel from 've/hooks/useModel.js'
+import {Position} from "@element-plus/icons-vue";
 
 defineOptions({
   name: 'Hotspot',
@@ -11,11 +12,9 @@ defineOptions({
   type: 'BasePackages',
   order: 1,
   config: { // 默认配置
-    attrs: {
-
-    },
+    attrs: {},
     styles: {
-      zIndex:999999,
+      zIndex: 999999,
       position: 'absolute',
       top: 0,
       left: 0,
@@ -29,8 +28,8 @@ defineOptions({
       position: 'relative',
       top: 0,
       left: 0,
-      overflow:'visible',
-      zIndex:999999,
+      overflow: 'visible',
+      zIndex: 999999,
     },
     events: []
   }
@@ -45,25 +44,22 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue']);
 
-const data = useModel(()=>props.modelValue || {},e=>emit('update:modelValue',e))
-
-
-
+const data = useModel(() => props.modelValue || {}, e => emit('update:modelValue', e))
 
 
 const clickTypeObj = {
   request: {
-    title:'发送请求',
+    title: '发送请求',
     disabled: true
   },
 
-  alert:  {
+  alert: {
     "title": "弹窗",
     "disabled": false
   },
-  router:  {
+  router: {
     "title": "路由",
-    "disabled": false
+    "disabled": true
   },
   link: {
     "title": "跳转",
@@ -77,26 +73,29 @@ const clickTypeObj = {
 
   <SettingLayout>
 
-
-
-
     <template #events>
       <el-form label-width="100px">
-        <el-form-item label="点击事件">
-          <!--      选择  发送请求 弹窗-->
-          <el-select v-model="data.events.clickType" placeholder="请选择">
-            <el-option v-for="(label,key) in clickTypeObj" :key="key" :label="label" :value="key"></el-option>
-          </el-select>
-        </el-form-item>
+        <div v-for="(item,index) in  data.events" :key="item.type" class="event_card">
+          <div class="left">
+            {{ index + 1 }}
+          </div>
+          <div class="center">
+            <EventItemConf v-model="data.events[index]" />
 
-        <el-form-item v-if="data.events.clickType==='link'" label="跳转地址">
-          <el-input :placeholder="`请输入跳转链接`"></el-input>
-        </el-form-item>
-        <el-form-item v-if="data.events.clickType==='router'" label="路由名称">
-          <el-select placeholder="请选择路由">
-            <el-option></el-option>
-          </el-select>
-        </el-form-item>
+          </div>
+          <div class="right">
+            按钮xxx
+          </div>
+        </div>
+
+
+        <div style="text-align:right">
+          <el-button type="primary" @click="data.events.push({
+        uid: uuid()
+        })">
+            添加事件
+          </el-button>
+        </div>
       </el-form>
     </template>
   </SettingLayout>
@@ -104,5 +103,35 @@ const clickTypeObj = {
 </template>
 
 <style scoped lang="scss">
+.event_card {
+  display: flex;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  margin: 10px 0;
+  border-radius: 8px;
+  align-items: center;
+  position: relative;
 
+  .left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: rgba(136, 136, 136, 0.22);
+    border-radius: 4px;
+    color: #267da2;
+    font-size: 14px;
+  }
+
+  .center {
+    flex: 1;
+  }
+
+  .right {
+
+  }
+}
 </style>

@@ -67,7 +67,7 @@ router.beforeEach(async (to, from) => {
     const appStore = useApp();
 
 
-    if (!appStore.token && token && name) {
+    if (token && name) {
         appStore.setToken( atob(token))
         appStore.setUserName(name)
         await router.replace({
