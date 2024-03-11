@@ -21,6 +21,8 @@ const page = useModel(() => pStore.pageConfig, val => pStore.updatePageConfig(va
       <UploadImg  style="display:block" v-model="page.styles.backgroundImage"></UploadImg>
     </el-form-item>
 
+
+
   </el-form>
 </template>
 

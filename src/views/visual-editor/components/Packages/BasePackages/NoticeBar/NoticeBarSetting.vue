@@ -6,6 +6,7 @@ defineOptions({
   name: 'NoticeBar',
   label: '通知组件',
   type: 'BasePackages',
+  _hidden: true,
   order: 4,
   config:{
     attrs:{

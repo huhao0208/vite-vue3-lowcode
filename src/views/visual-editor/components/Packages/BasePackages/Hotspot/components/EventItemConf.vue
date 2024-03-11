@@ -31,10 +31,10 @@ const clickTypeObj = {
 </script>
 
 <template>
-  <el-form>
+  <el-form label-width="100px" :model="data">
     <el-form-item label="事件类型">
       <!--      选择  发送请求 弹窗-->
-      <el-select v-model="data.clickType" placeholder="请选择">
+      <el-select v-model="data.clickType" placeholder="请选择"  disabled>
         <el-option v-for="(item,key) in clickTypeObj" :key="key" :disabled="item.disabled" :label="item.title"
                    :value="key"></el-option>
       </el-select>
@@ -52,16 +52,16 @@ const clickTypeObj = {
     <!-- 弹窗相关-->
     <template v-if="data.clickType==='alert'">
       <el-form-item label="弹窗标题">
-        <el-input v-model="data.alertTitle"></el-input>
+        <el-input v-model="data.alertTitle" placeholder="请输入弹窗标题"></el-input>
       </el-form-item>
       <el-form-item label="弹窗内容">
-        <el-input v-model="data.alertContent" type="textarea"></el-input>
+        <el-input v-model="data.alertContent" type="textarea" placeholder="请输入弹窗内容"></el-input>
       </el-form-item>
-      <el-form-item label="确认按钮文案">
-        <el-input v-model="data.alertConfirm"></el-input>
+      <el-form-item label="确认按钮">
+        <el-input v-model="data.alertConfirm" placeholder="请输入确认按钮文案"></el-input>
       </el-form-item>
-      <el-form-item label="取消按钮文案">
-        <el-input v-model="data.alertCancel"></el-input>
+      <el-form-item label="取消按钮">
+        <el-input v-model="data.alertCancel" placeholder="请输入取消按钮文案"></el-input>
       </el-form-item>
     </template>
   </el-form>

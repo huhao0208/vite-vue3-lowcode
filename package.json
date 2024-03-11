@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host --mode dev",
     "build:st": "vite build --mode st",
-    "preview": "vite preview"
+    "build:pre": "vite build --mode pre",
+    "build": "vite build --mode pro"
   },
   "engines": {
     "node": ">=16.0.0"

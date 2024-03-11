@@ -91,3 +91,10 @@ export const getThemeEditorDetailContent = data => post('/zq-package/client/comb
  * @returns {Promise | Promise<unknown>}
  */
 export const saveThemeEditorPreviewContent = data => post('/zq-package/admin/combine/saveThemeEditorPreviewContent', data)
+
+/**
+ * @desc 复制编辑器详情
+ * @param data
+ * @returns {Promise<unknown>}
+ */
+export const copyThemeEditorDetail = data => post('/zq-package/admin/combine/copyThemeEditorDetail', data)

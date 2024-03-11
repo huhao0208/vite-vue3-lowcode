@@ -30,11 +30,12 @@ const cloneDog = (comp) => {
   <el-tabs tab-position="left" class="aside_tabs">
     <el-tab-pane v-for="(tab,type) in packageModules" :key="type" :label="tab.label" lazy>
       <el-scrollbar height="calc(100vh - 80px)">
-        <draggable item-key="id" :list="Object.values(tab.components).sort((a,b)=>a.order-b.order)"
+        <draggable item-key="id" :list="Object.values(tab.components).sort((a,b)=>a.order-b.order).filter(item=>!item._hidden)"
                     :clone="cloneDog"  :sort="false"
                    :group="{ name: 'page', pull: 'clone', put: false }"
-                   :fallback-class="true"
-                   :fallback-on-body="true"
+                   :fallback-class="false"
+                   :fallback-on-body="false"
+                   :scrollSensitivity="20"
 
         >
 

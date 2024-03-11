@@ -1,24 +1,32 @@
 import {v4 as uuid} from "uuid";
 import {components, settingComponents} from 've/components/Packages/index.js'
+import {saveThemeEditorPreviewContent} from "api";
 
 export const useCustomPage = defineStore('customPage', {
     // 开启数据缓存
     persist: {
         key: 'customPage', // 自定义名称
         storage: localStorage, // 保存位置，默认保存在sessionStorage
-        paths: ['classDetail'], // 指定要持久化的数据，默认所有 state 都会进行缓存，你可以通过 paths 指定要持久化的字段，其他的则不会进行持久化。
+        paths: ['classDetail', 'uid'], // 指定要持久化的数据，默认所有 state 都会进行缓存，你可以通过 paths 指定要持久化的字段，其他的则不会进行持久化。
     },
     state: () => ({
         currentUid: '',
+        uid: Math.random().toString().substr(2, 10), // 生成随机uid
         list: [],
         pageConfig: {
-            styles:{
-
+            styles: {
+                backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
+                backgroundImage: '', // 设置元素的背景图像，默认值：none。
+                backgroundSize: '375 auto', // 设置元素背景图像的大小，默认值：auto。
+                backgroundPosition: 'top center', // 设置元素背景图像的位置，默认值：0% 0%。
+                backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
+                paddingTop: 0,
             },
-            attrs:{}
-
+            attrs: {
+                class: 'test'
+            }
         },
-        classDetail:{}
+        classDetail: {}
     }),
     getters: {
         classId(state) {
@@ -30,34 +38,35 @@ export const useCustomPage = defineStore('customPage', {
         currentDetail: state => {
             return state.list[state.currentIndex]
         },
-        pageData(state) {
-            return {
-                ...state.pageConfig,
-                list: state.list,
-            }
+        hasNavBar(state) {
+            return state.list.some(item => item.name === 'NavBar')
         },
+        hasTabBar(state) {
+            return state.list.some(item => item.name === 'TabBar')
+        }
     },
     actions: {
         setClassDetail(e) {
             console.log('%c setClassDetail', 'color: #007acc;')
             this.classDetail = e
         },
-        updateList(e=[]) {
+        updateList(e = []) {
             console.log('%c updateList', 'color: #007acc;')
             this.list = e.map(item => {
                 // console.log(item)
-                const {name, label, styles, outStyles, attrs, events, uid='', children = [], type} = item
-
+                const {name, label, styles, outStyles, attrs, events, uid = '', type} = item
+                // 获取组件默认配置
                 const {
                     attrs: defaultAttrs = {},
                     events: defaultEvents = [],
                     styles: defaultStyles = {},
                     outStyles: defaultOutStyles = {},
-                    children: defaultChildren = []
                 } = settingComponents[name]?.config || {}
 
                 return {
-                    name, label, type,
+                    name,
+                    label,
+                    type,
                     uid: uid || uuid(),
                     styles: styles || {
                         display: 'block',
@@ -75,10 +84,21 @@ export const useCustomPage = defineStore('customPage', {
                         ...defaultOutStyles
                     },
                     attrs: attrs || {...defaultAttrs},
-                    events: events ||defaultEvents,
+                    events: events || defaultEvents,
 
                 }
             })
+
+            const navBar = this.list.find(item => item.name === 'NavBar') || null
+            console.log('navBar', navBar)
+            this.pageConfig.styles.paddingTop = navBar?.outStyles?.height || 0
+            // this.pageConfig = {
+            //     ...this.pageConfig,
+            //     styles:{
+            //         ...this.pageConfig.styles,
+            //         paddingTop:  navBar?.outStyles?.height||0
+            //     }
+            // }
         },
 
         setCurrent(uid) {
@@ -88,19 +108,26 @@ export const useCustomPage = defineStore('customPage', {
             this.list[this.currentIndex] = detail
         },
         updatePageConfig(config) {
-            const {styles={}} = config
-            this.pageConfig = {
-                styles:{
-                    backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
-                    backgroundImage: '', // 设置元素的背景图像，默认值：none。
-                    backgroundSize: '375px auto', // 设置元素背景图像的大小，默认值：auto。
-                    backgroundPosition: '', // 设置元素背景图像的位置，默认值：0% 0%。
-                    backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
-                    ...styles,
-                },
-                attrs:{}
-            }
+            this.pageConfig = config
         },
+        savePreview() {
+            return new Promise(async (resolve, reject) => {
+
+                try {
+                    await saveThemeEditorPreviewContent({
+                        id: this.uid,
+                        // uid,
+                        content: JSON.stringify({
+                            pageConfig: this.pageConfig,
+                            contentList: this.list
+                        })
+                    })
+                    resolve()
+                } catch (e) {
+                    reject(e)
+                }
+            })
+        }
 
     },
 })

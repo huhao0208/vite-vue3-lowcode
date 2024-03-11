@@ -17,7 +17,7 @@ const submit =async () => {
     id:route.query.id,
     url: route.params.url,
     content:JSON.stringify({
-      pageStyle: pStore.pageConfig,
+      pageConfig: pStore.pageConfig,
       contentList: pStore.list
     })
   })
@@ -116,6 +116,12 @@ watch(
         font-size: 12px;
       }
     }
+
+
+    :deep(.el-dialog__header){
+      padding-right: 0;
+    }
   }
 }
+
 </style>

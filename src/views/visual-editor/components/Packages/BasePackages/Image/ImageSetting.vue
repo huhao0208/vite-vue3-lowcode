@@ -11,6 +11,8 @@ defineOptions({
     attrs: {
       src:'https://img01.yzcdn.cn/vant/cat.jpeg',
       fit:'fill',
+
+      class:''
     },
     styles: {
       height: 'auto',
@@ -20,7 +22,7 @@ defineOptions({
         height: '',
     },
     events: [ ]
-  }
+  },
 })
 const props = defineProps({
   modelValue: {

@@ -20,8 +20,7 @@ defineOptions({
       leftIcon: "arrow-left"
     },
     styles: {
-      // display: '',
-      // position: ''
+      fontSize: 17,
     },
     outStyles: {
       display: 'block',
@@ -29,7 +28,8 @@ defineOptions({
       top: 0,
       left: 0,
       width: 375,
-      height: 46,
+      height: 48,
+
       zIndex:99999999,
       background:'#fff'
     },

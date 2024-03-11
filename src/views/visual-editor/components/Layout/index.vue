@@ -29,7 +29,8 @@ const buttonIcon = computed(() => {
         <div class="page_edit_con">
           <slot name="main"></slot>
         </div>
-        <div class="right_attrs" :hidden="!pStore.currentUid" :class="{'right_attrs_open': attrsOpen}">
+<!--        :hidden="!pStore.currentUid"-->
+        <div class="right_attrs"  :class="{'right_attrs_open': attrsOpen}">
           <el-button :icon="buttonIcon" class="open_icon" link
                      @click="attrsOpen = !attrsOpen">
 
@@ -73,7 +74,7 @@ const buttonIcon = computed(() => {
   }
 
   .right_attrs {
-    height: 100%;
+    height: calc(100vh - var(--header-height));
     background-color: #fff;
     position: relative;
     width: 600px;

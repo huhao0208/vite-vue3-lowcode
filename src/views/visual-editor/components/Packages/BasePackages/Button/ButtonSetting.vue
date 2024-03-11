@@ -1,7 +1,7 @@
 <script setup>
 
 
-import SettingLayout from "ve/components/SettingLayout.vue";
+// import SettingLayout from "ve/components/SettingLayout/index";
 import {defineEmits } from "vue";
 import useModel from 've/hooks/useModel.js'
 
@@ -10,6 +10,7 @@ defineOptions({
   label: '按钮',
   type: 'BasePackages',
   order: 1,
+  _hidden: true,
   config: { // 默认配置
     attrs: {
       type: 'primary',

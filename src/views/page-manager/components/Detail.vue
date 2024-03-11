@@ -1,6 +1,6 @@
 <script setup>
 
-import {deleteThemeEditorDetail, updateThemeEditorDetail} from "api";
+import {copyThemeEditorDetail, deleteThemeEditorDetail, updateThemeEditorDetail} from "api";
 import {CopyDocument} from "@element-plus/icons-vue";
 
 const pStore = useCustomPage()
@@ -55,7 +55,19 @@ const clientPageLink = (row) => {
   return `${import.meta.env.VITE_CLIENT_STANDALONE}custom/${row.url}`
 }
 
+// 复制页面
+const copyPageFun = async (e)=>{
+  console.log(e)
+  await copyThemeEditorDetail({
+    id: e.id
+  })
+  ElMessage.success('操作成功')
+  tableReload()
+}
 
+const  previewFun = scope=>{
+  window.open(clientPageLink(scope), '_blank')
+}
 defineExpose({
   tableReload
 })
@@ -89,8 +101,8 @@ defineExpose({
         })">
           {{ scope.status === 1 ? '下架' : '上架' }}
         </el-button>
-        <el-button link type="primary">复制</el-button>
-        <el-button link type="primary">查看</el-button>
+        <el-button link type="primary" @click="copyPageFun(scope)">复制</el-button>
+        <el-button link type="primary" @click="previewFun(scope)">查看</el-button>
         <el-button link type="primary" @click="router.push(`/visual-editor/${scope.url}?id=${scope.id}`)">编辑
         </el-button>
         <el-popconfirm title="删除后无法恢复，是否删除？" confirm-button-text="是"

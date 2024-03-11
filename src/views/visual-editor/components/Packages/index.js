@@ -23,11 +23,11 @@ Object.entries(modulesFiles).forEach(([path, component]) => {
     const [packageType, componentName = '', lastFullName = ''] = path.replace(/\.\/|\.vue$/g, '').split('/')
     const lastName = lastFullName.replace(componentName, '')
     if (lastName.toLowerCase() === 'setting') {
-        const {label, name, order,type} = componentTarget;
+        const {label, name, order,type,_hidden} = componentTarget;
 
         componentsObj[componentName] = {
             ...componentsObj[componentName],
-            label, name, order,type
+            label, name, order,type,_hidden
         }
         settingComponentsObj[componentName] = componentTarget
         const {components = {}} = packageModulesObj[packageType] || {}
@@ -36,7 +36,7 @@ Object.entries(modulesFiles).forEach(([path, component]) => {
             ...components[componentName],
             label,
             name,
-            order,type,
+            order,type,_hidden,
             settingComponent: componentTarget
         }
 

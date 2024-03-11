@@ -10,12 +10,15 @@ const props = defineProps({
   }
 })
 const route = useRoute()
+const showLeft = computed(()=>{
+  return window.history.length>1
+})
 const onClickLeft = () => {
-  if (window.history.length > 1) {
+  if (showLeft) {
     route.goBack()
   } else {
-    // 跳转指定链接
-    location.replace('https://www.baidu.com')
+    // // 跳转指定链接
+    // location.replace('https://www.baidu.com')
   }
 
 }
@@ -26,7 +29,7 @@ const onClickRight = () => {
 
 <template>
   <div class="nav_bar"  >
-    <div class="left" @click="onClickLeft">
+    <div class="left" @click="onClickLeft" v-if="showLeft">
       <van-icon name="arrow-left" />
     </div>
     <div class="title">
@@ -42,7 +45,7 @@ const onClickRight = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+
 
   .left {
     position: absolute;

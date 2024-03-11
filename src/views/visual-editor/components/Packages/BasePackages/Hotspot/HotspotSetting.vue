@@ -1,10 +1,8 @@
 <script setup>
 
-
-import SettingLayout from "ve/components/SettingLayout.vue";
 import {defineEmits} from "vue";
 import useModel from 've/hooks/useModel.js'
-import {Position} from "@element-plus/icons-vue";
+
 
 defineOptions({
   name: 'Hotspot',
@@ -43,29 +41,7 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['update:modelValue']);
-
 const data = useModel(() => props.modelValue || {}, e => emit('update:modelValue', e))
-
-
-const clickTypeObj = {
-  request: {
-    title: '发送请求',
-    disabled: true
-  },
-
-  alert: {
-    "title": "弹窗",
-    "disabled": false
-  },
-  router: {
-    "title": "路由",
-    "disabled": true
-  },
-  link: {
-    "title": "跳转",
-    "disabled": false
-  }
-}
 
 </script>
 
@@ -74,35 +50,27 @@ const clickTypeObj = {
   <SettingLayout>
 
     <template #events>
-      <el-form label-width="100px">
-        <div v-for="(item,index) in  data.events" :key="item.type" class="event_card">
-          <div class="left">
-            {{ index + 1 }}
-          </div>
-          <div class="center">
-            <EventItemConf v-model="data.events[index]" />
 
-          </div>
-          <div class="right">
-            按钮xxx
-          </div>
-        </div>
-
-
-        <div style="text-align:right">
-          <el-button type="primary" @click="data.events.push({
-        uid: uuid()
-        })">
-            添加事件
-          </el-button>
-        </div>
-      </el-form>
     </template>
+
+
   </SettingLayout>
 
 </template>
 
 <style scoped lang="scss">
+.events_empty {
+  text-align: center;
+  font-size: 14px;
+  color: #4f4e4e;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+}
+
 .event_card {
   display: flex;
   border: 1px solid #ccc;
@@ -127,11 +95,26 @@ const clickTypeObj = {
   }
 
   .center {
+    padding-top: 18px;
     flex: 1;
   }
 
   .right {
+    //width: 60px;
+    margin: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
 
+    span {
+      display: inline-block;
+      padding: 6px;
+      cursor: pointer;
+
+      &.move {
+        cursor: move;
+      }
+    }
   }
 }
 </style>

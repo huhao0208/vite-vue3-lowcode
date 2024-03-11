@@ -62,49 +62,64 @@ const onDragStart = (e) => {
   console.log(e, 'onDragStart b')
 }
 
-const move = reactive({
+const move = {
   x: 0,
   y: 0
-})
+}
 
 
 const onDragging = (e) => {
   const {layerX, layerY, pageX, pageY, x, y, screenX, screenY} = e
-  move.x = x
-  move.y = y
+  move.screenLeft = (window.screenLeft || window.screenX)
+  move.screenTop = (window.screenTop || window.screenY)
+  move.x =   screenX
+  move.y =  screenY
+//  console.clear()
+ console.log({layerX, layerY, pageX, pageY, x, y, screenX, screenY},move,'layerX, layerY, pageX, pageY, x, y, screenX, screenY')
+  // console.log('layerY', screenX, screenY,e)
+  // console.log('x,y',x,y)
+}
+const onDragEnd = (event) => {
 
-  console.log('layerY', screenX, screenY,e)
-  console.log('x,y',x,y)
 }
-const onDragEnd = (e) => {
-  console.log(e, 'onDragEnd b')
-}
+
+
 const changeFun = e => {
+
+  const phone_container = document.querySelector('.phone_container')
+   console.dir(phone_container , 'phone_container')
+
+  const phoneInfo = phone_container.getBoundingClientRect()
   const {added} = e
   const {newIndex, element} = added || {}
   // 计算位置信息
-  if (element.name === 'Hotspot') {
+  if (element?.name === 'Hotspot') {
     nextTick(() => {
       const current = list.value[newIndex]
-      console.log(window, 'CCCCCCCCCCCCCCCC')
+
       const {height, width} = current.styles
-      let left = move.x - 720
-      let top = move.y - 130 + props.scrollTop
 
 
-      if (left > 375) {
-        left = 365
-      }
-      if (height + top <= 20) {
-        top = 20 - height
-      }
+      let left =   move.x - move.screenLeft  - phoneInfo.left - 100
+      let top =   move.y  - move.screenTop  - phoneInfo.top  + props.scrollTop -110
 
+      // console.log(left, top)
+
+
+      // if (left > 350)  left = 350
+      // if (left<-200) left = -180
+      //
+      // if (height + top <= 20) {
+      //   top = 20 - height
+      // }
+      // debugger
       console.log({
+        move,
+        phoneInfo,
         height,
         width,
         left,
-        top
-
+        top,
       }, 'llllllllllllllll')
       list.value[newIndex] = {
         ...current,
@@ -124,6 +139,7 @@ const changeFun = e => {
   <draggable :group="{ name: 'page',  pull: false,put:true }" v-model="list" class="group_list"
              @drag="onDragging"
              @change="changeFun"
+             @end="onDragEnd"
              item-key="uid">
     <template #item="{ element }">
       <component v-if="element.name === 'Hotspot'" :is="components[element.name]" :key="element.uid"
@@ -171,6 +187,7 @@ const changeFun = e => {
 <style scoped lang="scss">
 .group_list {
   position: relative;
+  overflow-x: hidden;
 
   &.ghost-class {
     background: red;

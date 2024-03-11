@@ -27,6 +27,11 @@ defineOptions({
           src: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
           link: 'https://wwww.baidu.com'
         },
+        {
+          id: 2,
+          src: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+          link: 'https://wwww.baidu.com'
+        },
       ]
     },
     styles: {

@@ -6,10 +6,13 @@ const detail = useModel(()=>pStore.currentDetail,val=>pStore.updateCurrentDetail
 </script>
 
 <template>
-  <component v-model="detail"  v-if="detail?.name"  :key="detail.uid" :is="settingComponents[detail.name]
-"></component>
+ <div>
 
 
+   <component v-model="detail"  v-if="detail?.name"  :key="detail.uid" :is="settingComponents[detail.name]"></component>
+
+   <SettingLayout v-else></SettingLayout>
+ </div>
 </template>
 
 <style scoped lang="scss">

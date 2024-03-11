@@ -1,6 +1,10 @@
 <script>
+
+import ComEventsConfig from "./ComEventsConfig.vue";
+
 export default {
-  name: "SettingLayout"
+  name: "SettingLayout",
+  components: {ComEventsConfig}
 }
 </script>
 
@@ -9,13 +13,16 @@ export default {
     <el-tab-pane label="属性设置" v-if="$slots.attrs">
       <slot name="attrs"></slot>
     </el-tab-pane>
-    <el-tab-pane label="样式设置"  v-if="$slots.styles">
+    <el-tab-pane label="样式设置" v-if="$slots.styles">
 
-<!--      &lt;!&ndash;通用样式配置&ndash;&gt;-->
-<!--      <CommonStyleSetting/>-->
+      <!--      &lt;!&ndash;通用样式配置&ndash;&gt;-->
+      <ComStylesConfig/>
       <slot name="styles"></slot>
     </el-tab-pane>
     <el-tab-pane label="事件配置" v-if="$slots.events">
+      <!-- 点击事件-->
+    <ComEventsConfig></ComEventsConfig>
+
       <slot name="events"></slot>
     </el-tab-pane>
     <el-tab-pane label="页面设置">
@@ -41,7 +48,8 @@ export default {
     box-sizing: border-box;
     padding: 20px 10px 20px 20px;
   }
-  :deep(.el-form-item__label){
+
+  :deep(.el-form-item__label) {
     text-align: center;
   }
 }

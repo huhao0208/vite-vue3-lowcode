@@ -7,6 +7,7 @@ defineOptions({
   label: '文本',
   type: 'BusinessPackages',
   order: 1,
+  _hidden: true,
   config:{
     attrs:{
 

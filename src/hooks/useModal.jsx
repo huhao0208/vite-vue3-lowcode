@@ -22,6 +22,7 @@ const Modal = defineComponent({
         const state = reactive({
             options: props.options,
             visible: true,
+            data:{}
         });
 
         const methods = {
@@ -35,15 +36,16 @@ const Modal = defineComponent({
 
         const handler = {
             onConfirm: async () => {
-                await state.options.onConfirm?.();
+                await state.options.onConfirm?.(state.data);
                 methods.hide();
             },
             onCancel: () => {
-                state.options.onCancel?.();
+                state.options.onCancel?.(state.data);
                 methods.hide();
             },
             onClosed: () => {
                 state.options.onClosed?.();
+                state.data = {}
             }
         };
 
@@ -61,12 +63,10 @@ const Modal = defineComponent({
             >
                 {{
                     default:!state.options.content? null: () =>
-                        isVNode(state.options.content) ? (
-                            <content/>
-                        ) : isFunction(state.options.content) ? (
-                            state.options.content()
+                        isVNode(state.options.content) ? ( state.options.content) : isFunction(state.options.content) ? (
+                            state.options.content(state.data)
                         ) : '提示内容',
-                    footer: state.options.footer === null ? null : () =>
+                    footer: !state.options.footer ? null :  () =>  isVNode(state.options.footer)? state.options.footer:  isFunction(state.options.footer) ? state.options.footer(state.data) :
                         (
                             <div>
                                 <ElButton {...{onClick: handler.onCancel}}>取消</ElButton>

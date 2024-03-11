@@ -19,8 +19,9 @@ import {saveThemeEditorPreviewContent} from "api";
 
 const standaloneBaseUrl = import.meta.env.VITE_CLIENT_STANDALONE
 
+
 // 生成预览链接
-const createPreviewLink = () => {
+const createPreviewLink = (isPreview) => {
     return new Promise(async (resolve, reject) => {
         const {
             query: {
@@ -29,18 +30,68 @@ const createPreviewLink = () => {
                 url
             }, path
         } = router.currentRoute.value
-        const pStore = useCustomPage()
-        await  saveThemeEditorPreviewContent({
-            id,
-            content:JSON.stringify({
-                pageStyle:pStore.pageConfig,
-                contentList: pStore.list
-            })
-        })
 
-        resolve( `${standaloneBaseUrl}custom/${url}?id=${id}&isPreview=1`)
+        let urlLink = `${standaloneBaseUrl}custom/${url}`
+        const pStore = useCustomPage()
+        if (isPreview) {
+         try {
+             await pStore.savePreview()
+             urlLink+=`?id=${pStore.uid}&isPreview=1&t=${+new Date()}`
+         }catch (e) {
+             ElMessage({
+                 type: 'warning',
+                  message: '保存预览数据失败，请稍后再试！'
+             })
+         }
+        }
+
+        resolve(urlLink)
     })
 };
+
+const createPreviewModel = async(isPreview) => {
+    const link = await createPreviewLink(isPreview)
+    const qrcode = useQRCode(link, {
+        size: 220,
+    });
+    useModal({
+        title: '',
+        props: {
+            width: 400,
+            height: 700
+        },
+        footer: null,
+        content: () => (
+            <div style={
+                {
+
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }
+            }>
+                <h3 style={{marginTop: '-10px'}}>{isPreview?'编辑预览':'预览(发布状态)'}</h3>
+                <a href={link} target={"_blank"} style={{
+                    width: '100%',
+                    whiteSpace: 'nowrap',
+                    textAlign: 'center',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    padding: '10px 0',
+                }}>
+                    {link}
+                </a>
+                <img width={280} height={280} src={qrcode.value}/>
+                {/*<div>*/}
+                {/*    xxx分后过期*/}
+                {/*</div>*/}
+
+            </div>
+        ),
+    })
+    ;
+}
 
 
 export const useTools = () => {
@@ -48,52 +99,13 @@ export const useTools = () => {
     const cStore = useCustomPage()
     const undoRedoStore = useUndoRedoStore()
     const tools = ref([
-        {
-            title: '真机预览',
-            icon: Cellphone,
-            onClick: async () => {
-                console.log('真机预览')
-                const link = await createPreviewLink()
-                const qrcode = useQRCode(link, {
-                    size: 220,
-                });
-                useModal({
-                    title: '预览二维码',
-                    props: {
-                        width: 400,
-                        height: 700
-                    },
-                    footer: null,
-                    content: () => (
-                        <div style={
-                            {
 
-                                display:'flex',
-                                flexDirection: 'column',
-                                justifyContent:'center',
-                                alignItems: 'center',
-                            }
-                        }>
-                            {/*<div style={{*/}
-                            {/*    width:'300px'*/}
-                            {/*}}>{link}</div>*/}
-                            <img width={280} height={280} src={qrcode.value}/>
-                            {/*<div>*/}
-                            {/*    xxx分后过期*/}
-                            {/*</div>*/}
-
-                        </div>
-                    ),
-                })
-                ;
-            },
-        },
         {
             title: '撤销',
             icon: RefreshLeft,
             disabled: !undoRedoStore.canUndo,
             onClick: () => {
-                const {list=[],pageConfig={}} =  undoRedoStore.undo()
+                const {list = [], pageConfig = {}} = undoRedoStore.undo()
                 undoRedoStore.updateIsRecord(false)
                 cStore.updateList(list)
                 cStore.updatePageConfig(pageConfig)
@@ -107,7 +119,7 @@ export const useTools = () => {
             icon: RefreshRight,
             disabled: !undoRedoStore.canRedo,
             onClick: () => {
-                const {list=[],pageConfig={}} =  undoRedoStore.redo()
+                const {list = [], pageConfig = {}} = undoRedoStore.redo()
                 undoRedoStore.updateIsRecord(false)
                 cStore.updateList(list)
                 cStore.updatePageConfig(pageConfig)
@@ -125,11 +137,17 @@ export const useTools = () => {
             },
         },
         {
+            title: '编辑预览',
+            icon: Cellphone,
+            onClick: async () => {
+                await createPreviewModel(true)
+            },
+        },
+        {
             title: '预览',
             icon: Position,
             onClick: async () => {
-                const link = await createPreviewLink()
-                window.open(link, '_blank')
+                await createPreviewModel(false)
             },
         },
 
@@ -147,7 +165,7 @@ export const useTools = () => {
                 }
             });
         },
-        { deep: false }
+        {deep: false}
     );
 
     // 在组件卸载时记得取消订阅

@@ -20,10 +20,6 @@ const rules = {
     {required: true, message: '请输入名称', trigger: 'blur'},
     {min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur'}
   ],
-  // url: [
-  //   {required: true, message: '请输入描述', trigger: 'blur'},
-  //   {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'},
-  // ]
 }
 
 const closeHandler = () => {

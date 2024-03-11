@@ -6,7 +6,7 @@ import directives from "@/directives/index";
 
 import 'normalize.css';
 import './style.css'
-
+import 'animate.css';
 import 'element-plus/theme-chalk/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import App from './App.vue'

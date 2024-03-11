@@ -6,7 +6,12 @@
  * @returns {*|string}
  */
 export function processValue(rawValue, unit = 'px', baseSize = 37.5) {
-    if (isNumber(rawValue) || ( isString(rawValue) && /^\d+$/.test(rawValue.trim()))) {
+    // 如果是类似backgroundSize: 375 auto
+    if (isString(rawValue)&& rawValue.includes(' ')) {
+        return rawValue.split(' ').map(item => processValue(item, unit, baseSize)).join(' ')
+    }
+
+    if (isNumber(rawValue) || (isString(rawValue) && /^\d+$/.test(rawValue.trim()))) {
         switch (unit) {
             case 'px':
                 return `${rawValue}px`;
@@ -39,8 +44,8 @@ function handleCssData(cssData, cssAttr, camelCaseAttrs, unit, baseSize) {
             acc[key] = value
         }
         // 如果是背景图片 值为base64数据或者链接 则拼接url
-        if (key==='backgroundImage'){
-            acc[key] = /^(http|data:image)/.test(value) ? `url(${value})`:value
+        if (key === 'backgroundImage') {
+            acc[key] = /^(http|data:image)/.test(value) ? `url(${value})` : value
         }
         return acc;
     }, {});
@@ -108,8 +113,8 @@ export default function (
  * @returns {{}}
  */
 function convertCssStringToObject(cssString) {
-     if (isObject(cssString)) return cssString;
-     if (!isString(cssString)) return {};
+    if (isObject(cssString)) return cssString;
+    if (!isString(cssString)) return {};
     const lines = cssString.split('\n');
     const cssObject = {};
 

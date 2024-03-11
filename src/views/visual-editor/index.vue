@@ -11,8 +11,8 @@ onMounted(async () => {
   })
 
   console.log(content,'content')
-  const {pageStyle={},contentList=[]} = content||{}
-  cStore.updatePageConfig(pageStyle)
+  const {pageConfig={},contentList=[]} = content||{}
+  cStore.updatePageConfig(pageConfig)
   cStore.updateList(contentList)
 })
 </script>
