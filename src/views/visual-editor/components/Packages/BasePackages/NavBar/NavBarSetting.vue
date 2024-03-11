@@ -9,6 +9,7 @@ defineOptions({
   label: '顶部导航',
   type: 'BasePackages',
   order: 6,
+  onlyOne: true, // 是否唯一 整个页面只能有一个
   config: {
 
     attrs: {

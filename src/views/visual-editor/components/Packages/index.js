@@ -23,27 +23,28 @@ Object.entries(modulesFiles).forEach(([path, component]) => {
     const [packageType, componentName = '', lastFullName = ''] = path.replace(/\.\/|\.vue$/g, '').split('/')
     const lastName = lastFullName.replace(componentName, '')
     if (lastName.toLowerCase() === 'setting') {
-        const {label, name, order,type,_hidden} = componentTarget;
+        // 移除不必要的JSON序列化和反序列化，直接解构赋值
+        const { render, setup, inheritAttrs, model, ref, refInFor, slots, staticRenderFns, emits, props, __hmrId, __file, __name,__scopeId, ...args } = componentTarget;
+
+        // const {label, name, order,type,_hidden} = componentTarget;
 
         componentsObj[componentName] = {
             ...componentsObj[componentName],
-            label, name, order,type,_hidden
+            ...args
         }
         settingComponentsObj[componentName] = componentTarget
         const {components = {}} = packageModulesObj[packageType] || {}
 
         components[componentName] = {
             ...components[componentName],
-            label,
-            name,
-            order,type,_hidden,
+            ...args,
             settingComponent: componentTarget
         }
 
         packageModulesObj[packageType] = {
             ...packageTypeObj[packageType],
             components,
-            type
+            type: args.type
 
         }
     }

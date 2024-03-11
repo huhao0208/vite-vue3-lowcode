@@ -86,32 +86,32 @@ export const animationList = [
         ],
     },
 
-    {
-        label: '弹跳退出',
-        value: 'Bouncing Exits',
-        children: [
-            {
-                label: '弹跳退出',
-                value: 'bounceOut',
-            },
-            {
-                label: '向下弹跳退出',
-                value: 'bounceOutDown',
-            },
-            {
-                label: '向左弹跳退出',
-                value: 'bounceOutLeft',
-            },
-            {
-                label: '向右弹跳退出',
-                value: 'bounceOutRight',
-            },
-            {
-                label: '向上弹跳退出',
-                value: 'bounceOutUp',
-            },
-        ],
-    },
+    // {
+    //     label: '弹跳退出',
+    //     value: 'Bouncing Exits',
+    //     children: [
+    //         {
+    //             label: '弹跳退出',
+    //             value: 'bounceOut',
+    //         },
+    //         {
+    //             label: '向下弹跳退出',
+    //             value: 'bounceOutDown',
+    //         },
+    //         {
+    //             label: '向左弹跳退出',
+    //             value: 'bounceOutLeft',
+    //         },
+    //         {
+    //             label: '向右弹跳退出',
+    //             value: 'bounceOutRight',
+    //         },
+    //         {
+    //             label: '向上弹跳退出',
+    //             value: 'bounceOutUp',
+    //         },
+    //     ],
+    // },
 
     {
         label: '渐显进入',
@@ -156,48 +156,48 @@ export const animationList = [
         ],
     },
 
-    {
-        label: '渐隐退出',
-        value: 'Fading Exits',
-        children: [
-            {
-                label: '渐隐退出',
-                value: 'fadeOut',
-            },
-            {
-                label: '向下渐隐退出',
-                value: 'fadeOutDown',
-            },
-            {
-                label: '向下渐隐退出屏幕外',
-                value: 'fadeOutDownBig',
-            },
-            {
-                label: '向左渐隐退出',
-                value: 'fadeOutLeft',
-            },
-            {
-                label: '向左渐隐退出屏幕外',
-                value: 'fadeOutLeftBig',
-            },
-            {
-                label: '向右渐隐退出',
-                value: 'fadeOutRight',
-            },
-            {
-                label: '向右渐隐退出屏幕外',
-                value: 'fadeOutRightBig',
-            },
-            {
-                label: '向上渐隐退出',
-                value: 'fadeOutUp',
-            },
-            {
-                label: '向上渐隐退出屏幕外',
-                value: 'fadeOutUpBig',
-            },
-        ],
-    },
+    // {
+    //     label: '渐隐退出',
+    //     value: 'Fading Exits',
+    //     children: [
+    //         {
+    //             label: '渐隐退出',
+    //             value: 'fadeOut',
+    //         },
+    //         {
+    //             label: '向下渐隐退出',
+    //             value: 'fadeOutDown',
+    //         },
+    //         {
+    //             label: '向下渐隐退出屏幕外',
+    //             value: 'fadeOutDownBig',
+    //         },
+    //         {
+    //             label: '向左渐隐退出',
+    //             value: 'fadeOutLeft',
+    //         },
+    //         {
+    //             label: '向左渐隐退出屏幕外',
+    //             value: 'fadeOutLeftBig',
+    //         },
+    //         {
+    //             label: '向右渐隐退出',
+    //             value: 'fadeOutRight',
+    //         },
+    //         {
+    //             label: '向右渐隐退出屏幕外',
+    //             value: 'fadeOutRightBig',
+    //         },
+    //         {
+    //             label: '向上渐隐退出',
+    //             value: 'fadeOutUp',
+    //         },
+    //         {
+    //             label: '向上渐隐退出屏幕外',
+    //             value: 'fadeOutUpBig',
+    //         },
+    //     ],
+    // },
 
     {
         label: '翻动',
@@ -226,28 +226,28 @@ export const animationList = [
         ],
     },
 
-    {
-        label: '加速进出',
-        value: 'Lightspeed',
-        children: [
-            {
-                label: '向左加速进入',
-                value: 'lightSpeedInRight',
-            },
-            {
-                label: '向右加速进入',
-                value: 'lightSpeedInLeft',
-            },
-            {
-                label: '向右加速退出',
-                value: 'lightSpeedOutRight',
-            },
-            {
-                label: '向左加速退出',
-                value: 'lightSpeedOutLeft',
-            },
-        ],
-    },
+    // {
+    //     label: '加速进出',
+    //     value: 'Lightspeed',
+    //     children: [
+    //         {
+    //             label: '向左加速进入',
+    //             value: 'lightSpeedInRight',
+    //         },
+    //         {
+    //             label: '向右加速进入',
+    //             value: 'lightSpeedInLeft',
+    //         },
+    //         {
+    //             label: '向右加速退出',
+    //             value: 'lightSpeedOutRight',
+    //         },
+    //         {
+    //             label: '向左加速退出',
+    //             value: 'lightSpeedOutLeft',
+    //         },
+    //     ],
+    // },
 
     {
         label: '旋转渐显',
@@ -325,28 +325,28 @@ export const animationList = [
             },
         ],
     },
-    {
-        label: '平移退出',
-        value: 'Sliding Exits',
-        children: [
-            {
-                label: '向上平移退出',
-                value: 'slideOutUp',
-            },
-            {
-                label: '向下平移退出',
-                value: 'slideOutDown',
-            },
-            {
-                label: '向左平移退出',
-                value: 'slideOutLeft',
-            },
-            {
-                label: '向右平移退出',
-                value: 'slideOutRight',
-            },
-        ],
-    },
+    // {
+    //     label: '平移退出',
+    //     value: 'Sliding Exits',
+    //     children: [
+    //         {
+    //             label: '向上平移退出',
+    //             value: 'slideOutUp',
+    //         },
+    //         {
+    //             label: '向下平移退出',
+    //             value: 'slideOutDown',
+    //         },
+    //         {
+    //             label: '向左平移退出',
+    //             value: 'slideOutLeft',
+    //         },
+    //         {
+    //             label: '向右平移退出',
+    //             value: 'slideOutRight',
+    //         },
+    //     ],
+    // },
 
     {
         label: '放大进入',
@@ -375,32 +375,32 @@ export const animationList = [
         ],
     },
 
-    {
-        label: '缩小退出',
-        value: 'Zoom Exits',
-        children: [
-            {
-                label: '缩小退出',
-                value: 'zoomOut',
-            },
-            {
-                label: '向下缩小退出',
-                value: 'zoomOutDown',
-            },
-            {
-                label: '向左缩小退出',
-                value: 'zoomOutLeft',
-            },
-            {
-                label: '向右缩小退出',
-                value: 'zoomOutRight',
-            },
-            {
-                label: '向上缩小退出',
-                value: 'zoomOutUp',
-            },
-        ],
-    },
+    // {
+    //     label: '缩小退出',
+    //     value: 'Zoom Exits',
+    //     children: [
+    //         {
+    //             label: '缩小退出',
+    //             value: 'zoomOut',
+    //         },
+    //         {
+    //             label: '向下缩小退出',
+    //             value: 'zoomOutDown',
+    //         },
+    //         {
+    //             label: '向左缩小退出',
+    //             value: 'zoomOutLeft',
+    //         },
+    //         {
+    //             label: '向右缩小退出',
+    //             value: 'zoomOutRight',
+    //         },
+    //         {
+    //             label: '向上缩小退出',
+    //             value: 'zoomOutUp',
+    //         },
+    //     ],
+    // },
 
     {
         label: '特殊效果',
@@ -414,10 +414,10 @@ export const animationList = [
                 label: '滚动进入',
                 value: 'rollIn',
             },
-            {
-                label: '滚动退出',
-                value: 'rollOut',
-            },
+            // {
+            //     label: '滚动退出',
+            //     value: 'rollOut',
+            // },
         ],
     },
 ]

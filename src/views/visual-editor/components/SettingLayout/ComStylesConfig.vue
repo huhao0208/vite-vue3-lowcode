@@ -1,7 +1,6 @@
 <script setup>
 const pStore = useCustomPage();
 import useModel from "ve/hooks/useModel.js";
-
 const detail = useModel(() => pStore.currentDetail, val => pStore.updateCurrentDetail(val));
 
 
@@ -20,38 +19,59 @@ const padding = computed({
     }
   }
 })
+
 import animationList from "./animateConfig.js";
+
+const props = defineProps({
+  config: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
 
 </script>
 
 <template>
   <el-form label-width="100px">
+    <!--加载动画-->
 
-<!--    <el-form-item label="宽度">-->
-<!--      <div class="row">-->
-<!--        <el-slider v-model="detail.outStyles.width" :max="375" :step="1"/>-->
-<!--        <el-input v-model="detail.outStyles.width" class="row_value"/>-->
-<!--      </div>-->
-<!--    </el-form-item>-->
-<!--    <el-form-item label="高度">-->
-<!--      <div class="row">-->
-<!--        <el-slider v-model="detail.outStyles.height" :max="800" :step="1"/>-->
-<!--        <el-input v-model="detail.outStyles.height" class="row_value"/>-->
-<!--      </div>-->
-<!--    </el-form-item>-->
-
-<!--加载动画-->
-    <el-form-item label="加载动画">
+    <el-form-item label="加载动画" v-if="config.animate">
 
       <el-tree-select
           v-model="detail.attrs.class"
           :data="animationList"
           :render-after-expand="false"
+          placeholder="请选择加载动画"
           style="width: 240px"
       />
     </el-form-item>
 
-    <el-form-item label="边距">
+    <el-form-item label="宽度" v-if="config.width">
+      <div class="row">
+        <el-slider v-model="detail.outStyles.width" :max="375" :step="1"/>
+        <el-input v-model="detail.outStyles.width" class="row_value"/>
+      </div>
+    </el-form-item>
+    <el-form-item label="对齐方式" v-if="config.aline">
+       <el-select v-model="detail.outStyles.margin" placeholder="请选择左右对齐方式">
+         <el-option label="左" value="0 auto 0 0"/>
+         <el-option label="中" value="0 auto"/>
+         <el-option label="右" value="0 0 0 auto"/>
+
+
+       </el-select>
+    </el-form-item>
+    <el-form-item label="高度" v-if="config.height">
+      <div class="row">
+        <el-slider v-model="detail.outStyles.height" :max="800" :step="1"/>
+        <el-input v-model="detail.outStyles.height" class="row_value"/>
+      </div>
+    </el-form-item>
+
+
+
+    <el-form-item label="边距" v-if="config.padding">
       <div class="padding_setting">
         <div class="top">
           <el-input-number placeholder="上" v-model="detail.outStyles.paddingTop"

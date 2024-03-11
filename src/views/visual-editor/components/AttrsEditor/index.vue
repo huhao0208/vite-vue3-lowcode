@@ -1,8 +1,12 @@
 <script setup>
 const pStore = useCustomPage();
 import {settingComponents} from 've/components/Packages'
+
+console.log(settingComponents,'settingComponents')
 import useModel from "ve/hooks/useModel.js"
 const detail = useModel(()=>pStore.currentDetail,val=>pStore.updateCurrentDetail(val))
+
+
 </script>
 
 <template>

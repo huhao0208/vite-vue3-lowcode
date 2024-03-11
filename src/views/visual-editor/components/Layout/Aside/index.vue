@@ -2,29 +2,18 @@
 
 import draggable from 'vuedraggable'
 import {packageModules, settingComponents} from "ve/components/Packages"
+const pStore  = useCustomPage()
 
-// console.log(packageModules, settingComponents, 'settingComponents')
-// const onDragStart = (e) => {
-//   console.log(e,'onDragStart a')
-// }
-// const onDragging = (e) => {
-//     const {layerX,layerY} = e
-// //   console.log(e,layerX,layerY, 'onDragging b')
-// // }
-//   console.log(e,layerX,layerY,'onDragging a')
-// }
-// const onDragEnd = (e) => {
-//   console.log(e,'onDragEnd a')
-// }
-// const changeFun = e=>{
-//   console.log(e,'changeFun a')
-// }
 // 克隆组件
 const cloneDog = (comp) => {
   console.log('当前拖拽的组件：', comp);
-
-  return comp
+  const {label,name,type,onlyOne } = comp
+  if (onlyOne && pStore.list.find(item=>item.name ===name)) return
+  return   {
+    label,name,type
+  }
 };
+
 </script>
 <template>
   <el-tabs tab-position="left" class="aside_tabs">
@@ -146,7 +135,9 @@ const cloneDog = (comp) => {
             height: 100%;
           }
         }
-
+        &.Text{
+          white-space: pre-wrap;
+        }
         &.Hotspot {
           text-align: center;
           background:rgba(255, 0, 0, 0.2);

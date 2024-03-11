@@ -23,6 +23,7 @@ defineOptions({
     },
     events: [ ]
   },
+
 })
 const props = defineProps({
   modelValue: {
@@ -48,7 +49,13 @@ const fitObj = {
 </script>
 
 <template>
-<SettingLayout>
+<SettingLayout :styleConf="{
+animate: true,
+padding: true,
+width: true,
+height: false,
+aline: true,
+}">
   <template #attrs>
 
     <el-form label-width="100px">

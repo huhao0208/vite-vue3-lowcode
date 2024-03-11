@@ -15,15 +15,15 @@ export const useCustomPage = defineStore('customPage', {
         list: [],
         pageConfig: {
             styles: {
-                backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
-                backgroundImage: '', // 设置元素的背景图像，默认值：none。
-                backgroundSize: '375 auto', // 设置元素背景图像的大小，默认值：auto。
-                backgroundPosition: 'top center', // 设置元素背景图像的位置，默认值：0% 0%。
-                backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
-                paddingTop: 0,
+                // backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
+                // backgroundImage: '', // 设置元素的背景图像，默认值：none。
+                // backgroundSize: '375 auto', // 设置元素背景图像的大小，默认值：auto。
+                // backgroundPosition: 'top center', // 设置元素背景图像的位置，默认值：0% 0%。
+                // backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
+                // paddingTop: 0,
             },
             attrs: {
-                class: 'test'
+
             }
         },
         classDetail: {}
@@ -89,16 +89,16 @@ export const useCustomPage = defineStore('customPage', {
                 }
             })
 
-            const navBar = this.list.find(item => item.name === 'NavBar') || null
-            console.log('navBar', navBar)
-            this.pageConfig.styles.paddingTop = navBar?.outStyles?.height || 0
-            // this.pageConfig = {
-            //     ...this.pageConfig,
-            //     styles:{
-            //         ...this.pageConfig.styles,
-            //         paddingTop:  navBar?.outStyles?.height||0
-            //     }
-            // }
+            const navBar = this.list.find(item => item.name === 'NavBar') || {}
+
+            this.updatePageConfig({
+                ...this.pageConfig,
+                styles:{
+                    ...this.pageConfig.styles,
+                    paddingTop:navBar?.outStyles?.height || 0
+                }
+            })
+
         },
 
         setCurrent(uid) {
@@ -108,7 +108,19 @@ export const useCustomPage = defineStore('customPage', {
             this.list[this.currentIndex] = detail
         },
         updatePageConfig(config) {
-            this.pageConfig = config
+            this.pageConfig = {
+                ...config,
+                styles:{
+                    backgroundColor: '', // 设置元素的背景颜色，默认值：transparent。
+                    backgroundImage: '', // 设置元素的背景图像，默认值：none。
+                    backgroundSize: '375 auto', // 设置元素背景图像的大小，默认值：auto。
+                    backgroundPosition: 'top center', // 设置元素背景图像的位置，默认值：0% 0%。
+                    backgroundRepeat: 'no-repeat', // 设置背景图像是否重复，以及如何重复，默认值：repeat。
+                    paddingTop: 0,
+                    ...(config.styles||{})
+                },
+
+            }
         },
         savePreview() {
             return new Promise(async (resolve, reject) => {

@@ -4,7 +4,24 @@ import ComEventsConfig from "./ComEventsConfig.vue";
 
 export default {
   name: "SettingLayout",
-  components: {ComEventsConfig}
+  components: {ComEventsConfig},
+  props: {
+    styleConf: {
+      type: Object,
+      default: () => ({})
+    },
+    attrConf: {
+      type: Object,
+      default: () => ({})
+    },
+    eventConf: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  computed:{
+
+  }
 }
 </script>
 
@@ -13,15 +30,15 @@ export default {
     <el-tab-pane label="属性设置" v-if="$slots.attrs">
       <slot name="attrs"></slot>
     </el-tab-pane>
-    <el-tab-pane label="样式设置" v-if="$slots.styles">
+    <el-tab-pane label="样式设置" v-if="$slots.styles ||Object.keys(styleConf).length">
 
       <!--      &lt;!&ndash;通用样式配置&ndash;&gt;-->
-      <ComStylesConfig/>
+      <ComStylesConfig  :config="styleConf"/>
       <slot name="styles"></slot>
     </el-tab-pane>
     <el-tab-pane label="事件配置" v-if="$slots.events">
       <!-- 点击事件-->
-    <ComEventsConfig></ComEventsConfig>
+      <ComEventsConfig></ComEventsConfig>
 
       <slot name="events"></slot>
     </el-tab-pane>

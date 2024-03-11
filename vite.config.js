@@ -78,7 +78,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) =>{
            rollupOptions: {
                input: {
                    main: resolve(__dirname, 'index.html'),
-                   preview: resolve(__dirname, 'preview/index.html'),
+                  // preview: resolve(__dirname, 'preview/index.html'),
                },
                output: {
                    chunkFileNames: 'js/[name].[hash].js',
